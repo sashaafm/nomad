@@ -1,0 +1,2 @@
+defmodule Nomad do
+end
