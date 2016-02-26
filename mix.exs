@@ -2,12 +2,14 @@ defmodule Nomad.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :nomad,
-     version: "0.0.1",
-     elixir: "~> 1.1-dev",
-     build_embedded: Mix.env == :prod,
+    [
+     app:             :nomad,
+     version:         "0.0.1",
+     elixir:          "~> 1.1-dev",
+     build_embedded:  Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps:            deps
+   ]
   end
 
   # Configuration for the OTP application
@@ -27,6 +29,8 @@ defmodule Nomad.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [
+      {:exrm, "~> 1.0.0-rc8"}
+    ]
   end
 end
