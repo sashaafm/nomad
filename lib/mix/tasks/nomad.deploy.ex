@@ -1,5 +1,6 @@
 defmodule Mix.Tasks.Nomad.Deploy do
 	use Mix.Task
+  alias Nomad.{DeploymentScript}
 	
 	def run(args) do
 		setup_config args
@@ -15,7 +16,6 @@ defmodule Mix.Tasks.Nomad.Deploy do
       #compile_and_gen_release
     end
 
-
     if ("-f" in args) == false do 
       case Mix.Shell.IO.yes? "The release will now be sent to the cloud host, do you agree?" do
         true  -> deploy_to_cloud_host
@@ -26,9 +26,11 @@ defmodule Mix.Tasks.Nomad.Deploy do
     else
       #deploy_to_cloud_host
     end
-    
+                   
 
+    Mix.Shell.IO.info("Remove release from local dir.")
     System.cmd "rm", ["-rf", "rel"]
+    DeploymentScript.delete_script
 	end
 
 	defp setup_config(args) do 
@@ -52,10 +54,25 @@ defmodule Mix.Tasks.Nomad.Deploy do
   end
 
   defp deploy_to_cloud_host do
+    DeploymentScript.build_script
+
     System.cmd "scp", [
                        "-i", "~/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
                        "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/#{System.get_env("APP_NAME")}.tar.gz", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
                       ] 
+
+    Mix.Shell.IO.info "Going to transfer the after deployment script."
+    System.cmd "scp", [
+                       "-i", "~/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "after_deploy.sh", 
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
+                      ]
+
+    Mix.Shell.IO.info "Going to run the remote script."                                             
+    System.cmd "ssh", ["#{System.get_env("USERNAME")}@#{System.get_env("HOST")}", 
+                       "chmod o+rx after_deploy.sh;" 
+                       <> "./after_deploy.sh"
+                      ]                           
   end
 end
