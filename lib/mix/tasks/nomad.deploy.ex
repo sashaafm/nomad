@@ -23,27 +23,17 @@ defmodule Mix.Tasks.Nomad.Deploy do
 
     if ("-f" in args) == false do 
       case Mix.Shell.IO.yes? "The release will now be sent to the cloud host, do you agree?" do
-        true  -> 
-          build_deployment_script
-          deploy_to_cloud_host
-          transfer_deployment_script
-          execute_remote_deployment_script
+        true  -> cloud_deploy
         false -> 
           Mix.Shell.IO.info "Deployment halted at the user's request."
           System.halt
         _     -> System.halt
       end
     else
-      build_deployment_script
-      deploy_to_cloud_host
-      transfer_deployment_script
-      execute_remote_deployment_script
+      cloud_deploy
     end
                    
-
-    Mix.Shell.IO.info("Remove release from local dir.")
-    System.cmd "rm", ["-rf", "rel"]
-    DeploymentScript.delete_script
+    cleanup
   end
 
   defp setup_config(args) do 
@@ -64,6 +54,13 @@ defmodule Mix.Tasks.Nomad.Deploy do
     Mix.env :prod
     Mix.Task.run "compile"
     Mix.Task.run "release"
+  end
+
+  defp cloud_deploy do 
+    build_deployment_script
+    deploy_to_cloud_host
+    transfer_deployment_script
+    execute_remote_deployment_script
   end
 
   defp deploy_to_cloud_host do
@@ -94,5 +91,11 @@ defmodule Mix.Tasks.Nomad.Deploy do
 
   defp build_deployment_script do
     DeploymentScript.build_script
+  end
+
+  defp cleanup do 
+    Mix.Shell.IO.info("Remove release from local dir.")
+    System.cmd "rm", ["-rf", "rel"]
+    DeploymentScript.delete_script
   end
 end
