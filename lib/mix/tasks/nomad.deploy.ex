@@ -33,7 +33,8 @@ defmodule Mix.Tasks.Nomad.Deploy do
       cloud_deploy
     end
                    
-    cleanup
+    local_cleanup
+    remote_cleanup
   end
 
   defp setup_config(args) do 
@@ -93,9 +94,16 @@ defmodule Mix.Tasks.Nomad.Deploy do
     DeploymentScript.build_script
   end
 
-  defp cleanup do 
-    Mix.Shell.IO.info("Remove release from local dir.")
+  defp local_cleanup do 
+    Mix.Shell.IO.info "Remove release from local dir."
     System.cmd "rm", ["-rf", "rel"]
     DeploymentScript.delete_script
+  end
+
+  defp remote_cleanup do 
+    Mix.Shell.IO.info "Remove release and script from remote dir."
+    System.cmd "ssh", ["#{System.get_env("USERNAME")}@#{System.get_env("HOST")}",
+                       "rm -rf after_deploy.sh #{System.get_env("APP_NAME")}.tar.gz"
+                      ]
   end
 end
