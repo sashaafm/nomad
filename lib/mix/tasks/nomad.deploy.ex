@@ -1,6 +1,6 @@
 defmodule Mix.Tasks.Nomad.Deploy do
   use Mix.Task
-  alias Nomad.{DeploymentScript}
+  alias Nomad.{DeploymentScript, UpstartScript}
 
   @moduledoc """
   
@@ -18,7 +18,7 @@ defmodule Mix.Tasks.Nomad.Deploy do
         _     -> System.halt
       end
     else
-      #compile_and_gen_release
+      compile_and_gen_release
     end
 
     if ("-f" in args) == false do 
@@ -59,14 +59,16 @@ defmodule Mix.Tasks.Nomad.Deploy do
 
   defp cloud_deploy do 
     build_deployment_script
+    build_upstart_script
     deploy_to_cloud_host
     transfer_deployment_script
+    transfer_upstart_script
     execute_remote_deployment_script
   end
 
   defp deploy_to_cloud_host do
     System.cmd "scp", [
-                       "-i", "~/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", "/home/#{System.cmd("whoami")}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
                        "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/"
                        <> "#{System.get_env("APP_NAME")}.tar.gz", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
@@ -76,10 +78,19 @@ defmodule Mix.Tasks.Nomad.Deploy do
   defp transfer_deployment_script do 
     Mix.Shell.IO.info "Going to transfer the after deployment script."
     System.cmd "scp", [
-                       "-i", "~/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", "/home/#{System.cmd("whoami")}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
                        "after_deploy.sh", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
                       ]
+  end
+
+  defp transfer_upstart_script do
+    Mix.Shell.IO.info "Going to transfer the Upstart script."
+    System.cmd "scp", [
+                       "-i", "/home/#{System.cmd("whoami")}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "#{System.get_env("APP_NAME")}.conf", 
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/init"
+                      ]    
   end
 
   defp execute_remote_deployment_script do
@@ -94,10 +105,15 @@ defmodule Mix.Tasks.Nomad.Deploy do
     DeploymentScript.build_script
   end
 
+  defp build_upstart_script do 
+    UpstartScript.build_script
+  end
+
   defp local_cleanup do 
     Mix.Shell.IO.info "Remove release from local dir."
     System.cmd "rm", ["-rf", "rel"]
     DeploymentScript.delete_script
+    UpstartScript.delete_script
   end
 
   defp remote_cleanup do 

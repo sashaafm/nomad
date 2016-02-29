@@ -22,6 +22,6 @@ defmodule Nomad.DeploymentScript do
   end
 
   def delete_script do
-    File.rm("after_deploy.sh")
+    File.rm "after_deploy.sh"
   end
 end
