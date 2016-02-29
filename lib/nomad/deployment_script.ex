@@ -8,7 +8,7 @@ defmodule Nomad.DeploymentScript do
   def build_script do
     {:ok, script} = File.open "after_deploy.sh", [:write]
 
-    IO.binwrite script, bs("app", System.get_env("USERNAME"), System.get_env("APP_NAME"))
+    :ok = IO.binwrite script, bs("app", System.get_env("USERNAME"), System.get_env("APP_NAME"))
     File.close script
   end
 
@@ -18,6 +18,7 @@ defmodule Nomad.DeploymentScript do
     sudo chown #{username}:#{username} /#{folder}
     cd /#{folder}
     tar xfz /root/#{app_name}.tar.gz
+    sudo ln -s /etc/nginx/sites-available/#{app_name} /etc/nginx/sites-enabled
     """
   end
 

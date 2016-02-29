@@ -1,6 +1,6 @@
 defmodule Mix.Tasks.Nomad.Deploy do
   use Mix.Task
-  alias Nomad.{DeploymentScript, UpstartScript}
+  alias Nomad.{CloudDeploy}
 
   @moduledoc """
   
@@ -10,31 +10,26 @@ defmodule Mix.Tasks.Nomad.Deploy do
     setup_config args
 
     if ("-f" in args) == false do 
-      case Mix.Shell.IO.yes? "A production release will be generated, do you wish to proceed?" do 
-        true  -> compile_and_gen_release
-        false -> 
-          Mix.Shell.IO.info "Deployment halted at the user's request."
-          System.halt
-        _     -> System.halt
+      if Mix.Shell.IO.yes? "A production release will be generated, do you wish to proceed?" do 
+        compile_and_gen_release
+      else
+        Mix.Shell.IO.info "Deployment halted at the user's request."
+        System.halt
       end
     else
       compile_and_gen_release
     end
 
     if ("-f" in args) == false do 
-      case Mix.Shell.IO.yes? "The release will now be sent to the cloud host, do you agree?" do
-        true  -> cloud_deploy
-        false -> 
-          Mix.Shell.IO.info "Deployment halted at the user's request."
-          System.halt
-        _     -> System.halt
+      if Mix.Shell.IO.yes? "The release will now be sent to the cloud host, do you agree?" do
+        CloudDeploy.cloud_deploy
+      else
+        Mix.Shell.IO.info "Deployment halted at the user's request."
+        System.halt
       end
     else
-      cloud_deploy
+      CloudDeploy.cloud_deploy
     end
-                   
-    local_cleanup
-    remote_cleanup
   end
 
   defp setup_config(args) do 
@@ -53,76 +48,8 @@ defmodule Mix.Tasks.Nomad.Deploy do
 
   defp compile_and_gen_release do 
     Mix.env :prod
+    Mix.Task.run "phoenix.digest"
     Mix.Task.run "compile"
     Mix.Task.run "release"
-  end
-
-  defp cloud_deploy do 
-    {res, _}    = System.cmd "whoami", []
-    system_user = String.split(res, "\n") |> List.first
-
-    build_deployment_script
-    build_upstart_script
-    deploy_to_cloud_host system_user
-    transfer_deployment_script system_user
-    transfer_upstart_script system_user
-    execute_remote_deployment_script
-  end
-
-  defp deploy_to_cloud_host(system_user) do
-    System.cmd "scp", [
-                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
-                       "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/"
-                       <> "#{System.get_env("APP_NAME")}.tar.gz", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
-                      ]                       
-  end
-
-  defp transfer_deployment_script(system_user) do 
-    Mix.Shell.IO.info "Going to transfer the after deployment script."
-    System.cmd "scp", [
-                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
-                       "after_deploy.sh", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
-                      ]
-  end
-
-  defp transfer_upstart_script(system_user) do
-    Mix.Shell.IO.info "Going to transfer the Upstart script."
-    System.cmd "scp", [
-                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
-                       "#{System.get_env("APP_NAME")}.conf", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/init"
-                      ]    
-  end
-
-  defp execute_remote_deployment_script do
-    Mix.Shell.IO.info "Going to run the remote script."                                             
-    System.cmd "ssh", ["#{System.get_env("USERNAME")}@#{System.get_env("HOST")}", 
-                       "chmod o+rx after_deploy.sh;" 
-                       <> "./after_deploy.sh"
-                      ]
-  end
-
-  defp build_deployment_script do
-    DeploymentScript.build_script
-  end
-
-  defp build_upstart_script do 
-    UpstartScript.build_script
-  end
-
-  defp local_cleanup do 
-    Mix.Shell.IO.info "Remove release from local dir."
-    System.cmd "rm", ["-rf", "rel"]
-    DeploymentScript.delete_script
-    UpstartScript.delete_script
-  end
-
-  defp remote_cleanup do 
-    Mix.Shell.IO.info "Remove release and script from remote dir."
-    System.cmd "ssh", ["#{System.get_env("USERNAME")}@#{System.get_env("HOST")}",
-                       "rm -rf after_deploy.sh #{System.get_env("APP_NAME")}.tar.gz"
-                      ]
   end
 end

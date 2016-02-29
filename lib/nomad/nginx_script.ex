@@ -1,15 +1,21 @@
 defmodule Nomad.NginxScript do
 
+  @moduledoc """
+  
+  """
+
   def build_script do 
     {:ok, script} = File.open "#{System.get_env("APP_NAME")}", [:write]
 
-    IO.binwrite script, bs(System.get_env("HOST"), System.get_env("PORT"))
+    :ok = IO.binwrite script, bs(System.get_env("APP_NAME"), 
+                                 System.get_env("HOST"), 
+                                 System.get_env("PORT"))
     File.close script
   end
 
-  defp bs(host, port) do 
+  defp bs(app_name, host, port) do 
     """
-    upstream hello_phoenix {
+    upstream #{app_name} {
       server 127.0.0.1:#{port};
     }
     # The following map statement is required
@@ -29,7 +35,7 @@ defmodule Nomad.NginxScript do
       location @proxy {
         include proxy_params;
         proxy_redirect off;
-        proxy_pass http://hello_phoenix;
+        proxy_pass http://#{app_name};
         # The following two headers need to be set in order
         # to keep the websocket connection open. Otherwise you'll see
         # HTTP 400's being returned from websocket connections.

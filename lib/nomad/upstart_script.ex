@@ -7,7 +7,7 @@ defmodule Nomad.UpstartScript do
   def build_script do 
     {:ok, script} = File.open "#{System.get_env("APP_NAME")}.conf", [:write]
 
-    IO.binwrite script, bs(System.get_env("APP_NAME"), System.get_env("PORT"))
+    :ok = IO.binwrite script, bs(System.get_env("APP_NAME"), System.get_env("PORT"))
     File.close script    
   end
 
@@ -31,8 +31,8 @@ defmodule Nomad.UpstartScript do
 
     ## Uncomment the following two lines if we configured
     ## our port with an environment variable.
-    env PORT=#{port}
-    export PORT
+    #env PORT=#{port}
+    #export PORT
 
     ## Add app HOME directory.
     env HOME=/app
