@@ -58,36 +58,39 @@ defmodule Mix.Tasks.Nomad.Deploy do
   end
 
   defp cloud_deploy do 
+    {res, _}    = System.cmd "whoami", []
+    system_user = String.split(res, "\n") |> List.first
+
     build_deployment_script
     build_upstart_script
-    deploy_to_cloud_host
-    transfer_deployment_script
-    transfer_upstart_script
+    deploy_to_cloud_host system_user
+    transfer_deployment_script system_user
+    transfer_upstart_script system_user
     execute_remote_deployment_script
   end
 
-  defp deploy_to_cloud_host do
+  defp deploy_to_cloud_host(system_user) do
     System.cmd "scp", [
-                       "-i", "/home/#{System.cmd("whoami")}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
                        "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/"
                        <> "#{System.get_env("APP_NAME")}.tar.gz", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
                       ]                       
   end
 
-  defp transfer_deployment_script do 
+  defp transfer_deployment_script(system_user) do 
     Mix.Shell.IO.info "Going to transfer the after deployment script."
     System.cmd "scp", [
-                       "-i", "/home/#{System.cmd("whoami")}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
                        "after_deploy.sh", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
                       ]
   end
 
-  defp transfer_upstart_script do
+  defp transfer_upstart_script(system_user) do
     Mix.Shell.IO.info "Going to transfer the Upstart script."
     System.cmd "scp", [
-                       "-i", "/home/#{System.cmd("whoami")}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
                        "#{System.get_env("APP_NAME")}.conf", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/init"
                       ]    

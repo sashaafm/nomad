@@ -13,12 +13,12 @@ defmodule Nomad.DeploymentScript do
   end
 
   defp bs(folder, username, app_name) do
-    "sudo mkdir -p /#{folder}\n" <>
-    "sudo chown #{username}:#{username} /#{folder}\n" <>
-    "cd /#{folder}\n" <>
-    "tar xfz /root/#{app_name}.tar.gz\n"
-
-    # Should clean up after deployment
+    """
+    sudo mkdir -p /#{folder}
+    sudo chown #{username}:#{username} /#{folder}
+    cd /#{folder}
+    tar xfz /root/#{app_name}.tar.gz
+    """
   end
 
   def delete_script do
