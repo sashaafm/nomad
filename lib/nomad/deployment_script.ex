@@ -18,7 +18,11 @@ defmodule Nomad.DeploymentScript do
     sudo chown #{username}:#{username} /#{folder}
     cd /#{folder}
     tar xfz /root/#{app_name}.tar.gz
+    sudo touch /etc/nginx/sites-available/#{app_name}
     sudo ln -s /etc/nginx/sites-available/#{app_name} /etc/nginx/sites-enabled
+    sudo service nginx stop
+    sudo start #{app_name}
+    sudo service nginx start
     """
   end
 
