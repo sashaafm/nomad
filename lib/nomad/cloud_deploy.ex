@@ -1,5 +1,5 @@
 defmodule Nomad.CloudDeploy do
-  alias Nomad.{DeploymentScript, UpstartScript, NginxScript}
+  alias Nomad.{DeploymentScript, UpstartScript, NginxScript, CloudSetupScript}
 
   @moduledoc """
   
@@ -11,6 +11,12 @@ defmodule Nomad.CloudDeploy do
                   |> List.first 
                   |> String.split("\n") 
                   |> List.first
+
+    if Mix.Shell.yes? "Do you want to setup the cloud host?" do
+      :ok = build_cloud_setup_script
+      {_, 0} = transfer_cloud_setup_script
+      {_, 0} = execute_cloud_setup_script
+    end
 
     :ok = build_deployment_script
     :ok = build_upstart_script
@@ -58,7 +64,24 @@ defmodule Nomad.CloudDeploy do
                        "#{System.get_env("APP_NAME")}", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/nginx/sites-available"
                       ]    
+  end
+
+  defp transfer_cloud_setup_script do 
+    Mix.Shell.IO.info "Going to transfer the cloud setup script."
+    System.cmd "scp", [
+                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "cloud_setup.sh", 
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
+                      ]      
   end  
+
+  defp execute_cloud_setup_script do 
+    Mix.Shell.IO.info "Going to run the cloud setup script."                                             
+    System.cmd "ssh", ["#{System.get_env("USERNAME")}@#{System.get_env("HOST")}", 
+                       "chmod o+rx cloud_setup.sh;" 
+                       <> "./cloud_setup.sh"
+                      ]    
+  end
 
   defp execute_remote_deployment_script do
     Mix.Shell.IO.info "Going to run the remote script."                                             
@@ -70,6 +93,10 @@ defmodule Nomad.CloudDeploy do
 
   defp build_deployment_script do
     DeploymentScript.build_script
+  end
+
+  defp build_cloud_setup_script do 
+    CloudSetupScript.build_script
   end
 
   defp build_upstart_script do 
@@ -85,6 +112,7 @@ defmodule Nomad.CloudDeploy do
     {_, 0} = System.cmd "rm", ["-rf", "rel"]
     :ok    = DeploymentScript.delete_script
     UpstartScript.delete_script
+    CloudSetupScript.delete_script
   end
 
   defp remote_cleanup do 
