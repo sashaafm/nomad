@@ -13,14 +13,15 @@ defmodule Nomad.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :httpoison]]
   end
 
   defp deps do
     [
-      {:exrm,   "~> 1.0.1"},
-      {:credo,  "~> 0.3",  only: [:dev, :test]},
-      {:ex_doc, "~> 0.11", only: [:dev]}
+      {:exrm,      "~> 1.0.1"},
+      {:credo,     "~> 0.3",  only: [:dev, :test]},
+      {:ex_doc,    "~> 0.11", only: [:dev]},
+      {:httpoison, "~> 0.8.1"}
     ]
   end
 end
