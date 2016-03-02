@@ -1,6 +1,6 @@
 defmodule Mix.Tasks.Nomad.Deploy do
   use Mix.Task
-  alias Nomad.{CloudDeploy}
+  alias Nomad.{RemoteDeploy}
 
   @moduledoc """
   
@@ -21,14 +21,14 @@ defmodule Mix.Tasks.Nomad.Deploy do
     end
 
     if ("-f" in args) == false do 
-      if Mix.Shell.IO.yes? "The release will now be sent to the cloud host, do you agree?" do
-        CloudDeploy.cloud_deploy
+      if Mix.Shell.IO.yes? "The release will now be sent to the remote host, do you agree?" do
+        RemoteDeploy.run
       else
         Mix.Shell.IO.info "Deployment halted at the user's request."
         System.halt
       end
     else
-      CloudDeploy.cloud_deploy
+      RemoteDeploy.run
     end
   end
 

@@ -1,16 +1,16 @@
-defmodule Nomad.CloudSetupScript do
+defmodule Nomad.RemoteSetupScript do
   @behaviour Script
   
   @moduledoc """
-  Builds and deletes the script for the setup of the cloud host.
+  Builds and deletes the script for the setup of the remote host.
   """
 
   @doc """
-  Builds the script for the setup of the cloud host.
+  Builds the script for the setup of the remote host.
   The script installs all the necessary packages for Elixir/Phoenix and MySQL.
   """
   def build_script do
-    {:ok, script} = File.open "cloud_setup.sh", [:write]
+    {:ok, script} = File.open "remote_setup.sh", [:write]
 
     :ok = IO.binwrite script, bs
     File.close script
@@ -35,10 +35,10 @@ defmodule Nomad.CloudSetupScript do
   end
 
   @doc """
-  Deletes the cloud setup script from the local directory.
+  Deletes the remote setup script from the local directory.
   """
   def delete_script do
-    File.rm "cloud_setup.sh"
+    File.rm "remote_setup.sh"
   end
   
 end
