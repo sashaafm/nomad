@@ -16,10 +16,13 @@ defmodule Nomad.RemoteSetupScript do
     File.close script
   end
 
-  ### SÓ ESTÁ PARA MYSQL ####
+  ### JUST FOR MYSQL FOR NOW ####
+  ### NEEDS TO RECEIVE THE MYSQL PASSWORD ###
   defp bs do
     """
     #!/bin/bash
+
+    export DEBIAN_FRONTEND=noninteractive
 
     sudo apt-get install -y build-essential
     wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
@@ -28,9 +31,10 @@ defmodule Nomad.RemoteSetupScript do
     sudo apt-get install -y erlang-public-key erlang-runtime-tools erlang-solutions erlang-ssl 
     sudo apt-get install -y erlang-dev erlang-base-hipe erlang-eunit erlang-syntax-tools
     sudo apt-get install -y elixir
-    sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password'
-    sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password'
-    sudo apt-get -y install mysql-server
+    echo mysql-server mysql-server/root_password password root | sudo debconf-set-selections
+    echo mysql-server mysql-server/root_password_again password root | sudo debconf-set-selections
+    sudo -E apt-get -q -y install mysql-server
+    sudo apt-get -y install nginx
     """
   end
 
