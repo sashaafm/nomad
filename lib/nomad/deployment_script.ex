@@ -2,12 +2,15 @@ defmodule Nomad.DeploymentScript do
   @behaviour Script
 
   @moduledoc """
-  
+  Builds and deletes the deployment script for the production release.
   """
 
   @folder "app"
 
-  ### THIS FILE SHOULD BE WRITTEN TO TEMP????
+  @doc """
+  Builds the script for the deployment of the production release of the application.
+  The script follows the Phoenix Official EXRM Releases Guide.
+  """
   def build_script do
     {:ok, script} = File.open "after_deploy.sh", [:write]
 
@@ -29,6 +32,9 @@ defmodule Nomad.DeploymentScript do
     """
   end
 
+  @doc """
+  Deletes the deployment script from the local directory.
+  """
   def delete_script do
     File.rm "after_deploy.sh"
   end

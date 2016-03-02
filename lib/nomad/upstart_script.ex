@@ -2,9 +2,13 @@ defmodule Nomad.UpstartScript do
   @behaviour Script
 
   @moduledoc """
-  
+  Builds and deletes the Upstart script for the production release.
   """
 
+  @doc """
+  Builds the script for the Upstart of the production release of the application.
+  The script follows the Phoenix Official EXRM Releases Guide.
+  """
   def build_script do 
     {:ok, script} = File.open "#{System.get_env("APP_NAME")}.conf", [:write]
 
@@ -46,6 +50,9 @@ defmodule Nomad.UpstartScript do
     """
   end
 
+  @doc """
+  Deletes the Upstart script from the local directory.
+  """
   def delete_script do 
     File.rm "#{System.get_env("APP_NAME")}.conf"
   end

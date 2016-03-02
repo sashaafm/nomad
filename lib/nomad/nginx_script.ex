@@ -2,9 +2,13 @@ defmodule Nomad.NginxScript do
   @behaviour Script
 
   @moduledoc """
-  
+  Builds and deletes the NGINX script for the production release.
   """
 
+  @doc """
+  Builds the script for the setup of NGINX to use the production release of the application.
+  The script follows the Phoenix Official EXRM Releases Guide.
+  """
   def build_script do 
     {:ok, script} = File.open "#{System.get_env("APP_NAME")}", [:write]
 
@@ -45,6 +49,9 @@ defmodule Nomad.NginxScript do
     """
   end
 
+  @doc """
+  Deletes the NGINX script from the local directory.
+  """
   def delete_script do 
     File.rm "#{System.get_env("APP_NAME")}"
   end

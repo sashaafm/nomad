@@ -2,10 +2,13 @@ defmodule Nomad.CloudSetupScript do
   @behaviour Script
   
   @moduledoc """
-  
+  Builds and deletes the script for the setup of the cloud host.
   """
 
-  ### THIS FILE SHOULD BE WRITTEN TO TEMP????
+  @doc """
+  Builds the script for the setup of the cloud host.
+  The script installs all the necessary packages for Elixir/Phoenix and MySQL.
+  """
   def build_script do
     {:ok, script} = File.open "cloud_setup.sh", [:write]
 
@@ -13,6 +16,7 @@ defmodule Nomad.CloudSetupScript do
     File.close script
   end
 
+  ### SÓ ESTÁ PARA MYSQL ####
   defp bs do
     """
     #!/bin/bash
@@ -30,6 +34,9 @@ defmodule Nomad.CloudSetupScript do
     """
   end
 
+  @doc """
+  Deletes the cloud setup script from the local directory.
+  """
   def delete_script do
     File.rm "cloud_setup.sh"
   end
