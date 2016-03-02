@@ -12,10 +12,11 @@ defmodule Nomad.CloudDeploy do
                   |> String.split("\n") 
                   |> List.first
 
-    if Mix.Shell.yes? "Do you want to setup the cloud host?" do
+    {_, 0} =
+    if Mix.Shell.IO.yes? "Do you want to setup the cloud host?" do
       :ok = build_cloud_setup_script
-      {_, 0} = transfer_cloud_setup_script
-      {_, 0} = execute_cloud_setup_script
+      {_, 0} = transfer_cloud_setup_script system_user
+      execute_cloud_setup_script
     end
 
     :ok = build_deployment_script
@@ -66,7 +67,7 @@ defmodule Nomad.CloudDeploy do
                       ]    
   end
 
-  defp transfer_cloud_setup_script do 
+  defp transfer_cloud_setup_script(system_user) do 
     Mix.Shell.IO.info "Going to transfer the cloud setup script."
     System.cmd "scp", [
                        "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
@@ -111,8 +112,8 @@ defmodule Nomad.CloudDeploy do
     Mix.Shell.IO.info "Cleaning up local dir."
     {_, 0} = System.cmd "rm", ["-rf", "rel"]
     :ok    = DeploymentScript.delete_script
-    UpstartScript.delete_script
-    CloudSetupScript.delete_script
+    :ok    = UpstartScript.delete_script
+    :ok    = CloudSetupScript.delete_script
   end
 
   defp remote_cleanup do 

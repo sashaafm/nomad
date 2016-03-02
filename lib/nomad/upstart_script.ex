@@ -1,4 +1,5 @@
 defmodule Nomad.UpstartScript do
+  @behaviour Script
 
   @moduledoc """
   
@@ -7,13 +8,13 @@ defmodule Nomad.UpstartScript do
   def build_script do 
     {:ok, script} = File.open "#{System.get_env("APP_NAME")}.conf", [:write]
 
-    :ok = IO.binwrite script, bs(System.get_env("APP_NAME"), System.get_env("PORT"))
+    :ok = IO.binwrite script, bs
     File.close script    
   end
 
-  defp bs(app_name, port) do 
+  defp bs do 
     """
-    description "#{app_name}"
+    description "#{System.get_env("APP_NAME")}"
 
     ## Uncomment the following two lines to run the
     ## application as www-data:www-data
@@ -31,7 +32,7 @@ defmodule Nomad.UpstartScript do
 
     ## Uncomment the following two lines if we configured
     ## our port with an environment variable.
-    #env PORT=#{port}
+    #env PORT=#{System.get_env("PORT")}
     #export PORT
 
     ## Add app HOME directory.
@@ -39,9 +40,9 @@ defmodule Nomad.UpstartScript do
     export HOME
 
 
-    pre-start exec /bin/sh /app/bin/#{app_name} start
+    pre-start exec /bin/sh /app/bin/#{System.get_env("APP_NAME")} start
 
-    post-stop exec /bin/sh /app/bin/#{app_name} stop
+    post-stop exec /bin/sh /app/bin/#{System.get_env("APP_NAME")} stop
     """
   end
 

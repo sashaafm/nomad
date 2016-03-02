@@ -1,5 +1,6 @@
 defmodule Nomad.CloudSetupScript do
-
+  @behaviour Script
+  
   @moduledoc """
   
   """

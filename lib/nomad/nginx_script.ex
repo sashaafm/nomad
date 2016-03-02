@@ -1,4 +1,5 @@
 defmodule Nomad.NginxScript do
+  @behaviour Script
 
   @moduledoc """
   
@@ -7,16 +8,14 @@ defmodule Nomad.NginxScript do
   def build_script do 
     {:ok, script} = File.open "#{System.get_env("APP_NAME")}", [:write]
 
-    :ok = IO.binwrite script, bs(System.get_env("APP_NAME"), 
-                                 System.get_env("HOST"), 
-                                 System.get_env("PORT"))
+    :ok = IO.binwrite script, bs
     File.close script
   end
 
-  defp bs(app_name, host, port) do 
+  defp bs do 
     """
-    upstream #{app_name} {
-      server 127.0.0.1:#{port};
+    upstream #{System.get_env("APP_NAME")} {
+      server 127.0.0.1:#{System.get_env("PORT")};
     }
     # The following map statement is required
     # if you plan to support channels. See https://www.nginx.com/blog/websocket-nginx/
@@ -26,7 +25,7 @@ defmodule Nomad.NginxScript do
     }
     server{
       listen 80;
-      server_name #{host};
+      server_name #{System.get_env("HOST")};
 
       location / {
         try_files $uri @proxy;
@@ -35,7 +34,7 @@ defmodule Nomad.NginxScript do
       location @proxy {
         include proxy_params;
         proxy_redirect off;
-        proxy_pass http://#{app_name};
+        proxy_pass http://#{System.get_env("APP_NAME")};
         # The following two headers need to be set in order
         # to keep the websocket connection open. Otherwise you'll see
         # HTTP 400's being returned from websocket connections.
