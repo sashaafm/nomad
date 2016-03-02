@@ -3,9 +3,20 @@ defmodule Mix.Tasks.Nomad.Deploy do
   alias Nomad.{RemoteDeploy}
 
   @moduledoc """
-  
+  Task for automatically deploying production releases of Elixir and 
+  Phoenix applications to remote hosts.
   """
   
+  @doc """
+  Deploy the application in the current project's directory.
+  Arguments must be in order:
+  <HOSTNAME/IP> : Required - the remote host hostname or IP address 
+  <PORT>        : Required - the port for the production application
+  <SSH KEY>     : Required - the SSH Key for accessing the remote host,
+                             only the filename and it must be in ~/.ssh 
+  <USERNAME>    : Required - the username to use to access the remote host
+  <-f>          : Optional - bypass all the questions during deployment
+  """
   def run(args) do
     setup_config args
 
@@ -41,7 +52,7 @@ defmodule Mix.Tasks.Nomad.Deploy do
     System.put_env              "HOST",     host
     System.put_env              "PORT",     port
     System.put_env              "USERNAME", username
-    # Getting the app name from the cwd may not always work!
+    # Getting the app name from the cwd may not always work?
     System.put_env              "APP_NAME", System.cwd |> String.split("/") |> List.last
     Application.put_env         :nomad,     :ssh_key, ssh_key
   end

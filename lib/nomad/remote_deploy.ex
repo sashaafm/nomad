@@ -80,7 +80,7 @@ defmodule Nomad.RemoteDeploy do
                       ]      
   end  
 
-  defp transfer_remote_setup_script do 
+  defp execute_remote_setup_script do 
     Mix.Shell.IO.info "Going to run the remote setup script."                                             
     System.cmd "ssh", ["#{System.get_env("USERNAME")}@#{System.get_env("HOST")}", 
                        "chmod o+rx remote_setup.sh;" 
