@@ -16,5 +16,33 @@ defmodule Nomad.Storage do
   def list_items(storage) do 
     CS.list_items storage
   end
+
+  def delete_item(storage, item) do 
+    CS.delete_item storage, item
+  end
+
+  def get_item(storage, item) do
+    CS.get_item storage, item
+  end
+
+  def get_item_acl(storage, item) do 
+    CS.get_item_acl storage, item
+  end
+
+  def delete_storage(storage) do
+    CS.delete_storage storage
+  end
+
+  def get_storage_region(storage) do
+    CS.get_storage_region storage
+  end
+
+  def get_storage_class(storage) do 
+    CS.get_storage_class storage
+  end
+
+  def get_storage_acl(storage) do 
+    CS.get_storage_acl storage
+  end
   
 end
