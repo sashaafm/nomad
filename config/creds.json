@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "vocal-raceway-124010",
+  "private_key_id": "2d5b5695323de07d78c2899d7dc76d168de62909",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCj8C3iSKh0hL3B\nAkkqPKlaCYKNGLDnZMly4M/REWOrMQkTGY4iqRPn9SdHy3LBR/C9qxamhQCyaEpX\nIBsKxanoNmV/01z+k/3qGpsO/Z+vBJ7xqCEo6hHet6SiFkeHjrxm4SB3FbOBNa8L\nGVkHXSSyH0P0kP0vdMcqyyCiq7ReSkMpIGwSkCbH8alTL6qZ9k9uDIXXo2i1W9P2\nShHhMRWtJe3CZ85SsmD83slHtS+VOA1pFpCFw9lgmENMFQwHHYGU+gf/V+mkaOYh\n+obCCkzmcYX6euWBPaCsg/OwJDiTpP1sT0fiJQ2/uA8DhQE4PgI/GccA7qiyeBfW\nDQ42Di37AgMBAAECggEBAJ3vSDUE7Iz8SNaFvjjbogdkvAn0bJEvzsdGf88ZYpzN\nK8Hjz8PigZPo4QPQo2hDR1FiXvrjjW1S/bN78bFqBir5JMWFucRkjK0ZHqLNgiYZ\nXIrQ/8kr3zViVE/3CMg2oZi3cBBprrpfHpihvdxTRoP3jP8zI0exyCKY+ILeynA+\nrec4YVzB3lXTKI3MjX8ytAQcnEUCk5HhTs4ZVR3vDSEWi27y5C71EjrIvJ88vM3C\nKx9vcN7/kS58mA8WaQxw1EH7i+KP4Uqgx2Hqveov++/QrEOWdcb/ucxUwLVatboX\n/XT0LC1kKs3Wm5TdBkwJagLBnktOb7y9FUV8CWNTtLECgYEA1ejOEvfFUUYlyJNj\nT+VvSVrYzmWmhcmY6jjTuLG+6F95EyqvBINhF3TSfX8+cUbQ1gseOFFIXSH41D9g\nGnyiaBLkIU35nB5jr6lXI+Hm4O5baF/Kg65Lv8KFW/HqJJfdV4sykk2K1kAl2scj\nZjqNlA+lwQZyM62KU796gH1+NjMCgYEAxDIwophXIBkaSizLrAO8FRP7ZlARKmDx\nJU5AB/T7IJ2jhqitWoWUA6ZTDXFKenQNC3sazdI8XpnF1Vmx8D55+kvINtASQgv2\nUu+w6thk8/GD7ZZ2CbXC5NGGv6HtdvNoenyHgkdITKXBoT9498L9psisOqMHJab/\nuFPK8k/YkRkCgYAbt6rcMlbTDS/gKZj4xVYCP09Qj0NgmprB3tMwX3fJTHW30hQT\nlaKDE5QixtYkf3SYB6DG02F5D+naNswRIo04xxngZuYtIJLyNBMihycPhlM51w+6\nuF8AXghBvbsFOthne5X19y5CTNWa36rqmDO4N77WoCs0HwyJhYouFBTCmQKBgDNi\nIbKzyz2w1V3P1Ze7cqrijNkC5zv+H6nxkHuFAbBNGOLPknc+vMEn8mB251aixjfX\nifGVuhHcnB+AWkXdVvzilBEm9WEu2NhnxiH7gpURD8hNu6RXYi+jYHMX6aVZomdR\n7fuEx76rOscMZJYfD2d67wB8agbGcfrIl0JW/xUhAoGAN7Z+/187933dw/C+LlsR\nyILN6kgmTMJN8vcqz0x/z4P6mTRC69EGpfT/A3k9ttIurECKziI1gZCQyqy/dPii\nv0qYm7ZeElMTYlotON5fqI/Od9+Qo6bxnTVxG3AYwJudK3qYSjh/w58Cc+Cc/+oY\nuh8FyRNgAAjSTYp5D9M05Sc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-cloud-storage@vocal-raceway-124010.iam.gserviceaccount.com",
+  "client_id": "104078909853251391566",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-cloud-storage%40vocal-raceway-124010.iam.gserviceaccount.com"
+}
