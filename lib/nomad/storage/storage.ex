@@ -5,8 +5,16 @@ defmodule Nomad.Storage do
     CS.list_storages
   end
 
+  def create_storage(name) do 
+    CS.create_storage name
+  end
+
   def create_storage(name, region) do 
-    CS.create_bucket name, region
+    CS.create_storage name, region
+  end
+
+  def create_storage(name, region, class) do 
+    CS.create_storage name, region, class
   end
 
   def put_item(storage, name, content) do 
