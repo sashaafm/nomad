@@ -12,6 +12,8 @@
   "httpoison": {:hex, :httpoison, "0.8.1"},
   "idna": {:hex, :idna, "1.1.0"},
   "mimerl": {:hex, :mimerl, "1.0.2"},
+  "mimetype_parser": {:hex, :mimetype_parser, "0.1.1"},
+  "oauth2": {:hex, :oauth2, "0.5.0"},
   "poison": {:hex, :poison, "1.5.2"},
   "providers": {:hex, :providers, "1.6.0"},
   "quinn": {:git, "https://github.com/nhu313/Quinn.git", "72e13b6f635d69e5d0f713ff979c08340148da00", []},
