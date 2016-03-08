@@ -1,6 +1,10 @@
 defmodule Nomad.Storage do
   alias Cloud.Storage, as: CS
 
+  @moduledoc """
+  
+  """
+
   def list_storages do 
     CS.list_storages
   end
@@ -17,8 +21,8 @@ defmodule Nomad.Storage do
     CS.create_storage name, region, class
   end
 
-  def put_item(storage, name, content) do 
-    CS.put_item storage, name, content
+  def put_item(storage, filepath) do 
+    CS.put_item storage, filepath
   end
 
   def list_items(storage) do 

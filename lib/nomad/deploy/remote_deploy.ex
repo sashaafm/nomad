@@ -10,7 +10,8 @@ defmodule Nomad.RemoteDeploy do
   Deploys the production release to the remote host.
   """
   def run do 
-    system_user = System.cmd("whoami", []) 
+    system_user = "whoami"
+                  |> System.cmd([]) 
                   |> Tuple.to_list 
                   |> List.first 
                   |> String.split("\n") 
