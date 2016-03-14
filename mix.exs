@@ -30,18 +30,21 @@ defmodule Nomad.Mixfile do
           {:credo,     "~> 0.3",  only: [:dev, :test]},
           {:ex_doc,    "~> 0.11", only: [:dev]},
           {:httpoison, "~> 0.8.1"},
-          {:nomad_aws, path: "/home/sashaafm/Documents/nomad_aws"}
+          {:nomad_aws, git: "git@github.com:sashaafm/nomad_aws.git"}
+         # {:nomad_aws, path: "/home/sashaafm/Documents/nomad_aws"}
         ]
-        #Mix.Task.run "deps.clean", [:nomad_gcl]
+
       "GCL" ->
         [
           {:exrm,      "~> 1.0.1"},
           {:credo,     "~> 0.3",  only: [:dev, :test]},
           {:ex_doc,    "~> 0.11", only: [:dev]},
           {:httpoison, "~> 0.8.1"},
-          {:nomad_gcl, path: "/home/sashaafm/Documents/nomad_gcl"}
+          {:nomad_gcl, git: "git@github.com:sashaafm/nomad_gcl.git"}
+         # {:nomad_gcl, path: "/home/sashaafm/Documents/nomad_gcl"}
         ]        
-        #Mix.Task.run "deps.clean", [:nomad_aws]
     end
+
+#    Mix.Task.run "deps.clean", ["--unused"]
   end
 end

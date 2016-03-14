@@ -18,6 +18,8 @@
   "mimerl": {:hex, :mimerl, "1.0.2"},
   "mimetype_parser": {:hex, :mimetype_parser, "0.1.1"},
   "mochiweb_html": {:hex, :mochiweb_html, "2.13.0"},
+  "nomad_aws": {:git, "git@github.com:sashaafm/nomad_aws.git", "f5973999198fccf1aac92613e383f0f32f9fc292", []},
+  "nomad_gcl": {:git, "git@github.com:sashaafm/nomad_gcl.git", "c007ed518e3e27728c2885abfdd4dea79a532948", []},
   "oauth2": {:hex, :oauth2, "0.5.0"},
   "poison": {:hex, :poison, "1.5.2"},
   "providers": {:hex, :providers, "1.6.0"},
