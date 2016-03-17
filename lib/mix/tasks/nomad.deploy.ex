@@ -4,7 +4,12 @@ defmodule Mix.Tasks.Nomad.Deploy do
 
   @moduledoc """
   Task for automatically deploying production releases of Elixir and 
-  Phoenix applications to remote hosts.
+  Phoenix applications to remote hosts. This task is mainly targeted at cloud
+	hosts like Amazon EC2 instances or Google Compute Engine instances, but will
+	work with any UNIX remote machine.
+
+	The deployment is done through SSH and it follows the officials guidelines 
+	www.phoenixframework.org.
   """
   
   @doc """

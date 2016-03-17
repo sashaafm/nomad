@@ -3,7 +3,7 @@ defmodule Nomad.Storage do
 
   @moduledoc """
   Interface for the Nomad Storage API. All the functions here will call their
-  respective callbacks to the desired cloud's client.
+  respective callbacks to the desired cloud's client adapter.
   """
 
   @doc """
