@@ -11,7 +11,7 @@ case System.get_env("PROVIDER") do
      	json: "config/creds.json" |> Path.expand |> File.read!
 
     config :gcloudex,
-      storage_proj:  "330132837690"  
+      project:  "330132837690"  
 
   "AWS" ->
     :ok
