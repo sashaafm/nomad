@@ -7,14 +7,10 @@ config :nomad,
 
 case System.get_env("PROVIDER") do
   "GCL" ->
-    config :nomad_gcl,
-      storage_scope: "https://www.googleapis.com/auth/devstorage.full_control"
-
      config :goth, 
      	json: "config/creds.json" |> Path.expand |> File.read!
 
     config :gcloudex,
-      storage_scope: "https://www.googleapis.com/auth/devstorage.full_control",
       storage_proj:  "330132837690"  
 
   "AWS" ->

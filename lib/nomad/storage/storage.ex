@@ -6,6 +6,8 @@ defmodule Nomad.Storage do
   respective callbacks to the desired cloud's client adapter.
   """
 
+  @behaviour NomadStorage
+
   @doc """
   Lists all the available storages for the chosen cloud 
   provider's storage service.
