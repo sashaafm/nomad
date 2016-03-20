@@ -54,6 +54,17 @@ defmodule Nomad.Storage do
     CS.put_item storage, filepath
   end
 
+  @doc"""
+  Uploads the file in 'filepath' to the given 'storage' and stores it
+  in the specified 'storage_path'. The necessaries directories in 
+  'storage_path' will be created if they do not exist.
+  """
+  
+  def put_item(storage, filepath, storage_path) do 
+    CS.put_item storage, filepath, storage_path
+  end
+
+
   @doc """
   Lists all the available files in the given 'storage'.
   """

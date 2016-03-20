@@ -31,7 +31,8 @@ defmodule Nomad.Mixfile do
           {:ex_doc,    "~> 0.11", only: [:dev]},
           {:httpoison, "~> 0.8.1"},
          # {:nomad_aws, git: "git@github.com:sashaafm/nomad_aws.git"}
-          {:nomad_aws, path: "/home/sashaafm/Documents/nomad_aws"}
+          {:nomad_aws, path: "/home/sashaafm/Documents/nomad_aws"},
+          {:nomad_behaviours, path: "/home/sashaafm/Documents/nomad_behaviours"}
         ]
 
       "GCL" ->
@@ -41,7 +42,8 @@ defmodule Nomad.Mixfile do
           {:ex_doc,    "~> 0.11", only: [:dev]},
           {:httpoison, "~> 0.8.1"},
         #  {:nomad_gcl, git: "git@github.com:sashaafm/nomad_gcl.git"}
-          {:nomad_gcl, path: "/home/sashaafm/Documents/nomad_gcl"}
+          {:nomad_gcl, path: "/home/sashaafm/Documents/nomad_gcl"},
+          {:nomad_behaviours, path: "/home/sashaafm/Documents/nomad_behaviours"}
         ]        
     end    
   end
