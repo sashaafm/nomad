@@ -140,5 +140,7 @@ defmodule Nomad.Storage do
     CS.get_storage_acl storage
   end
  
-  @spec get_storage_acl(binary) :: binary | :error 
+  def list_classes do
+    CS.list_classes
+  end
 end

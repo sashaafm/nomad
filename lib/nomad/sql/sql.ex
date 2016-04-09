@@ -31,4 +31,8 @@ defmodule Nomad.SQL do
   def list_databases(instance) do 
     CS.list_databases instance
   end
+
+  def list_classes do 
+    CS.list_classes
+  end
 end
