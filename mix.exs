@@ -15,10 +15,16 @@ defmodule Nomad.Mixfile do
   def application do
     case System.get_env("PROVIDER") do 
       "AWS" ->
-        [applications: [:logger, :httpoison, :nomad_aws]]
+        [
+          applications: [:logger, :httpoison, :nomad_aws],
+          mod: {Nomad, []}
+        ]
 
       "GCL" ->
-        [applications: [:logger, :httpoison, :nomad_gcl]]
+        [
+          applications: [:logger, :httpoison, :nomad_gcl],
+          mod: {Nomad, []}
+        ]
     end
   end
 

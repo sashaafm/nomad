@@ -1,5 +1,6 @@
 defmodule Nomad do
-  
+  use Application
+
   @moduledoc """
   Nomad is a tool for cloud abstraction and cloud portability for
   Elixir and Phoenix applications. 
@@ -23,4 +24,8 @@ defmodule Nomad do
     Elastic Compute Cloud (EC2)  |   Compute Engine 
     Relational Database (RDS)    |   Cloud SQL
   """
+
+  def start(_type, _args) do 
+    Nomad.Supervisor.start_link
+  end
 end

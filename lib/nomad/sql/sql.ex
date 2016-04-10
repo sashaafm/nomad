@@ -77,4 +77,17 @@ defmodule Nomad.SQL do
   def get_instance_address(instance) do 
     CS.get_instance_address instance
   end
+
+  @doc """
+  Sets the database host (for Ecto).
+  """
+  @spec set_database_host(atom, atom) :: :ok
+  def set_database_host(app_name, module) do 
+    hostname = Nomad.SQL.get_instance_address(System.get_env("DB_INSTANCE"))
+
+    new_env  = Application.get_env(app_name, module)
+               |> Keyword.put(:hostname, hostname)
+
+    Application.put_env(app_name, module, new_env, persistent: true)    
+  end
 end
