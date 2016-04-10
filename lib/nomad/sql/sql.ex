@@ -69,4 +69,12 @@ defmodule Nomad.SQL do
   def list_classes do 
     CS.list_classes
   end
+
+  @doc """
+  Returns the address for the given 'instance'.
+  """
+  @spec get_instance_address(binary) :: binary
+  def get_instance_address(instance) do 
+    CS.get_instance_address instance
+  end
 end
