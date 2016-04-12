@@ -5,7 +5,9 @@ defmodule Nomad.SQL do
   Interface for the Nomad SQL API. All the functions here will call their
   respective callbacks to the desired cloud's client adapter.
 
-  To use the SQL API the following system variables must be passed on startup:
+  To use the SQL API - at least - the following system variables must be 
+  passed on startup:
+
     DB_NAME:     The name of the database
     DB_INSTANCE: The instance to which the database belongs
     DB_USERNAME: The username for the given database
@@ -14,6 +16,7 @@ defmodule Nomad.SQL do
     The hostname will be retrieved through the API.
 
   To use the SQL API and the regular Ecto Mix tasks:
+  
     DB_NAME:     The name of the database
     DB_INSTANCE: The instance to which the database belongs
     DB_USERNAME: The username for the given database
