@@ -1,6 +1,5 @@
 defmodule Nomad.Utils do
   alias HTTPoison, as: HTTP
-  alias Poison,   as: JSON
 
   @moduledoc """
   Offers auxiliary functions for Nomad workflows.
