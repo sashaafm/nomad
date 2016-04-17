@@ -11,6 +11,10 @@ defmodule Mix.Tasks.Nomad.Deploy do
   The deployment is done through SSH and it follows the officials guidelines at 
   www.phoenixframework.org.
   """
+
+  @shortdoc"""
+  Automatically deploys a production release of the appplication on a remote host.
+  """
   
   @doc """
   Deploy the application in the current project's directory.
