@@ -51,9 +51,9 @@ defmodule Nomad.SQL do
 
   The 'settings' must be passed as a Map in the format: %{key: value}
   """
-  @spec insert_instance(binary, map, binary) :: :ok | binary
-  def insert_instance(instance, settings, tier) do 
-    CS.insert_instance instance, settings, tier
+  @spec insert_instance(binary, map, binary, {binary, binary}, [binary]) :: :ok | binary
+  def insert_instance(instance, settings, tier, credentials, addresses) do 
+    CS.insert_instance instance, settings, tier, credentials, addresses
   end
 
   @doc """
