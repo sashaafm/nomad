@@ -1,6 +1,5 @@
-defmodule Mix.Tasks.Nomad.Instance.Create do
+defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
   use Mix.Task
-  alias Nomad.{SQL}
 
   @moduledoc """
   Task for automatically creating a remote SQL database instance on a 
@@ -44,36 +43,45 @@ defmodule Mix.Tasks.Nomad.Instance.Create do
     <> "(asia-east1 | europe-west1 | us-central1 | us-east1):") |> String.rstrip()
 
     addresses = 
-    if Mix.Shell.IO.yes?("Do you want to insert custom authorized IP "
-      <> "addresses? (your current public IP is added automatically): ") do 
-      ask_for_addresses true, []
-    else 
-      []
-    end
+      if Mix.Shell.IO.yes?("Do you want to insert custom authorized IP "
+        <> "addresses? (your current public IP is added automatically): ") do 
+        ask_for_addresses true, []
+      else 
+        []
+      end
+
+    tier = 
+      if Mix.Shell.IO.yes?("Do you want to use Google Cloud SQL Second Generation instances?: ") do 
+        tier = Mix.Shell.IO.prompt("Insert the instance's tier ("
+          <> "db-f1-micro | db-g1-small | "
+          <> "db-n1-standard-1 | db-n1-standard-2 | db-n1-standard-4 | db-n1-standard-8 | db-n1-standard-1 | " 
+          <> "db-n1-highmem-2 | db-n1-highmem-4 | db-n1-highmem-8 | db-n1-highmem-16): ")
+        |> String.rstrip
+      else      
+        tier = Mix.Shell.IO.prompt("Insert the instance's tier (D0 | D1 | D2 | D4 | D8 | D16 | D32): ")
+        |> String.rstrip
+      end
 
     generation = 
-    if Mix.Shell.IO.yes?("Do you want to use Google Cloud SQL Second Generation instances?: ") do 
-      tier = Mix.Shell.IO.prompt("Insert the instance's tier ("
-        <> "db-f1-micro | db-g1-small | "
-        <> "db-n1-standard-1 | db-n1-standard-2 | db-n1-standard-4 | db-n1-standard-8 | db-n1-standard-1 | " 
-        <> "db-n1-highmem-2 | db-n1-highmem-4 | db-n1-highmem-8 | db-n1-highmem-16): ")
-      |> String.rstrip
+      if tier in ["D0", "D1", "D2", "D4", "D8", "D16", "D32"] do 
+        1
+      else
+        2
+      end
 
-      2
-    else      
-      tier = Mix.Shell.IO.prompt("Insert the instance's tier (D0 | D1 | D2 | D4 | D8 | D16 | D32): ")
-      |> String.rstrip
+    size = 
+      if generation == 2 do 
+        size = Mix.Shell.IO.prompt("Insert the size of the data disk size (in GB) for this instance: ")
+        |> String.rstrip
+      else
+        size = "Not Applicable"
+      end
 
-      1
-    end
-
-    if generation == 2 do 
-      size = Mix.Shell.IO.prompt("Insert the size of the data disk size (in GB) for this instance: ")
-      |> String.rstrip
-
-      # Only applicable to Second Generation instances
-      settings = Map.put_new(settings, "dataDiskSizeGb", size)
-    end
+    settings = 
+      if is_number(size) do 
+        # Only applicable to Second Generation instances
+        Map.put_new(settings, "dataDiskSizeGb", size)
+      end
 
     username = Mix.Shell.IO.prompt("Insert the instance's root username: ") |> String.rstrip
     password = Mix.Shell.IO.prompt("Insert the instance's root password: ") |> String.rstrip
@@ -86,7 +94,7 @@ defmodule Mix.Tasks.Nomad.Instance.Create do
     <> "Region:               #{region}\n"
     <> "Generation:           #{generation}\n"
     <> "Tier:                 #{tier}\n"
-    <> "Data Disk Size:       #{if size == nil do "Not Applicable" end}\n"
+    <> "Data Disk Size:       #{size}\n"
     <> "Authorized Addresses: #{print_list_with_commas(addresses, "")}"
     <> "Username:             #{username}\n"
     <> "Password:             #{password}\n"
