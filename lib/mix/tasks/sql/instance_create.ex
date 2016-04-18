@@ -17,6 +17,10 @@ defmodule Mix.Tasks.Nomad.Instance.Create do
   Create a SQL database instance on the chosen cloud provider's SQL service.
   """
 
+  @doc """
+  Runs the task for the chosen cloud provider. The shell prompts and necessary
+  input parameters change with the chosen provider.
+  """
   def run(args) do
     case System.get_env("PROVIDER") do 
       "AWS" -> :todo
@@ -31,6 +35,9 @@ defmodule Mix.Tasks.Nomad.Instance.Create do
   end
 
   defp create_instance_gcl(args) do 
+    Application.ensure_all_started(:nomad_gcl)
+    settings  = Map.new
+
     name      = Mix.Shell.IO.prompt("Insert name for the instance: ") |> String.rstrip
 
     region    = Mix.Shell.IO.prompt("Insert the desired region "
@@ -60,19 +67,42 @@ defmodule Mix.Tasks.Nomad.Instance.Create do
       1
     end
 
-    settings = Map.new
-
     if generation == 2 do 
-      size = Mix.Shell.IO.prompt("Insert the size of the data disk (in GB) for this instance: ")
+      size = Mix.Shell.IO.prompt("Insert the size of the data disk size (in GB) for this instance: ")
       |> String.rstrip
 
-      # Only applicable to Secong Generation instances
+      # Only applicable to Second Generation instances
       settings = Map.put_new(settings, "dataDiskSizeGb", size)
     end
 
-    settings = Map.put_new(settings, "region", region)
     username = Mix.Shell.IO.prompt("Insert the instance's root username: ") |> String.rstrip
     password = Mix.Shell.IO.prompt("Insert the instance's root password: ") |> String.rstrip
+
+    Mix.Shell.IO.info("\n")
+    Mix.Shell.IO.info("####################### SUMMARY #######################\n")
+
+    summary = "The instance will be created with the following settings:\n"
+    <> "Instance Name:        #{name}\n"
+    <> "Region:               #{region}\n"
+    <> "Generation:           #{generation}\n"
+    <> "Tier:                 #{tier}\n"
+    <> "Data Disk Size:       #{if size == nil do "Not Applicable" end}\n"
+    <> "Authorized Addresses: #{print_list_with_commas(addresses, "")}"
+    <> "Username:             #{username}\n"
+    <> "Password:             #{password}\n"
+    <> "Do you confirm?\n"
+
+    if Mix.Shell.IO.yes?(summary) do 
+      result = 
+        Nomad.SQL.insert_instance name, settings, {region, tier}, {username, password}, addresses
+
+      case result do
+        :ok -> Mix.Shell.IO.info("The instance has been created successfully.")
+        msg -> Mix.Shell.IO.error("A problem has occurred: \n#{msg}")
+      end
+    else 
+      create_instance_gcl(args)
+    end
   end
 
   defp ask_for_addresses(continue, list) do 
@@ -83,5 +113,11 @@ defmodule Mix.Tasks.Nomad.Instance.Create do
       res  = Mix.Shell.IO.yes? "Do you want to insert another address? "
       ask_for_addresses res, list ++ [addr]
     end
+  end
+
+  defp print_list_with_commas([], _), do: "Not Applicable\n"
+  defp print_list_with_commas([head | []], string), do: string <> head <> "\n"
+  defp print_list_with_commas([head | tail], string) do 
+    print_list_with_commas tail, string <> head <> ", "
   end
 end
