@@ -5,6 +5,14 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Delete do
   Task for automatically deleting a remote SQL database on a pre-determined
   cloud provider. The instance deletion is done through the cloud provider's
   API.
+
+  Usage:
+    
+    PROVIDER=<cloud_provider> mix nomad.database_instance.delete
+      # Will be prompted for name 
+
+    PROVIDER=<cloud_provider> mix nomad.database_instance.delete <name>  
+      # Won't be prompted for name  
   """
 
   @shortdoc"""
