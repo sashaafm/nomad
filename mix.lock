@@ -27,4 +27,5 @@
   "quinn": {:git, "https://github.com/nhu313/Quinn.git", "72e13b6f635d69e5d0f713ff979c08340148da00", []},
   "relx": {:hex, :relx, "3.18.0"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0"},
-  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
+  "table_rex": {:hex, :table_rex, "0.8.0"}}
