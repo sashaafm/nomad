@@ -20,6 +20,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
   Runs the task for the chosen cloud provider. The shell prompts and necessary
   input parameters change with the chosen provider.
   """
+  @spec run(list) :: binary
   def run(args) do
     case System.get_env("PROVIDER") do 
       "AWS" -> :todo
