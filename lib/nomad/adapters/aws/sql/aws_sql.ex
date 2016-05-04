@@ -18,11 +18,6 @@ if Code.ensure_loaded?(ExAws) do
           Application.get_all_env(:my_aws_config_root)
         end  
 
-        @doc """
-        Lists all Amazon RDS instances for the provided credentials alongside their
-        region and address.
-        """
-        @spec list_instances :: list(tuple) | binary
         def list_instances do 
           case describe_db_instances do 
             {:ok, res} ->
@@ -72,9 +67,6 @@ if Code.ensure_loaded?(ExAws) do
             [status_list] ++ [storage_list]
         end
 
-        @doc """
-        Retrieves the name, region and address of the given 'instance'.
-        """
         def get_instance(instance) do 
           case describe_db_instances(%{"DBInstanceIdentifier" => instance}) do 
             {:ok, res} ->
@@ -114,19 +106,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        @doc """
-        Creates a new instance with the name 'instance' and user 'username' with 
-        password 'password' and the allocated storage size of 'storage' using the 
-        provided SQL 'engine'. The instance has the class 'class'.
-
-        The settings must be passed as a Map in the format %{key: value}. This map may
-        have additional query parameters besides the required ones in the function
-        definition.
-
-        TODO: A Security Group must be created to be added with the list of addresses.
-        This can only be done when the EC2 API is ready.
-        """
-        @spec insert_instance(binary, map, binary, {binary, binary}, [binary]) :: :ok | binary
+        # TODO: A Security Group must be created to be added with the list of addresses.
+        # This can only be done when the EC2 API is ready.
         def insert_instance(instance, settings, class, _credentials = {username, password}, addresses) do 
           storage = settings.storage
           engine  = settings.engine
@@ -144,10 +125,6 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        @doc """
-        Deletes the given 'instance'.
-        """
-        @spec delete_instance(binary) :: :ok | binary
         def delete_instance(instance) do 
           case delete_db_instance(instance) do 
             {:ok, res} ->
@@ -162,10 +139,6 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        @doc """
-        Restarts the given instance.
-        """
-        @spec restart_instance(binary) :: :ok | binary
         def restart_instance(instance) do
           case reboot_db_instance(instance) do 
             {:ok, res} ->
@@ -180,10 +153,6 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        @doc """
-        Lists all databases for the given 'instance'.
-        """
-        @spec list_databases(binary) :: list(binary) | binary
         def list_databases(instance) do 
           case describe_db_instances(%{"DBInstanceIdentifier" => instance}) do 
             {:ok, res} ->
@@ -199,11 +168,7 @@ if Code.ensure_loaded?(ExAws) do
               show_message_and_error_code reason
           end
         end
-
-        @doc """
-        Lists all the available instance classes.
-        """
-        @spec list_classes() :: list(binary)
+        
         def list_classes do
           ["db.t1.micro",    "db.m1.small",   "db.m1.medium",  "db.m1.large", 
            "db.m1.xlarge",   "db.m2.xlarge",  "db.m2.2xlarge", "db.m2.4xlarge", 

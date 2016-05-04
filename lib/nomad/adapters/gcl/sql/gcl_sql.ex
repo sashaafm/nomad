@@ -13,10 +13,6 @@ if Code.ensure_loaded?(GCloudex) do
 
         @behaviour NomadSQL        
 
-        @doc """
-        List all available Google Cloud SQL instances to the Google Cloud project.
-        """
-        @spec list_instances :: list(tuple) | binary
         def list_instances do
           case GSQL.list_instances do
             {:ok, res} ->
@@ -53,12 +49,7 @@ if Code.ensure_loaded?(GCloudex) do
                         }
                       end)
         end
-
-        @doc """
-        Retrieves the name, region, address (if available), status and storage of 
-        the given 'instance'.
-        """
-        @spec get_instance(binary) :: tuple | binary
+        
         def get_instance(instance) do
           case GSQL.get_instance(instance) do 
             {:ok, res} ->
