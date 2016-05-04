@@ -5,7 +5,7 @@ defmodule NomadSQL do
   returns a list of tuples with the following format:
     {instance_name, region, address, status, allocated_storage}
   """  
-  @callback list_instances() :: list(tuple) | binary
+  @callback list_instances() :: list(tuple) | [] | binary
 
   @doc """
   Returns a tuple with info about the given 'instance' with the format:

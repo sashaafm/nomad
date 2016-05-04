@@ -16,10 +16,6 @@ if Code.ensure_loaded?(GCloudex) do
         
         @endpoint "storage.googleapis.com"
 
-        @doc"""
-        List all available storages to the Google Cloud account.
-        """
-        @spec list_storages() :: [binary] | binary
         def list_storages do
           case GCSClient.list_buckets do
             {:ok, res} ->
@@ -37,11 +33,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Creates a new Google Cloud Storage bucket with the name 'bucket' in the
-        default region and with the default class.
-        """
-        @spec create_storage(binary) :: :ok | binary
         def create_storage(bucket) do
           case GCSClient.create_bucket bucket do
             {:ok, res} ->
@@ -54,11 +45,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Creates a new Google Cloud Storage bucket with the name 'bucket' in the
-        specified 'region' and with the default class.
-        """
-        @spec create_storage(binary, binary) :: :ok | binary
         def create_storage(bucket, region) do
           case GCSClient.create_bucket bucket, region do
             {:ok, res} ->
@@ -72,11 +58,6 @@ if Code.ensure_loaded?(GCloudex) do
 
         end
 
-        @doc"""
-        Creates a new Google Cloud Storage bucket with the name 'bucket' in the
-        specified 'region' and with the specified 'class'.
-        """
-        @spec create_storage(binary, binary, binary) :: :ok | binary
         def create_storage(bucket, region, class) do
           case GCSClient.create_bucket bucket, region, class do
             {:ok, res} ->
@@ -89,10 +70,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Uploads the file in the given 'filepath' to the specified 'bucket'.
-        """
-        @spec put_item(binary, binary) :: :ok | binary
         def put_item(bucket, filepath) do
           case GCSClient.put_object bucket, filepath do
             {:ok, res} ->
@@ -105,12 +82,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Uploads the file in the given 'filepath' to the specified 'bucket' and store
-        it in the specified 'storage_path'. The necessaries directories in
-        'storage_path' will be created if they do not exist.
-        """
-        @spec put_item(binary, binary) :: :ok | binary
         def put_item(bucket, filepath, storage_path) do
           case GCSClient.put_object bucket, filepath, storage_path do
             {:ok, res} ->
@@ -123,10 +94,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Deletes the specified 'object' from the given 'bucket'.
-        """
-        @spec delete_item(binary, binary) :: :ok | binary
         def delete_item(bucket, object) do
           case GCSClient.delete_object bucket, object do
             {:ok, res} ->
@@ -139,11 +106,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Downloads the specified 'object' from the given 'bucket' if it exists. The
-        file will be written into the current working directory.
-        """
-        @spec get_item(binary, binary) :: :ok | binary
         def get_item(bucket, object) do
           case GCSClient.get_object bucket, object do
             {:ok, res} ->
@@ -162,10 +124,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Lists the given 'object' ACL from the specified 'bucket'.
-        """
-        @spec get_item_acl(binary, binary) :: [{binary, binary}] | binary
         def get_item_acl(bucket, object) do
           case GCSClient.get_object_acl bucket, object do
             {:ok, res} ->
@@ -220,10 +178,6 @@ if Code.ensure_loaded?(GCloudex) do
                       end)
         end
 
-        @doc"""
-        Lists the items from the specified 'bucket'.
-        """
-        @spec list_items(binary) :: [binary] | binary
         def list_items(bucket) do
           case GCSClient.list_objects bucket do
             {:ok, res} ->
@@ -242,10 +196,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Deletes the specified 'bucket' if it is empty.
-        """
-        @spec delete_storage(binary) :: :ok | binary
         def delete_storage(bucket) do
           case GCSClient.delete_bucket bucket do
             {:ok, res} ->
@@ -258,10 +208,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Lists the specified 'bucket' region.
-        """
-        @spec get_storage_region(binary) :: binary
         def get_storage_region(bucket) do
           case GCSClient.get_bucket_region bucket do
             {:ok, res} ->
@@ -282,10 +228,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Lists the specified 'bucket' class.
-        """
-        @spec get_storage_class(binary) :: binary
         def get_storage_class(bucket) do
           case GCSClient.get_bucket_class bucket do
             {:ok, res} ->
@@ -305,10 +247,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc"""
-        Lists the specified 'bucket' ACL.
-        """
-        @spec get_storage_acl(binary) :: [{binary, binary}] | binary
         def get_storage_acl(bucket) do
           case GCSClient.get_bucket_acl bucket do
             {:ok, res} ->
