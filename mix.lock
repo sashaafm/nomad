@@ -9,6 +9,7 @@
   "exrm": {:hex, :exrm, "1.0.1"},
   "floki": {:hex, :floki, "0.8.0"},
   "friendly": {:hex, :friendly, "1.0.1"},
+  "gcloudex": {:git, "https://github.com/sashaafm/gcloudex.git", "645760c756b573ab7bac65102dd4bc105530d86e", []},
   "getopt": {:hex, :getopt, "0.8.2"},
   "goth": {:hex, :goth, "0.0.3"},
   "hackney": {:hex, :hackney, "1.6.0"},

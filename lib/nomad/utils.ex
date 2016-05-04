@@ -15,4 +15,28 @@ defmodule Nomad.Utils do
     {:ok, res} = HTTP.request(:get, "http://ipecho.net/plain", "", [], [])
     res.body
   end
+
+  def show_message_and_error_code({:http_error, code, body}) do 
+    msg = body |> Friendly.find("message") |> List.last |> Map.get(:text)
+    
+    Integer.to_string(code) <> ": " <> msg
+  end
+
+  def get_error_message(res) do 
+    msg  = res.body |> Friendly.find("message") |> List.last |> Map.get(:text)
+    code = res.status_code |> Integer.to_string
+
+    code <> ": " <> msg
+  end    
+
+  def show_error_message_and_code(res) do
+    msg  = res.body |> Friendly.find("message") |> List.last |> Map.get(:text)
+    code = res.status_code |> Integer.to_string
+
+    code <> ": " <> msg
+  end
+
+  def parse_http_error(%HTTPoison.Error{id: _id, reason: reason}) do
+    reason |> Atom.to_string
+  end
 end
