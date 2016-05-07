@@ -156,7 +156,6 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        # NOT WORKING CORRECTLY
         def get_storage_region(bucket) do 
           case get_bucket_location bucket do 
             {:ok, res} ->
