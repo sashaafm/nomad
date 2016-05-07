@@ -8,6 +8,3 @@ config :nomad,
 
 config :goth, 
  	json: "config/creds.json" |> Path.expand |> File.read!
-
-config :gcloudex,
-  project:  "330132837690"  

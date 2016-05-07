@@ -28,8 +28,8 @@ defmodule Nomad.Mixfile do
       {:table_rex,        "~> 0.8.0"},
       {:friendly,         "~> 1.0.0"},
       {:goth,             "~> 0.0.1"},
-      {:ex_aws,           github: "sashaafm/ex_aws", branch: "rds-basic-operations"},
-      {:gcloudex,         github: "sashaafm/gcloudex"},
+      {:ex_aws,           github: "sashaafm/ex_aws", branch: "merge-rds-and-ec2-for-testing", optional: true},
+      {:gcloudex,         "~> 0.4.3", optional: true},
       #{:gcloudex,         path: "/home/sashaafm/Documents/gcloudex"},
       # {:nomad_aws, git: "git@github.com:sashaafm/nomad_aws.git"}
      # {:nomad_aws,        path: "/home/sashaafm/Documents/nomad_aws", optional: true},
