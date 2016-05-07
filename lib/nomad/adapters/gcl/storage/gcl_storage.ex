@@ -14,11 +14,9 @@ if Code.ensure_loaded?(GCloudex) do
         import Nomad.Utils
 
         @behaviour NomadStorage
-        
-        @endpoint "storage.googleapis.com"
 
-        def list_storages do
-          case list_buckets do
+        def list_storages(fun \\ &list_buckets/0) do
+          case fun.() do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -33,8 +31,32 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def create_storage(bucket) do
-          case create_bucket bucket do
+        # def create_storage(bucket, fun \\ &create_bucket/1)  when is_function(fun) do
+        #   case fun.(bucket) do
+        #     {:ok, res} ->
+        #       case res.status_code do
+        #         200 -> :ok
+        #         _   -> res |> show_error_message_and_code
+        #       end
+        #     {:error, reason} ->
+        #       parse_http_error reason
+        #   end
+        # end
+
+        # def create_storage(bucket, region, fun \\ &create_bucket/2) when is_binary(region) do
+        #   case fun.(bucket, region) do
+        #     {:ok, res} ->
+        #       case res.status_code do
+        #         200 -> :ok
+        #         _   -> res |> show_error_message_and_code
+        #       end
+        #     {:error, reason} ->
+        #       parse_http_error reason
+        #   end
+        # end
+
+        def create_storage(bucket, region, class, fun \\ &create_bucket/3) do
+          case fun.(bucket, region, class) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -45,33 +67,20 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def create_storage(bucket, region) do
-          case create_bucket bucket, region do
-            {:ok, res} ->
-              case res.status_code do
-                200 -> :ok
-                _   -> res |> show_error_message_and_code
-              end
-            {:error, reason} ->
-              parse_http_error reason
-          end
+        # def put_item(bucket, filepath, fun \\ &put_object/2) do
+        #   case fun.(bucket, filepath) do
+        #     {:ok, res} ->
+        #       case res.status_code do
+        #         200 -> :ok
+        #         _   -> res |> show_error_message_and_code
+        #       end
+        #     {:error, reason} ->
+        #       parse_http_error reason
+        #   end
+        # end
 
-        end
-
-        def create_storage(bucket, region, class) do
-          case create_bucket bucket, region, class do
-            {:ok, res} ->
-              case res.status_code do
-                200 -> :ok
-                _   -> res |> show_error_message_and_code
-              end
-            {:error, reason} ->
-              parse_http_error reason
-          end
-        end
-
-        def put_item(bucket, filepath) do
-          case put_object bucket, filepath do
+        def put_item(bucket, filepath, storage_path, fun \\ &put_object/3) do
+          case fun.(bucket, filepath, storage_path) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -82,20 +91,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def put_item(bucket, filepath, storage_path) do
-          case put_object bucket, filepath, storage_path do
-            {:ok, res} ->
-              case res.status_code do
-                200 -> :ok
-                _   -> res |> show_error_message_and_code
-              end
-            {:error, reason} ->
-              parse_http_error reason
-          end
-        end
-
-        def delete_item(bucket, object) do
-          case delete_object bucket, object do
+        def delete_item(bucket, object, fun \\ &delete_object/2) do
+          case fun.(bucket, object) do
             {:ok, res} ->
               case res.status_code do
                 204 -> :ok
@@ -106,8 +103,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def get_item(bucket, object) do
-          case get_object bucket, object do
+        def get_item(bucket, object, fun \\ &get_object/2) do
+          case fun.(bucket, object) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -124,8 +121,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def get_item_acl(bucket, object) do
-          case get_object_acl bucket, object do
+        def get_item_acl(bucket, object, fun \\ &get_object_acl/2) do
+          case fun.(bucket, object) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -176,8 +173,8 @@ if Code.ensure_loaded?(GCloudex) do
                       end)
         end
 
-        def list_items(bucket) do
-          case list_objects bucket do
+        def list_items(bucket, fun \\ &list_objects/1) do
+          case fun.(bucket) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -193,8 +190,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def delete_storage(bucket) do
-          case delete_bucket bucket do
+        def delete_storage(bucket, fun \\ &delete_bucket/1) do
+          case fun.(bucket) do
             {:ok, res} ->
               case res.status_code do
                 204 -> :ok
@@ -205,8 +202,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def get_storage_region(bucket) do
-          case get_bucket_region bucket do
+        def get_storage_region(bucket, fun \\ &get_bucket_region/1) do
+          case fun.(bucket) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -224,8 +221,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def get_storage_class(bucket) do
-          case get_bucket_class bucket do
+        def get_storage_class(bucket, fun \\ &get_bucket_class/1) do
+          case fun.(bucket) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -242,8 +239,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def get_storage_acl(bucket) do
-          case get_bucket_acl bucket do
+        def get_storage_acl(bucket, fun \\ &get_bucket_acl/1) do
+          case fun.(bucket) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
