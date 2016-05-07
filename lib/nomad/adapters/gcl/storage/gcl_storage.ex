@@ -22,8 +22,7 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
-                  res
-                  |> Map.get(:body)
+                  res.body
                   |> Friendly.find("name")
                   |> Enum.map(fn bucket -> bucket.text end)
                 _   ->
@@ -131,14 +130,12 @@ if Code.ensure_loaded?(GCloudex) do
               case res.status_code do
                 200 ->
                   names =
-                    res
-                    |> Map.get(:body)
+                    res.body
                     |> Friendly.find("entry")
                     |> get_item_acl_names
 
                   permissions =
-                    res
-                    |> Map.get(:body)
+                    res.body
                     |> Friendly.find("entry")
                     |> get_item_acl_permissions
 
@@ -184,11 +181,10 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
-                  objects = res
-                            |> Map.get(:body)
-                            |> Friendly.find("key")
-                            |> Enum.map(fn object -> object.texts end)
-                            |> List.flatten
+                  res.body
+                  |> Friendly.find("key")
+                  |> Enum.map(fn object -> object.texts end)
+                  |> List.flatten
                 _   ->
                   res |> show_error_message_and_code
               end
@@ -214,8 +210,7 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
-                  res
-                  |> Map.get(:body)
+                  res.body
                   |> Friendly.find("locationconstraint")
                   |> List.first
                   |> Map.get(:texts)
@@ -234,8 +229,7 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
-                  res
-                  |> Map.get(:body)
+                  res.body
                   |> Friendly.find("storageclass")
                   |> List.first
                   |> Map.get(:texts)
@@ -253,8 +247,7 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
-                  res
-                  |> Map.get(:body)
+                  res.body
                   |> Friendly.find("entry")
                   |> parse_acl_entry
                 _   ->
