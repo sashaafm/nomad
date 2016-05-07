@@ -9,7 +9,8 @@ if Code.ensure_loaded?(GCloudex) do
 
     defmacro __using__(:gcl) do 
       quote do
-        alias GCloudex.CloudStorage.Client, as: GCSClient
+        # API functions will be used from this client
+        import GCloudex.CloudStorage.Client 
         import Nomad.Utils
 
         @behaviour NomadStorage
@@ -17,7 +18,7 @@ if Code.ensure_loaded?(GCloudex) do
         @endpoint "storage.googleapis.com"
 
         def list_storages do
-          case GCSClient.list_buckets do
+          case list_buckets do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -34,7 +35,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def create_storage(bucket) do
-          case GCSClient.create_bucket bucket do
+          case create_bucket bucket do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -46,7 +47,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def create_storage(bucket, region) do
-          case GCSClient.create_bucket bucket, region do
+          case create_bucket bucket, region do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -59,7 +60,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def create_storage(bucket, region, class) do
-          case GCSClient.create_bucket bucket, region, class do
+          case create_bucket bucket, region, class do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -71,7 +72,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def put_item(bucket, filepath) do
-          case GCSClient.put_object bucket, filepath do
+          case put_object bucket, filepath do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -83,7 +84,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def put_item(bucket, filepath, storage_path) do
-          case GCSClient.put_object bucket, filepath, storage_path do
+          case put_object bucket, filepath, storage_path do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -95,7 +96,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def delete_item(bucket, object) do
-          case GCSClient.delete_object bucket, object do
+          case delete_object bucket, object do
             {:ok, res} ->
               case res.status_code do
                 204 -> :ok
@@ -107,7 +108,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def get_item(bucket, object) do
-          case GCSClient.get_object bucket, object do
+          case get_object bucket, object do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -125,7 +126,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def get_item_acl(bucket, object) do
-          case GCSClient.get_object_acl bucket, object do
+          case get_object_acl bucket, object do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -179,7 +180,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def list_items(bucket) do
-          case GCSClient.list_objects bucket do
+          case list_objects bucket do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -197,7 +198,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def delete_storage(bucket) do
-          case GCSClient.delete_bucket bucket do
+          case delete_bucket bucket do
             {:ok, res} ->
               case res.status_code do
                 204 -> :ok
@@ -209,7 +210,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def get_storage_region(bucket) do
-          case GCSClient.get_bucket_region bucket do
+          case get_bucket_region bucket do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -229,7 +230,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def get_storage_class(bucket) do
-          case GCSClient.get_bucket_class bucket do
+          case get_bucket_class bucket do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -248,7 +249,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def get_storage_acl(bucket) do
-          case GCSClient.get_bucket_acl bucket do
+          case get_bucket_acl bucket do
             {:ok, res} ->
               case res.status_code do
                 200 ->

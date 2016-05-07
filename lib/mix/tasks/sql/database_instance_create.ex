@@ -70,14 +70,17 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
         2
       end
 
-    if generation == 2 do 
-      size = Mix.Shell.IO.prompt("Insert the size of the data disk size (in GB) for this instance: ")
-      |> String.rstrip
+    size = 
+      if generation == 2 do 
+        size = Mix.Shell.IO.prompt("Insert the size of the data disk size (in GB) for this instance: ")
+        |> String.rstrip
+      else
+        size = "Not Applicable"
+      end
 
+    if generation == 2 do 
       # Only applicable to Second Generation instances
       settings = Map.put_new(settings, "dataDiskSizeGb", size)
-    else
-      size = "Not Applicable"
     end
 
     username = Mix.Shell.IO.prompt("Insert the instance's root username: ") |> String.rstrip
