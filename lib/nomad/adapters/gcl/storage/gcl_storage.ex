@@ -108,7 +108,7 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
-                  file_content = Map.get res, :body
+                  file_content = res.body
                   {:ok, file}  = File.open object, [:write]
                   IO.binwrite file, file_content
                   :ok
