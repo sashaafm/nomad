@@ -20,8 +20,8 @@ if Code.ensure_loaded?(ExAws) do
           Application.get_all_env(:my_aws_config_root)
         end
 
-        def list_storages do 
-          case list_buckets do 
+        def list_storages(fun \\ &list_buckets/0) do 
+          case fun.() do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -36,12 +36,24 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def create_storage(name) do 
-          create_storage name, "us-east-1"
-        end
+        # def create_storage(name) do 
+        #   create_storage name, "us-east-1"
+        # end
 
-        def create_storage(name, region) do 
-          case put_bucket name, region do 
+        # def create_storage(name, region) do 
+        #   case put_bucket name, region do 
+        #     {:ok, res} ->
+        #       case res.status_code do 
+        #         200 -> :ok
+        #         _   -> get_error_message res
+        #       end
+        #     {:error, reason} ->
+        #       show_message_and_error_code reason
+        #   end
+        # end
+
+        def create_storage(name, region, _class, fun \\ &put_bucket/2) do 
+          case fun.(name, region) do 
             {:ok, res} ->
               case res.status_code do 
                 200 -> :ok
@@ -52,29 +64,25 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def create_storage(name, region, _class) do 
-          create_storage name, region
-        end
+        # def put_item(bucket, filepath) do
+        #   name           = filepath |> String.split("/") |> List.last 
+        #   {:ok, content} = File.read filepath
 
-        def put_item(bucket, filepath) do
-          name           = filepath |> String.split("/") |> List.last 
-          {:ok, content} = File.read filepath
-
-          case put_object bucket, name, content do
-            {:ok, res} ->
-              case res.status_code do 
-                200 -> :ok
-                _   -> get_error_message res
-              end
-            {:error, reason} ->
-              show_message_and_error_code reason
-          end
-        end
+        #   case put_object bucket, name, content do
+        #     {:ok, res} ->
+        #       case res.status_code do 
+        #         200 -> :ok
+        #         _   -> get_error_message res
+        #       end
+        #     {:error, reason} ->
+        #       show_message_and_error_code reason
+        #   end
+        # end
         
-        def put_item(bucket, filepath, bucket_path) do
+        def put_item(bucket, filepath, bucket_path, fun \\ &put_object/3) do
           {:ok, content} = File.read filepath
 
-          case put_object bucket, bucket_path, content do
+          case fun.(bucket, bucket_path, content) do
             {:ok, res} ->
               case res.status_code do 
                 200 -> :ok
@@ -85,8 +93,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def list_items(bucket) do 
-          case list_objects bucket do 
+        def list_items(bucket, fun \\ &list_objects/1) do 
+          case fun.(bucket) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -100,8 +108,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def delete_item(bucket, object) do 
-          case delete_object bucket, object do 
+        def delete_item(bucket, object, fun \\ &delete_object/2) do 
+          case fun.(bucket, object) do 
             {:ok, res} ->
               case res.status_code do 
                 204 -> :ok
@@ -112,8 +120,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def get_item(bucket, object) do 
-          case get_object(bucket, object) do 
+        def get_item(bucket, object, fun \\ &get_object/2) do 
+          case fun.(bucket, object) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -127,8 +135,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def get_item_acl(bucket, object) do 
-          case get_object_acl(bucket, object) do 
+        def get_item_acl(bucket, object, fun \\ &get_object_acl/2) do 
+          case fun.(bucket, object) do 
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -143,8 +151,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def delete_storage(bucket) do 
-          case delete_bucket bucket do 
+        def delete_storage(bucket, fun \\ &delete_bucket/1) do 
+          case fun.(bucket) do 
             {:ok, res} ->
               case res.status_code do 
                 204 ->
@@ -156,8 +164,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def get_storage_region(bucket) do 
-          case get_bucket_location bucket do 
+        def get_storage_region(bucket, fun \\ &get_bucket_location/1) do 
+          case fun.(bucket) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -187,8 +195,8 @@ if Code.ensure_loaded?(ExAws) do
           "STANDARD"
         end
 
-        def get_storage_acl(bucket) do 
-          case get_bucket_acl bucket do 
+        def get_storage_acl(bucket, fun \\ &get_bucket_acl/1) do 
+          case fun.(bucket) do 
             {:ok, res} ->
               case res.status_code do
                 200 ->
