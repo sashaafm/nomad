@@ -8,13 +8,14 @@ if Code.ensure_loaded?(GCloudex) do
 
     defmacro __using__(:gcl) do 
       quote do 
-        alias GCloudex.CloudSQL.Client, as: GSQL
+        alias GCloudex.CloudSQL.Client, as: Client
+        #import GCloudex.CloudSQL.Client
         import Nomad.Utils   
 
         @behaviour NomadSQL        
 
-        def list_instances do
-          case GSQL.list_instances do
+        def list_instances(fun \\ &Client.list_instances/0) do
+          case fun.() do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -50,13 +51,12 @@ if Code.ensure_loaded?(GCloudex) do
                       end)
         end
         
-        def get_instance(instance) do
-          case GSQL.get_instance(instance) do 
+        def get_instance(instance, fun \\ &Client.get_instance/1) do
+          case fun.(instance) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
-                  res
-                  |> Map.get(:body)
+                  res.body
                   |> Poison.decode!
                   |> parse_get_instance
                 _   ->
@@ -97,7 +97,7 @@ if Code.ensure_loaded?(GCloudex) do
         and arrange them accordingly????
         """
         @spec insert_instance(binary, map, {binary, binary}, {binary, binary}, [binary]) :: :ok | binary
-        def insert_instance(instance, settings, {region, tier}, _credentials = {user, password}, addresses \\ []) do 
+        def insert_instance(instance, settings, {region, tier}, _credentials = {user, password}, addresses \\ [], fun \\ &Client.insert_instance/4) do 
 
           addresses = addresses |> Enum.map(fn ip -> %{"value" => ip} end)
 
@@ -110,7 +110,7 @@ if Code.ensure_loaded?(GCloudex) do
 
           settings = Map.put_new(settings, "ipConfiguration", auth_networks)
 
-          case GSQL.insert_instance(instance, optional_properties, settings, tier) do 
+          case fun.(instance, optional_properties, settings, tier) do 
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -135,7 +135,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         defp insert_user_into_instance(instance, user, password) do 
-          case GSQL.insert_user(instance, user, password) do 
+          case Client.insert_user(instance, user, password) do 
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -147,7 +147,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         defp get_instance_state(instance) do 
-          case GSQL.get_instance(instance) do 
+          case Client.get_instance(instance) do 
             {:ok, res} ->
               case res.status_code do 
                 200 -> 
@@ -168,8 +168,8 @@ if Code.ensure_loaded?(GCloudex) do
         Deletes the given 'instance'.
         """
         @spec delete_instance(binary) :: :ok | binary
-        def delete_instance(instance) do 
-          case GSQL.delete_instance(instance) do 
+        def delete_instance(instance, fun \\ &Client.delete_instance/1) do 
+          case fun.(instance) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -186,8 +186,8 @@ if Code.ensure_loaded?(GCloudex) do
         Restarts the given 'instance'.
         """
         @spec restart_instance(binary) :: :ok | binary
-        def restart_instance(instance) do 
-          case GSQL.restart_instance(instance) do 
+        def restart_instance(instance, fun \\ &Client.restart_instance/1) do 
+          case fun.(instance) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -204,8 +204,8 @@ if Code.ensure_loaded?(GCloudex) do
         Lists all the databases belonging to the given 'instance'.
         """
         @spec list_databases(binary) :: list(binary)
-        def list_databases(instance) do 
-          case GSQL.list_databases(instance) do 
+        def list_databases(instance, fun \\ &Client.list_databases/1) do 
+          case fun.(instance) do 
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -230,8 +230,8 @@ if Code.ensure_loaded?(GCloudex) do
         Lists all the available instance tiers to choose from.
         """
         @spec list_classes :: list(binary) | binary
-        def list_classes do
-          case GSQL.list_tiers do 
+        def list_classes(fun \\ &Client.list_tiers/0) do
+          case fun.() do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->

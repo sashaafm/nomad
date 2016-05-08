@@ -137,7 +137,7 @@ defmodule Dummy.Test.AWSStorageClient do
   end
 end
 
-defmodule AwsStorageTest do
+defmodule AWSStorageTest do
   use ExUnit.Case
   use Nomad.AWS.Storage, :aws
   alias Dummy.Test.AWSStorageClient, as: Dummy

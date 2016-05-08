@@ -222,7 +222,7 @@ defmodule Test.Dummy.GCLStorageClient do
   end
 end
 
-defmodule GclStorageTest do
+defmodule GCLStorageTest do
   use ExUnit.Case
   alias Test.Dummy.GCLStorageClient, as: Dummy
   use Nomad.GCL.Storage, :gcl

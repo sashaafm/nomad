@@ -43,7 +43,7 @@ if Code.ensure_loaded?(ExAws) do
                   get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -102,7 +102,7 @@ if Code.ensure_loaded?(ExAws) do
                   get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -121,7 +121,7 @@ if Code.ensure_loaded?(ExAws) do
                   get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -135,7 +135,7 @@ if Code.ensure_loaded?(ExAws) do
                   get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -149,7 +149,7 @@ if Code.ensure_loaded?(ExAws) do
                   get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -165,7 +165,7 @@ if Code.ensure_loaded?(ExAws) do
                   get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
         
