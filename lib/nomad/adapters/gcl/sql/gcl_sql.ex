@@ -9,7 +9,6 @@ if Code.ensure_loaded?(GCloudex) do
     defmacro __using__(:gcl) do 
       quote do 
         alias GCloudex.CloudSQL.Client, as: Client
-        #import GCloudex.CloudSQL.Client
         import Nomad.Utils   
 
         @behaviour NomadSQL        
@@ -83,20 +82,18 @@ if Code.ensure_loaded?(GCloudex) do
           }
         end
 
-        @doc """
-        Creates a new instance with name 'instance' in the specified 'tier' and 
-        'region' and with the provided 'settings'. In the settings the appropriate 
-        network authorization for the current machine will be added. Other desired 
-        authorized networks can be passed through 'addresses'.
+        # Creates a new instance with name 'instance' in the specified 'tier' and 
+        # 'region' and with the provided 'settings'. In the settings the appropriate 
+        # network authorization for the current machine will be added. Other desired 
+        # authorized networks can be passed through 'addresses'.
 
-        A new user will also be added with the username 'user' and the 
-        given 'password'.
+        # A new user will also be added with the username 'user' and the 
+        # given 'password'.
 
-        TODO: Receive just the settings map and search through the map for fields that
-        belong to settings, replicaConfiguration or the first level of the request 
-        and arrange them accordingly????
-        """
-        @spec insert_instance(binary, map, {binary, binary}, {binary, binary}, [binary]) :: :ok | binary
+        # TODO: Receive just the settings map and search through the map for fields that
+        # belong to settings, replicaConfiguration or the first level of the request 
+        # and arrange them accordingly?
+        
         def insert_instance(instance, settings, {region, tier}, _credentials = {user, password}, addresses \\ [], fun \\ &Client.insert_instance/4) do 
 
           addresses = addresses |> Enum.map(fn ip -> %{"value" => ip} end)
@@ -164,10 +161,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc """
-        Deletes the given 'instance'.
-        """
-        @spec delete_instance(binary) :: :ok | binary
         def delete_instance(instance, fun \\ &Client.delete_instance/1) do 
           case fun.(instance) do 
             {:ok, res} ->
@@ -182,10 +175,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc """
-        Restarts the given 'instance'.
-        """
-        @spec restart_instance(binary) :: :ok | binary
         def restart_instance(instance, fun \\ &Client.restart_instance/1) do 
           case fun.(instance) do 
             {:ok, res} ->
@@ -200,10 +189,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        @doc """
-        Lists all the databases belonging to the given 'instance'.
-        """
-        @spec list_databases(binary) :: list(binary)
         def list_databases(instance, fun \\ &Client.list_databases/1) do 
           case fun.(instance) do 
             {:ok, res} ->
@@ -226,10 +211,6 @@ if Code.ensure_loaded?(GCloudex) do
           |> Enum.map(fn db -> db["name"] end)
         end  
 
-        @doc """
-        Lists all the available instance tiers to choose from.
-        """
-        @spec list_classes :: list(binary) | binary
         def list_classes(fun \\ &Client.list_tiers/0) do
           case fun.() do 
             {:ok, res} ->
@@ -252,10 +233,6 @@ if Code.ensure_loaded?(GCloudex) do
           |> Enum.map(fn tier -> tier["tier"] end)
         end
 
-        @doc """
-        Returns the given 'instance' address.
-        """
-        @spec get_instance_address(binary) :: binary
         def get_instance_address(instance) do 
           case get_instance(instance) do 
             {_, _, address, _, _} -> address
