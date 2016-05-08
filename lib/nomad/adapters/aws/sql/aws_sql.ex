@@ -11,6 +11,7 @@ if Code.ensure_loaded?(ExAws) do
       quote do
         use ExAws.RDS.Client
         import Nomad.Utils
+        alias Nomad.AWS.SQL.Helper, as: Helper
 
         @behaviour NomadSQL
 
@@ -106,11 +107,12 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        # TODO: A Security Group must be created to be added with the list of addresses.
-        # This can only be done when the EC2 API is ready.
         def insert_instance(instance, settings, class, _credentials = {username, password}, addresses, fun \\ &create_db_instance/7) do 
           storage = settings.storage
           engine  = settings.engine
+          settings = Map.put_new(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
+
+          Helper.create_sg_with_local_public_ip_allowed(instance, engine)
 
           case fun.(instance, username, password, storage, class, engine, settings) do 
             {:ok, res} ->
@@ -188,4 +190,64 @@ if Code.ensure_loaded?(ExAws) do
       end
     end
   end
+
+  defmodule Nomad.AWS.SQL.Helper do
+    use ExAws.EC2.Client
+    import Nomad.Utils
+
+    @mdoc false
+    
+    def config_root do 
+      Application.get_all_env(:my_aws_config_root)
+    end      
+
+    @doc """
+    Create a new Security Group that enables inbound traffic from the 
+    current local machine's public IP address. The Security Group will have
+    the name 'secgroup-<instance>' and the port used will be determined by
+    the provided SQL 'engine'.
+    """
+    @spec create_sg_with_local_public_ip_allowed(instance :: binary, engine :: binary) :: :ok | :error
+    def create_sg_with_local_public_ip_allowed(instance, engine) do 
+      group = "secgroup-#{instance}"
+      ip    = find_public_ip_address
+      port  = determine_port engine
+
+      create_security_group(
+        group, 
+        "Security Group for the instance #{instance}.")
+
+      res = authorize_security_group_ingress(
+        [
+          group_name: group, 
+          "IpPermissions.1.IpProtocol": "tcp",
+          "IpPermissions.1.FromPort": port,
+          "IpPermissions.1.ToPort": port,
+          "IpPermissions.1.IpRanges.1.CidrIp": ip <> "/32"
+        ])
+      
+      case res do
+        {:ok, _} -> :ok
+        _        -> :error
+      end
+    end
+
+    defp determine_port(engine) do 
+      case String.upcase(engine) do
+        "MYSQL"         -> 3306
+        "MARIADB"       -> 3306
+        "POSTGRES"      -> 5432
+        "ORACLE-SE1"    -> 1521
+        "ORACLE-SE"     -> 1521
+        "ORACLE-EE"     -> 1521
+        "SQLSERVER-EE"  -> 1433
+        "SQLSERVER-SE"  -> 1433
+        "SQLSERVER-EX"  -> 1433
+        "SQLSERVER-WEB" -> 1433
+        "AURORA"        -> 3306 
+      end
+    end
+
+  end  
 end
+

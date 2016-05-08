@@ -35,7 +35,7 @@ defmodule Nomad.Mixfile do
      # {:nomad_aws,        path: "/home/sashaafm/Documents/nomad_aws", optional: true},
       # {:nomad_gcl, git: "git@github.com:sashaafm/nomad_gcl.git"}
      # {:nomad_gcl,        path: "/home/sashaafm/Documents/nomad_gcl", optional: true},
-      {:nomad_behaviours, path: "/home/sashaafm/Documents/nomad_behaviours"}      
+      #{:nomad_behaviours, path: "/home/sashaafm/Documents/nomad_behaviours"}      
     ]        
   end
 end
