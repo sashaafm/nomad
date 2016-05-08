@@ -18,8 +18,8 @@ if Code.ensure_loaded?(ExAws) do
           Application.get_all_env(:my_aws_config_root)
         end  
 
-        def list_instances do 
-          case describe_db_instances do 
+        def list_instances(fun \\ &describe_db_instances/0) do 
+          case fun.() do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -33,7 +33,7 @@ if Code.ensure_loaded?(ExAws) do
                   |> Friendly.find("address")
 
                   status = res.body
-                  |> Friendly.find("status")
+                  |> Friendly.find("dbinstancestatus")
 
                   storage = res.body
                   |> Friendly.find("allocatedstorage")
@@ -67,8 +67,8 @@ if Code.ensure_loaded?(ExAws) do
             [status_list] ++ [storage_list]
         end
 
-        def get_instance(instance) do 
-          case describe_db_instances(%{"DBInstanceIdentifier" => instance}) do 
+        def get_instance(instance, fun \\ &describe_db_instances/1) do 
+          case fun.(%{"DBInstanceIdentifier" => instance}) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -88,7 +88,7 @@ if Code.ensure_loaded?(ExAws) do
                   |> Map.get(:text)
 
                   status = res.body
-                  |> Friendly.find("status")
+                  |> Friendly.find("dbinstancestatus")
                   |> List.first            
                   |> Map.get(:text)
 
@@ -108,11 +108,11 @@ if Code.ensure_loaded?(ExAws) do
 
         # TODO: A Security Group must be created to be added with the list of addresses.
         # This can only be done when the EC2 API is ready.
-        def insert_instance(instance, settings, class, _credentials = {username, password}, addresses) do 
+        def insert_instance(instance, settings, class, _credentials = {username, password}, addresses, fun \\ &create_db_instance/7) do 
           storage = settings.storage
           engine  = settings.engine
 
-          case create_db_instance(instance, username, password, storage, class, engine, settings) do 
+          case fun.(instance, username, password, storage, class, engine, settings) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -125,8 +125,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def delete_instance(instance) do 
-          case delete_db_instance(instance) do 
+        def delete_instance(instance, fun \\ &delete_db_instance/1) do 
+          case fun.(instance) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -139,8 +139,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def restart_instance(instance) do
-          case reboot_db_instance(instance) do 
+        def restart_instance(instance, fun \\ &reboot_db_instance/1) do
+          case fun.(instance) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->
@@ -153,8 +153,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def list_databases(instance) do 
-          case describe_db_instances(%{"DBInstanceIdentifier" => instance}) do 
+        def list_databases(instance, fun \\ &describe_db_instances/1) do 
+          case fun.(%{"DBInstanceIdentifier" => instance}) do 
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -179,12 +179,8 @@ if Code.ensure_loaded?(ExAws) do
            "db.t2.medium",   "db.t2.large"]
         end
 
-        @doc """
-        Returns the address for the given 'instance'.
-        """
-        @spec get_instance_address(binary) :: binary
-        def get_instance_address(instance) do 
-          case get_instance(instance) do 
+        def get_instance_address(instance, fun \\ &get_instance/1) do 
+          case fun.(instance) do 
             {_, _, address, _, _} -> address
             msg -> msg
           end

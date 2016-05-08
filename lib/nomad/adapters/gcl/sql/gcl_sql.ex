@@ -233,8 +233,8 @@ if Code.ensure_loaded?(GCloudex) do
           |> Enum.map(fn tier -> tier["tier"] end)
         end
 
-        def get_instance_address(instance) do 
-          case get_instance(instance) do 
+        def get_instance_address(instance, fun \\ &Client.get_instance/1) do 
+          case fun.(instance) do 
             {_, _, address, _, _} -> address
             msg -> msg
           end

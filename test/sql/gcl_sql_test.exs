@@ -138,6 +138,15 @@ defmodule Dummy.Test.GclSqlClient do
     end
   end
 
+  def get_instance_address_test(state) do 
+    fn (_instance) ->
+      case state do 
+        200    -> {:a, :b, "address", :c, :d}
+        :error -> "Message"
+      end
+    end    
+  end
+
   defp code_555 do 
     {
       :ok, 
@@ -272,6 +281,18 @@ defmodule GclSqlTest do
     expected = "reason"
 
     assert expected == list_classes Dummy.list_classes_test(:error)
+  end    
+
+  test "get_instance_address 200" do 
+    expected = "address"
+
+    assert expected == get_instance_address "ABC", Dummy.get_instance_address_test(200)
+  end
+
+  test "get_instance_address error" do 
+    expected = "Message"
+
+    assert expected == get_instance_address "ABC", Dummy.get_instance_address_test(:error)
   end    
 
   defp other_code, do: "555: Error message"  
