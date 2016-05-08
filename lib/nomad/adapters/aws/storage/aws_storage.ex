@@ -32,7 +32,7 @@ if Code.ensure_loaded?(ExAws) do
                   get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -52,15 +52,15 @@ if Code.ensure_loaded?(ExAws) do
         #   end
         # end
 
-        def create_storage(name, region, _class, fun \\ &put_bucket/2) do 
-          case fun.(name, region) do 
+        def create_storage(name, region, class, fun \\ &put_bucket/2) do 
+          case fun.(name, region, class) do 
             {:ok, res} ->
               case res.status_code do 
                 200 -> :ok
                 _   -> get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -89,7 +89,7 @@ if Code.ensure_loaded?(ExAws) do
                 _   -> get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -104,7 +104,7 @@ if Code.ensure_loaded?(ExAws) do
                 _   -> get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -116,7 +116,7 @@ if Code.ensure_loaded?(ExAws) do
                 _   -> get_error_message res
               end        
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -131,7 +131,7 @@ if Code.ensure_loaded?(ExAws) do
                 _   -> get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -147,7 +147,7 @@ if Code.ensure_loaded?(ExAws) do
                 _   -> get_error_message res
               end 
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -160,7 +160,7 @@ if Code.ensure_loaded?(ExAws) do
                 _   -> get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -179,7 +179,7 @@ if Code.ensure_loaded?(ExAws) do
                 _   -> get_error_message res
               end
             {:error, reason} ->
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
@@ -208,7 +208,7 @@ if Code.ensure_loaded?(ExAws) do
                 _   -> get_error_message res
               end
             {:error, reason} -> 
-              show_message_and_error_code reason
+              parse_http_error reason
           end
         end
 
