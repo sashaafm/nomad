@@ -29,13 +29,7 @@ defmodule Nomad.Mixfile do
       {:friendly,         "~> 1.0.0"},
       {:goth,             "~> 0.0.1"},
       {:ex_aws,           github: "sashaafm/ex_aws", branch: "merge-rds-and-ec2-for-testing", optional: true},
-      {:gcloudex,         "~> 0.4.3", optional: true},
-      #{:gcloudex,         path: "/home/sashaafm/Documents/gcloudex"},
-      # {:nomad_aws, git: "git@github.com:sashaafm/nomad_aws.git"}
-     # {:nomad_aws,        path: "/home/sashaafm/Documents/nomad_aws", optional: true},
-      # {:nomad_gcl, git: "git@github.com:sashaafm/nomad_gcl.git"}
-     # {:nomad_gcl,        path: "/home/sashaafm/Documents/nomad_gcl", optional: true},
-      #{:nomad_behaviours, path: "/home/sashaafm/Documents/nomad_behaviours"}      
+      {:gcloudex,         "~> 0.4.3", optional: true}     
     ]        
   end
 end

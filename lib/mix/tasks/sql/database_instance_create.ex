@@ -22,11 +22,18 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
   """
   @spec run(list) :: binary
   def run(args) do
-    case System.get_env("PROVIDER") do 
-      "AWS" -> :todo
+    case Application.get_env(:nomad, :cloud_provider) do 
+      :aws -> 
+        Application.ensure_all_started(:ex_aws)
+        Application.ensure_all_started(:httpoison)
 
+        create_instance_aws args
+      :gcl -> 
+        Application.ensure_all_started(:httpoison)
+        Application.ensure_all_started(:goth)
+        Application.ensure_all_started(:gcloudex)
 
-      "GCL" -> create_instance_gcl args
+        create_instance_gcl args
     end
   end
   
@@ -35,7 +42,6 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
   end
 
   defp create_instance_gcl(args) do 
-    Application.ensure_all_started(:nomad_gcl)
     settings  = Map.new
 
     name      = Mix.Shell.IO.prompt("Insert name for the instance: ") |> String.rstrip

@@ -8,10 +8,10 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Restart do
 
   Usage:
     
-    PROVIDER=<cloud_provider> mix nomad.database_instance.restart 
+    mix nomad.database_instance.restart 
       # Will be prompted for name 
 
-    PROVIDER=<cloud_provider> mix nomad.database_instance.restart <name>  
+    mix nomad.database_instance.restart <name>  
       # Won't be prompted for name
   """
 
@@ -25,22 +25,16 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Restart do
   """
   @spec run(list) :: binary
   def run(args) do 
-    case System.get_env("PROVIDER") do 
-      "AWS" -> restart_instance_aws args
-
-      "GCL" -> restart_instance_gcl args
+    case Application.get_env(:nomad, :cloud_provider) do 
+      :aws -> 
+        Application.ensure_all_started(:ex_aws)
+        Application.ensure_all_started(:httpoison)
+      :gcl -> 
+        Application.ensure_all_started(:httpoison)
+        Application.ensure_all_started(:goth)
+        Application.ensure_all_started(:gcloudex)
     end
-  end
-
-  defp restart_instance_aws(args) do 
-    Application.ensure_all_started :nomad_aws
-
-    restart_instance_api_call args
-  end
-
-  defp restart_instance_gcl(args) do 
-    Application.ensure_all_started :nomad_gcl
-
+        
     restart_instance_api_call args
   end
 

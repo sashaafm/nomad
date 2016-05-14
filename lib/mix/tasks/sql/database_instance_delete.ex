@@ -25,22 +25,16 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Delete do
   """
   @spec run(list) :: binary
   def run(args) do 
-    case System.get_env("PROVIDER") do 
-      "AWS" -> delete_instance_aws args
-
-      "GCL" -> delete_instance_gcl args
+    case Application.get_env(:nomad, :cloud_provider) do 
+      :aws -> 
+        Application.ensure_all_started(:ex_aws)
+        Application.ensure_all_started(:httpoison)
+      :gcl -> 
+        Application.ensure_all_started(:httpoison)
+        Application.ensure_all_started(:goth)
+        Application.ensure_all_started(:gcloudex)
     end
-  end
-
-  defp delete_instance_aws(args) do 
-    Application.ensure_all_started :nomad_aws
-
-    delete_instance_api_call args
-  end
-
-  defp delete_instance_gcl(args) do 
-    Application.ensure_all_started :nomad_gcl
-
+    
     delete_instance_api_call args
   end
 

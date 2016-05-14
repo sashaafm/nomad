@@ -20,21 +20,15 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.List do
   """
   @spec run(list) :: binary
   def run(args) do 
-    case System.get_env("PROVIDER") do 
-      "AWS" -> list_instances_aws args
-
-      "GCL" -> list_instances_gcl args
+    case Application.get_env(:nomad, :cloud_provider) do 
+      :aws -> 
+        Application.ensure_all_started(:ex_aws)
+        Application.ensure_all_started(:httpoison)
+      :gcl -> 
+        Application.ensure_all_started(:httpoison)
+        Application.ensure_all_started(:goth)
+        Application.ensure_all_started(:gcloudex)
     end
-  end
-
-  defp list_instances_aws(_args) do
-    Application.ensure_all_started :nomad_aws
-
-    list_instances_api_call
-  end
-
-  defp list_instances_gcl(_args) do 
-    Application.ensure_all_started :nomad_gcl
 
     list_instances_api_call
   end
@@ -42,7 +36,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.List do
   defp list_instances_api_call do
     res = Nomad.SQL.list_instances
 
-    if is_list(res) do 
+    if is_list(res) && res != [] do 
       res = res
       |> convert_instance_tuples_to_lists
       |> stringify
@@ -53,7 +47,11 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.List do
         "List of SQL Database Instances on #{System.get_env("PROVIDER")}")
       |> Mix.Shell.IO.info
     else
-      Mix.Shell.IO.info("There was a problem listing the instances:\n#{res}")
+      if res == [] do 
+        Mix.Shell.IO.info("There are no instances to be listed.")
+      else
+        Mix.Shell.IO.info("There was a problem listing the instances:\n#{res}")
+      end
     end
   end
 
