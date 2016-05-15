@@ -36,7 +36,7 @@ defmodule Nomad.SQL do
     hostname = Nomad.SQL.get_instance_address(System.get_env("DB_INSTANCE"))
 
     new_env  = Application.get_env(app_name, module)
-               |> Keyword.put(:hostname, hostname)
+    > Keyword.put(:hostname, hostname)
 
     Application.put_env(app_name, module, new_env, persistent: true)    
   end
