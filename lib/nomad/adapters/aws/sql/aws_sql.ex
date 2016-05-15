@@ -107,14 +107,14 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def insert_instance(instance, settings, class, _credentials = {username, password}, addresses, fun \\ &create_db_instance/7) do 
-          storage = settings.storage
-          engine  = settings.engine
-          settings = Map.put_new(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
+        def insert_instance(instance, settings, {region, tier}, _credentials = {username, password}, addresses, fun \\ &create_db_instance/7) do 
+          storage  = settings.storage
+          engine   = settings.engine
+          settings = Map.put(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
 
           Helper.create_sg_with_local_public_ip_allowed(instance, engine)
 
-          case fun.(instance, username, password, storage, class, engine, settings) do 
+          case fun.(instance, username, password, storage, tier, engine, settings) do 
             {:ok, res} ->
               case res.status_code do 
                 200 ->

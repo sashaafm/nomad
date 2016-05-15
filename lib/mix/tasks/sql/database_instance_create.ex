@@ -38,7 +38,58 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
   end
   
   defp create_instance_aws(args) do 
+    name      = Mix.Shell.IO.prompt("Insert name for the instance: ") |> String.rstrip
+    region    = Mix.Shell.IO.prompt("Insert the desired region "
+    <> "(#{Enum.join(aws_regions, ", ")}):") |> String.rstrip()
+    addresses = 
+      if Mix.Shell.IO.yes?("Do you want to insert custom authorized IP "
+        <> "addresses? (your current public IP is added automatically): ") do 
+        ask_for_addresses true, []
+      else 
+        []
+      end 
 
+    tier     = Mix.Shell.IO.prompt("Insert the instance's tier (#{Enum.join(Nomad.SQL.list_classes, ", ")}): ") |> String.rstrip  
+    engine   = Mix.Shell.IO.prompt("Insert the instance's engine (MySQL, Postgres, MariaDB, Oracle, SQL Server, Aurora): ") |> String.rstrip  
+    size     = Mix.Shell.IO.prompt("Insert the size of the data disk (in GB) for this instance: ") |> String.rstrip
+    username = Mix.Shell.IO.prompt("Insert the instance's root username: ") |> String.rstrip
+    password = Mix.Shell.IO.prompt("Insert the instance's root password: ") |> String.rstrip
+
+    settings = %{
+      storage: size,
+      engine:  engine
+    }
+
+    Mix.Shell.IO.info("\n")
+    Mix.Shell.IO.info("####################### SUMMARY ##########################\n")
+
+    summary = "The instance will be created with the following settings:\n"
+    <> "Instance Name:        #{name}\n"
+    <> "Region:               #{region}\n"
+    <> "Tier:                 #{tier}\n"
+    <> "Data Disk Size:       #{size}\n"
+    <> "Authorized Addresses: #{print_list_with_commas(addresses, "")}"
+    <> "Username:             #{username}\n"
+    <> "Password:             #{password}\n"
+    <> "Do you confirm?\n"    
+
+    if Mix.Shell.IO.yes?(summary) do 
+      result = 
+        Nomad.SQL.insert_instance name, settings, {region, tier}, {username, password}, addresses
+
+      case result do
+        :ok -> Mix.Shell.IO.info("The instance has been created successfully.")
+        msg -> Mix.Shell.IO.error("A problem has occurred: \n#{msg}")
+      end
+    else 
+      create_instance_aws(args)
+    end    
+  end
+
+  defp aws_regions do 
+    ["us-east-1", "us-west-1", "us-west-2", "eu-west-1", "eu-central-1", "ap-northeast-1",
+     "ap-northeast-2", "ap-southeast-1", "ap-southeast-2", "sa-east-1",  "cn-north-1",
+     "us-gov-west-1"]
   end
 
   defp create_instance_gcl(args) do 
@@ -78,7 +129,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
 
     size = 
       if generation == 2 do 
-        size = Mix.Shell.IO.prompt("Insert the size of the data disk size (in GB) for this instance: ")
+        size = Mix.Shell.IO.prompt("Insert the size of the data disk (in GB) for this instance: ")
         |> String.rstrip
       else
         size = "Not Applicable"
@@ -93,7 +144,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
     password = Mix.Shell.IO.prompt("Insert the instance's root password: ") |> String.rstrip
 
     Mix.Shell.IO.info("\n")
-    Mix.Shell.IO.info("####################### SUMMARY #######################\n")
+    Mix.Shell.IO.info("####################### SUMMARY ##########################\n")
 
     summary = "The instance will be created with the following settings:\n"
     <> "Instance Name:        #{name}\n"
