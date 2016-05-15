@@ -8,7 +8,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.List do
 
   Usage:
     
-    PROVIDER=<cloud_provider> mix nomad.database_instance.list 
+    mix nomad.database_instance.list 
   """
 
   @shortdoc"""

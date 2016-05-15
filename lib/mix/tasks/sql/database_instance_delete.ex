@@ -8,10 +8,10 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Delete do
 
   Usage:
     
-    PROVIDER=<cloud_provider> mix nomad.database_instance.delete
+    mix nomad.database_instance.delete
       # Will be prompted for name 
 
-    PROVIDER=<cloud_provider> mix nomad.database_instance.delete <name>  
+    mix nomad.database_instance.delete <name>  
       # Won't be prompted for name  
   """
 
