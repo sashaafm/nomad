@@ -10,7 +10,8 @@ defmodule Nomad.Mixfile do
      elixir:          "~> 1.2",
      build_embedded:  Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps:            deps
+     deps:            deps,
+     description:     "Create cloud portable Elixir and Phoenix apps. Write once, use everywhere!"
    ]
   end
 
@@ -33,5 +34,14 @@ defmodule Nomad.Mixfile do
       {:ex_aws,           github: "sashaafm/ex_aws", branch: "merge-rds-and-ec2-for-testing", optional: true},
       {:gcloudex,         "~> 0.4.3", optional: true}     
     ]        
+  end
+
+  defp package do 
+    [
+      licenses: ["MIT"],
+      name:     :nomad,
+      maintainers: ["Sasha Fonseca"],
+      links:       %{"GitHub" => "https://github.com/sashaafm/nomad"}
+    ]
   end
 end
