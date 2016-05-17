@@ -1,0 +1,404 @@
+    <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.11.5">
+    <title>NomadSQL – nomad v0.5.0</title>
+    <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
+    
+    <script src="dist/sidebar_items.js"></script>
+  </head>
+  <body data-type="modules">
+
+    <div class="main">
+<button class="sidebar-toggle">
+  <i class="icon-menu"></i>
+</button>
+<section class="sidebar">
+  <button class="sidebar-toggle">
+    <i class="icon-menu"></i>
+  </button>
+
+  
+  <a href="api-reference.html" class="sidebar-projectLink">
+    <div class="sidebar-projectDetails">
+      <h1 class="sidebar-projectName">
+        nomad
+      </h1>
+      <h2 class="sidebar-projectVersion">
+        v0.5.0
+      </h2>
+    </div>
+    
+  </a>
+
+  <div class="sidebar-search">
+    <i class="icon-search"></i>
+    <input type="text" class="sidebar-searchInput" placeholder="search" autocomplete="off" />
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+    
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+    
+
+    
+
+    
+  </ul>
+
+  <ul id="full-list" class="sidebar-fullList"></ul>
+  <div class="sidebar-noResults"></div>
+</section>
+
+<section class="content">
+  <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="visible-xs">nomad v0.5.0</small>
+        NomadSQL
+        
+          <small>behaviour</small>
+        
+        
+      </h1>
+
+      
+
+      
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <i class="icon-link"></i>
+            </a>
+            Summary
+          </h1>
+          
+
+          
+
+          
+
+          
+  <div class="summary-callbacks summary">
+    <h2>
+      <a href="#callbacks">Callbacks</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:delete_instance/1">delete_instance(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Deletes the given ‘instance’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get_instance/1">get_instance(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Returns a tuple with info about the given ‘instance’ with the format:
+  {instance_name, region, address, status, allocated_storage}</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get_instance_address/1">get_instance_address(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Returns the address for the given ‘instance’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:insert_instance/5">insert_instance(instance, settings, {}, {}, addresses)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Creates a new database instance with name ‘instance’, the provided 
+‘settings’ and in the desired pricing/performance ‘tier’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:list_classes/0">list_classes()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Lists all instance classes/tiers for the given cloud provier’s SQL service</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:list_databases/1">list_databases(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Lists all the available databases in the given ‘instance’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:list_instances/0">list_instances()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Lists all database instances for the given cloud credentials. The function
+returns a list of tuples with the following format:
+  {instance_name, region, address, status, allocated_storage}</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:restart_instance/1">restart_instance(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Restarts the given ‘instance’</p>
+</div>
+  
+</div>
+
+  </div>
+
+
+        </section>
+      
+
+      
+
+      
+
+      
+
+      
+        <section id="callbacks" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#callbacks">
+              <i class="icon-link"></i>
+            </a>
+            Callbacks
+          </h1>
+          <div class="detail" id="c:delete_instance/1">
+  <div class="detail-header">
+    <a href="#c:delete_instance/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_instance(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">delete_instance(instance :: binary) :: :ok | binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Deletes the given ‘instance’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:get_instance/1">
+  <div class="detail-header">
+    <a href="#c:get_instance/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_instance(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">get_instance(instance :: binary) :: map | binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Returns a tuple with info about the given ‘instance’ with the format:
+  {instance_name, region, address, status, allocated_storage}</p>
+
+  </section>
+</div>
+<div class="detail" id="c:get_instance_address/1">
+  <div class="detail-header">
+    <a href="#c:get_instance_address/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_instance_address(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">get_instance_address(instance :: binary) :: binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Returns the address for the given ‘instance’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:insert_instance/5">
+  <div class="detail-header">
+    <a href="#c:insert_instance/5" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">insert_instance(instance, settings, {}, {}, addresses)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">insert_instance(instance :: binary, settings :: map | list, {region :: binary, tier :: binary}, {user :: binary, password :: binary}, addresses :: list) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Creates a new database instance with name ‘instance’, the provided 
+‘settings’ and in the desired pricing/performance ‘tier’.</p>
+<p>The ‘settings’ must be passed as a Map in the format: %{key: value}</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_classes/0">
+  <div class="detail-header">
+    <a href="#c:list_classes/0" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_classes()</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_classes :: [binary]</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Lists all instance classes/tiers for the given cloud provier’s SQL service.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_databases/1">
+  <div class="detail-header">
+    <a href="#c:list_databases/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_databases(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_databases(instance :: binary) ::
+  [binary] |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Lists all the available databases in the given ‘instance’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_instances/0">
+  <div class="detail-header">
+    <a href="#c:list_instances/0" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_instances()</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_instances :: [tuple] | [] | binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Lists all database instances for the given cloud credentials. The function
+returns a list of tuples with the following format:
+  {instance_name, region, address, status, allocated_storage}</p>
+
+  </section>
+</div>
+<div class="detail" id="c:restart_instance/1">
+  <div class="detail-header">
+    <a href="#c:restart_instance/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">restart_instance(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">restart_instance(instance :: binary) :: :ok | binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Restarts the given ‘instance’.</p>
+
+  </section>
+</div>
+
+        </section>
+      
+        <footer class="footer">
+      <p>
+        <span class="line">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" rel="help" target="_blank">ExDoc</a> (v0.11.5),
+        </span>
+        <span class="line">
+          designed by
+          <a href="https://twitter.com/dignifiedquire" target="_blank" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+      </p>
+      <button class="night-mode-toggle" />
+    </footer>
+  </div>
+</section>
+</div>
+  <script src="dist/app-918614602f.js"></script>
+  </body>
+</html>
+
