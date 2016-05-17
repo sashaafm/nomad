@@ -5,7 +5,7 @@
 **Regular API service interaction**
 ![Imgur](http://i.imgur.com/CKpiFFb.gif)
 
-Use the same universal API across all cloud providers. Changes are only minimal and at configuration level. No code has to be changed.
+Use the same universal API across all cloud providers. Changes are only minimal and at configuration level. **No code has to be changed.**
 
 ## What is the Nomad Project?
 Nomad is an Open-Source API for Elixir that enables developer to use the most popular cloud providers interchangeabily at will without having to change any of their code. Nomad provides generic API's for cloud services (mainly Virtual Machines, Storage, SQL and JSON datastores). These API's offer the most useful features and functionalities that are common across the same kind of service between cloud providers. They are meant to be simple and user friendly. This enables applications to be portable and allows the migration of applications from one provider to the next.
