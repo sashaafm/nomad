@@ -38,8 +38,8 @@ defmodule Nomad.Mixfile do
 
   defp package do 
     [
-      licenses: ["MIT"],
-      name:     :nomad,
+      licenses:    ["MIT"],
+      name:        :nomad,
       maintainers: ["Sasha Fonseca"],
       links:       %{"GitHub" => "https://github.com/sashaafm/nomad"}
     ]
