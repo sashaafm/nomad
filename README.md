@@ -2,8 +2,9 @@
 
 **Create cloud portable Elixir and Phoenix apps. Write once, use everywhere!**
 
-**Regular API service interation**
+**Regular API service interaction**
 ![Imgur](http://i.imgur.com/CKpiFFb.gif)
+Use the same universal API across all cloud providers. Changes are only minimal and at configuration level. No code has to be changed.
 
 ## What is the Nomad Project?
 Nomad is an Open-Source API for Elixir that enables developer to use the most popular cloud providers interchangeabily at will without having to change any of their code. Nomad provides generic API's for cloud services (mainly Virtual Machines, Storage, SQL and JSON datastores). These API's offer the most useful features and functionalities that are common across the same kind of service between cloud providers. They are meant to be simple and user friendly. This enables applications to be portable and allows the migration of applications from one provider to the next.
@@ -48,6 +49,7 @@ Finally through macros and metaprogramming, the adapters logic will be generated
 - [ ] Virtual Machine Deletion
 - [ ] Storage Creation
 - [ ] Storage Deletion
+- [ ] Storage Migration
 
 ### Installation
 
@@ -85,7 +87,7 @@ Then pass your AWS Access Key ID and AWS Secret Access Key as System variables w
     AWS_ACCESS_KEY_ID=<aws_access_key_id> AWS_SECRET_ACCESS_KEY=<secret_access_key>
     
 #### Google Cloud Platform
-To use Google Cloud Platofrm te following configurations are needed:
+To use Google Cloud Platofrm the following configurations are needed:
 
     config :nomad,
       cloud_provider: :gcl
