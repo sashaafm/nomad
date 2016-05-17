@@ -28,7 +28,7 @@ defmodule Nomad.Mixfile do
       {:exrm,      "~> 1.0.1"},
       {:credo,     "~> 0.3",  only: [:dev, :test]},
       {:ex_doc,    "~> 0.11", only: [:dev]},
-      {:earmark,   "~> 0.2.1"},
+      {:earmark,   ">= 0.0.0", only: [:dev]},
       {:httpoison, "~> 0.8.1"},
       {:table_rex, "~> 0.8.0"},
       {:friendly,  "~> 1.0.0"},
