@@ -113,7 +113,7 @@ Where 'creds.json' is the JSON file with your account credentials that you may d
 **Under development**
 
 #### Datastore
-** Under development**
+**Under development**
 
 ### Mix Tasks
 
