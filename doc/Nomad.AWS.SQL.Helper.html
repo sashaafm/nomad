@@ -1,0 +1,3348 @@
+    <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.11.5">
+    <title>Nomad.AWS.SQL.Helper – nomad v0.5.0</title>
+    <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
+    
+    <script src="dist/sidebar_items.js"></script>
+  </head>
+  <body data-type="modules">
+
+    <div class="main">
+<button class="sidebar-toggle">
+  <i class="icon-menu"></i>
+</button>
+<section class="sidebar">
+  <button class="sidebar-toggle">
+    <i class="icon-menu"></i>
+  </button>
+
+  
+  <a href="api-reference.html" class="sidebar-projectLink">
+    <div class="sidebar-projectDetails">
+      <h1 class="sidebar-projectName">
+        nomad
+      </h1>
+      <h2 class="sidebar-projectVersion">
+        v0.5.0
+      </h2>
+    </div>
+    
+  </a>
+
+  <div class="sidebar-search">
+    <i class="icon-search"></i>
+    <input type="text" class="sidebar-searchInput" placeholder="search" autocomplete="off" />
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+    
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+    
+
+    
+
+    
+  </ul>
+
+  <ul id="full-list" class="sidebar-fullList"></ul>
+  <div class="sidebar-noResults"></div>
+</section>
+
+<section class="content">
+  <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="visible-xs">nomad v0.5.0</small>
+        Nomad.AWS.SQL.Helper
+        
+        
+      </h1>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Consult the documentation in ExAws.EC2.Client</p>
+
+        </section>
+      
+
+      
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <i class="icon-link"></i>
+            </a>
+            Summary
+          </h1>
+          
+
+          
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#attach_volume/3">attach_volume(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.attach_volume/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#attach_volume/4">attach_volume(arg0, arg1, arg2, arg3)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.attach_volume/4</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#authorize_security_group_egress/1">authorize_security_group_egress(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.authorize_security_group_egress/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#authorize_security_group_egress/2">authorize_security_group_egress(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.authorize_security_group_egress/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#authorize_security_group_ingress/0">authorize_security_group_ingress()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.authorize_security_group_ingress/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#authorize_security_group_ingress/1">authorize_security_group_ingress(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.authorize_security_group_ingress/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#bundle_instance/2">bundle_instance(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.bundle_instance/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#bundle_instance/3">bundle_instance(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.bundle_instance/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#cancel_bundle_task/1">cancel_bundle_task(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.cancel_bundle_task/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#cancel_bundle_task/2">cancel_bundle_task(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.cancel_bundle_task/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#copy_image/3">copy_image(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.copy_image/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#copy_image/4">copy_image(arg0, arg1, arg2, arg3)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.copy_image/4</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#copy_snapshot/2">copy_snapshot(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.copy_snapshot/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#copy_snapshot/3">copy_snapshot(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.copy_snapshot/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_image/2">create_image(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_image/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_image/3">create_image(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_image/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_key_pair/1">create_key_pair(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_key_pair/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_key_pair/2">create_key_pair(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_key_pair/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_security_group/2">create_security_group(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_security_group/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_security_group/3">create_security_group(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_security_group/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_sg_with_local_public_ip_allowed/2">create_sg_with_local_public_ip_allowed(instance, engine)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Create a new Security Group that enables inbound traffic from the 
+current local machine’s public IP address. The Security Group will have
+the name ‘secgroup-<instance>’ and the port used will be determined by
+the provided SQL ‘engine’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_snapshot/1">create_snapshot(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_snapshot/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_snapshot/2">create_snapshot(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_snapshot/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_subnet/2">create_subnet(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_subnet/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_subnet/3">create_subnet(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_subnet/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_tags/2">create_tags(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_tags/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_tags/3">create_tags(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_tags/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_volume/2">create_volume(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_volume/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_volume/3">create_volume(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_volume/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_vpc/1">create_vpc(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_vpc/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_vpc/2">create_vpc(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_vpc/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_key_pair/1">delete_key_pair(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_key_pair/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_key_pair/2">delete_key_pair(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_key_pair/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_snapshot/1">delete_snapshot(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_snapshot/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_snapshot/2">delete_snapshot(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_snapshot/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_subnet/1">delete_subnet(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_subnet/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_subnet/2">delete_subnet(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_subnet/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_tags/1">delete_tags(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_tags/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_tags/2">delete_tags(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_tags/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_volume/1">delete_volume(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_volume/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_volume/2">delete_volume(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_volume/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_vpc/1">delete_vpc(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_vpc/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_vpc/2">delete_vpc(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_vpc/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#deregister_image/1">deregister_image(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.deregister_image/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#deregister_image/2">deregister_image(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.deregister_image/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_account_attributes/0">describe_account_attributes()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_account_attributes/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_account_attributes/1">describe_account_attributes(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_account_attributes/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_availability_zones/0">describe_availability_zones()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_availability_zones/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_availability_zones/1">describe_availability_zones(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_availability_zones/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_bundle_tasks/0">describe_bundle_tasks()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_bundle_tasks/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_bundle_tasks/1">describe_bundle_tasks(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_bundle_tasks/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_id_format/0">describe_id_format()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_id_format/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_id_format/1">describe_id_format(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_id_format/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_image_attribute/2">describe_image_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_image_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_image_attribute/3">describe_image_attribute(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_image_attribute/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_images/0">describe_images()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_images/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_images/1">describe_images(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_images/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_instance_attribute/2">describe_instance_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instance_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_instance_attribute/3">describe_instance_attribute(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instance_attribute/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_instance_status/0">describe_instance_status()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instance_status/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_instance_status/1">describe_instance_status(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instance_status/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_instances/0">describe_instances()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instances/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_instances/1">describe_instances(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instances/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_key_pairs/0">describe_key_pairs()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_key_pairs/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_key_pairs/1">describe_key_pairs(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_key_pairs/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_regions/0">describe_regions()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_regions/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_regions/1">describe_regions(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_regions/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_security_groups/0">describe_security_groups()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_security_groups/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_security_groups/1">describe_security_groups(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_security_groups/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_snapshot_attribute/2">describe_snapshot_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_snapshot_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_snapshot_attribute/3">describe_snapshot_attribute(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_snapshot_attribute/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_snapshots/0">describe_snapshots()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_snapshots/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_snapshots/1">describe_snapshots(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_snapshots/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_subnets/0">describe_subnets()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_subnets/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_subnets/1">describe_subnets(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_subnets/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_tags/0">describe_tags()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_tags/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_tags/1">describe_tags(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_tags/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_volume_attribute/1">describe_volume_attribute(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volume_attribute/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_volume_attribute/2">describe_volume_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volume_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_volume_status/0">describe_volume_status()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volume_status/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_volume_status/1">describe_volume_status(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volume_status/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_volumes/0">describe_volumes()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volumes/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_volumes/1">describe_volumes(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volumes/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_vpc_attribute/2">describe_vpc_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_vpc_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_vpc_attribute/3">describe_vpc_attribute(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_vpc_attribute/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_vpcs/0">describe_vpcs()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_vpcs/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#describe_vpcs/1">describe_vpcs(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_vpcs/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#detach_volume/1">detach_volume(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.detach_volume/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#detach_volume/2">detach_volume(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.detach_volume/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#enable_volume_io/1">enable_volume_io(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.enable_volume_io/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#enable_volume_io/2">enable_volume_io(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.enable_volume_io/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_console_output/1">get_console_output(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.get_console_output/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_console_output/2">get_console_output(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.get_console_output/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_password_data/1">get_password_data(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.get_password_data/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_password_data/2">get_password_data(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.get_password_data/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#import_key_pair/2">import_key_pair(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.import_key_pair/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#import_key_pair/3">import_key_pair(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.import_key_pair/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_id_format/2">modify_id_format(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_id_format/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_image_attribute/1">modify_image_attribute(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_image_attribute/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_image_attribute/2">modify_image_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_image_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_instance_attribute/1">modify_instance_attribute(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_instance_attribute/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_instance_attribute/2">modify_instance_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_instance_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_snapshot_attribute/1">modify_snapshot_attribute(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_snapshot_attribute/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_snapshot_attribute/2">modify_snapshot_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_snapshot_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_subnet_attribute/1">modify_subnet_attribute(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_subnet_attribute/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_subnet_attribute/2">modify_subnet_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_subnet_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_volume_attribute/1">modify_volume_attribute(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_volume_attribute/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_volume_attribute/2">modify_volume_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_volume_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_vpc_attribute/1">modify_vpc_attribute(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_vpc_attribute/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#modify_vpc_attribute/2">modify_vpc_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_vpc_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#monitor_instances/1">monitor_instances(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.monitor_instances/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#monitor_instances/2">monitor_instances(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.monitor_instances/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#new/1">new(opts \\ [])</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#reboot_instances/1">reboot_instances(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reboot_instances/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#reboot_instances/2">reboot_instances(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reboot_instances/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#register_image/1">register_image(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.register_image/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#register_image/2">register_image(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.register_image/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#report_instance_status/2">report_instance_status(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.report_instance_status/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#report_instance_status/3">report_instance_status(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.report_instance_status/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#reset_image_attribute/2">reset_image_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_image_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#reset_image_attribute/3">reset_image_attribute(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_image_attribute/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#reset_instance_attribute/2">reset_instance_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_instance_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#reset_instance_attribute/3">reset_instance_attribute(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_instance_attribute/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#reset_snapshot_attribute/2">reset_snapshot_attribute(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_snapshot_attribute/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#reset_snapshot_attribute/3">reset_snapshot_attribute(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_snapshot_attribute/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#revoke_security_group_egress/1">revoke_security_group_egress(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.revoke_security_group_egress/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#revoke_security_group_egress/2">revoke_security_group_egress(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.revoke_security_group_egress/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#revoke_security_group_ingress/0">revoke_security_group_ingress()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.revoke_security_group_ingress/0</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#revoke_security_group_ingress/1">revoke_security_group_ingress(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.revoke_security_group_ingress/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#run_instances/3">run_instances(arg0, arg1, arg2)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.run_instances/3</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#run_instances/4">run_instances(arg0, arg1, arg2, arg3)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.run_instances/4</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_instances/1">start_instances(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.start_instances/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_instances/2">start_instances(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.start_instances/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#stop_instances/1">stop_instances(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.stop_instances/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#stop_instances/2">stop_instances(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.stop_instances/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#terminate_instances/1">terminate_instances(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.terminate_instances/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#terminate_instances/2">terminate_instances(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.terminate_instances/2</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#unmonitor_instances/1">unmonitor_instances(arg0)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.unmonitor_instances/1</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#unmonitor_instances/2">unmonitor_instances(arg0, arg1)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.unmonitor_instances/2</code></p>
+</div>
+  
+</div>
+
+  </div>
+
+
+          
+
+          
+
+        </section>
+      
+
+      
+
+      
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <i class="icon-link"></i>
+            </a>
+            Functions
+          </h1>
+          <div class="detail" id="attach_volume/3">
+  <div class="detail-header">
+    <a href="#attach_volume/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">attach_volume(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.attach_volume/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="attach_volume/4">
+  <div class="detail-header">
+    <a href="#attach_volume/4" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">attach_volume(arg0, arg1, arg2, arg3)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.attach_volume/4</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="authorize_security_group_egress/1">
+  <div class="detail-header">
+    <a href="#authorize_security_group_egress/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">authorize_security_group_egress(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.authorize_security_group_egress/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="authorize_security_group_egress/2">
+  <div class="detail-header">
+    <a href="#authorize_security_group_egress/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">authorize_security_group_egress(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.authorize_security_group_egress/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="authorize_security_group_ingress/0">
+  <div class="detail-header">
+    <a href="#authorize_security_group_ingress/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">authorize_security_group_ingress()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.authorize_security_group_ingress/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="authorize_security_group_ingress/1">
+  <div class="detail-header">
+    <a href="#authorize_security_group_ingress/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">authorize_security_group_ingress(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.authorize_security_group_ingress/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="bundle_instance/2">
+  <div class="detail-header">
+    <a href="#bundle_instance/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">bundle_instance(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.bundle_instance/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="bundle_instance/3">
+  <div class="detail-header">
+    <a href="#bundle_instance/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">bundle_instance(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.bundle_instance/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="cancel_bundle_task/1">
+  <div class="detail-header">
+    <a href="#cancel_bundle_task/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">cancel_bundle_task(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.cancel_bundle_task/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="cancel_bundle_task/2">
+  <div class="detail-header">
+    <a href="#cancel_bundle_task/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">cancel_bundle_task(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.cancel_bundle_task/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="copy_image/3">
+  <div class="detail-header">
+    <a href="#copy_image/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">copy_image(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.copy_image/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="copy_image/4">
+  <div class="detail-header">
+    <a href="#copy_image/4" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">copy_image(arg0, arg1, arg2, arg3)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.copy_image/4</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="copy_snapshot/2">
+  <div class="detail-header">
+    <a href="#copy_snapshot/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">copy_snapshot(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.copy_snapshot/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="copy_snapshot/3">
+  <div class="detail-header">
+    <a href="#copy_snapshot/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">copy_snapshot(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.copy_snapshot/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_image/2">
+  <div class="detail-header">
+    <a href="#create_image/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_image(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_image/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_image/3">
+  <div class="detail-header">
+    <a href="#create_image/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_image(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_image/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_key_pair/1">
+  <div class="detail-header">
+    <a href="#create_key_pair/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_key_pair(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_key_pair/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_key_pair/2">
+  <div class="detail-header">
+    <a href="#create_key_pair/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_key_pair(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_key_pair/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_security_group/2">
+  <div class="detail-header">
+    <a href="#create_security_group/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_security_group(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_security_group/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_security_group/3">
+  <div class="detail-header">
+    <a href="#create_security_group/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_security_group(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_security_group/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_sg_with_local_public_ip_allowed/2">
+  <div class="detail-header">
+    <a href="#create_sg_with_local_public_ip_allowed/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_sg_with_local_public_ip_allowed(instance, engine)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">create_sg_with_local_public_ip_allowed(instance :: binary, engine :: binary) ::
+  :ok |
+  :error</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Create a new Security Group that enables inbound traffic from the 
+current local machine’s public IP address. The Security Group will have
+the name ‘secgroup-<instance>’ and the port used will be determined by
+the provided SQL ‘engine’.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_snapshot/1">
+  <div class="detail-header">
+    <a href="#create_snapshot/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_snapshot(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_snapshot/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_snapshot/2">
+  <div class="detail-header">
+    <a href="#create_snapshot/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_snapshot(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_snapshot/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_subnet/2">
+  <div class="detail-header">
+    <a href="#create_subnet/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_subnet(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_subnet/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_subnet/3">
+  <div class="detail-header">
+    <a href="#create_subnet/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_subnet(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_subnet/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_tags/2">
+  <div class="detail-header">
+    <a href="#create_tags/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_tags(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_tags/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_tags/3">
+  <div class="detail-header">
+    <a href="#create_tags/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_tags(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_tags/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_volume/2">
+  <div class="detail-header">
+    <a href="#create_volume/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_volume(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_volume/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_volume/3">
+  <div class="detail-header">
+    <a href="#create_volume/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_volume(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_volume/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_vpc/1">
+  <div class="detail-header">
+    <a href="#create_vpc/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_vpc(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_vpc/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_vpc/2">
+  <div class="detail-header">
+    <a href="#create_vpc/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_vpc(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_vpc/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_key_pair/1">
+  <div class="detail-header">
+    <a href="#delete_key_pair/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_key_pair(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_key_pair/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_key_pair/2">
+  <div class="detail-header">
+    <a href="#delete_key_pair/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_key_pair(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_key_pair/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_snapshot/1">
+  <div class="detail-header">
+    <a href="#delete_snapshot/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_snapshot(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_snapshot/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_snapshot/2">
+  <div class="detail-header">
+    <a href="#delete_snapshot/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_snapshot(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_snapshot/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_subnet/1">
+  <div class="detail-header">
+    <a href="#delete_subnet/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_subnet(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_subnet/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_subnet/2">
+  <div class="detail-header">
+    <a href="#delete_subnet/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_subnet(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_subnet/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_tags/1">
+  <div class="detail-header">
+    <a href="#delete_tags/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_tags(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_tags/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_tags/2">
+  <div class="detail-header">
+    <a href="#delete_tags/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_tags(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_tags/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_volume/1">
+  <div class="detail-header">
+    <a href="#delete_volume/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_volume(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_volume/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_volume/2">
+  <div class="detail-header">
+    <a href="#delete_volume/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_volume(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_volume/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_vpc/1">
+  <div class="detail-header">
+    <a href="#delete_vpc/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_vpc(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_vpc/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="delete_vpc/2">
+  <div class="detail-header">
+    <a href="#delete_vpc/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_vpc(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_vpc/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="deregister_image/1">
+  <div class="detail-header">
+    <a href="#deregister_image/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">deregister_image(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.deregister_image/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="deregister_image/2">
+  <div class="detail-header">
+    <a href="#deregister_image/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">deregister_image(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.deregister_image/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_account_attributes/0">
+  <div class="detail-header">
+    <a href="#describe_account_attributes/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_account_attributes()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_account_attributes/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_account_attributes/1">
+  <div class="detail-header">
+    <a href="#describe_account_attributes/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_account_attributes(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_account_attributes/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_availability_zones/0">
+  <div class="detail-header">
+    <a href="#describe_availability_zones/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_availability_zones()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_availability_zones/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_availability_zones/1">
+  <div class="detail-header">
+    <a href="#describe_availability_zones/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_availability_zones(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_availability_zones/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_bundle_tasks/0">
+  <div class="detail-header">
+    <a href="#describe_bundle_tasks/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_bundle_tasks()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_bundle_tasks/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_bundle_tasks/1">
+  <div class="detail-header">
+    <a href="#describe_bundle_tasks/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_bundle_tasks(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_bundle_tasks/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_id_format/0">
+  <div class="detail-header">
+    <a href="#describe_id_format/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_id_format()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_id_format/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_id_format/1">
+  <div class="detail-header">
+    <a href="#describe_id_format/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_id_format(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_id_format/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_image_attribute/2">
+  <div class="detail-header">
+    <a href="#describe_image_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_image_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_image_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_image_attribute/3">
+  <div class="detail-header">
+    <a href="#describe_image_attribute/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_image_attribute(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_image_attribute/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_images/0">
+  <div class="detail-header">
+    <a href="#describe_images/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_images()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_images/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_images/1">
+  <div class="detail-header">
+    <a href="#describe_images/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_images(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_images/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_instance_attribute/2">
+  <div class="detail-header">
+    <a href="#describe_instance_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_instance_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instance_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_instance_attribute/3">
+  <div class="detail-header">
+    <a href="#describe_instance_attribute/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_instance_attribute(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instance_attribute/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_instance_status/0">
+  <div class="detail-header">
+    <a href="#describe_instance_status/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_instance_status()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instance_status/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_instance_status/1">
+  <div class="detail-header">
+    <a href="#describe_instance_status/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_instance_status(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instance_status/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_instances/0">
+  <div class="detail-header">
+    <a href="#describe_instances/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_instances()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instances/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_instances/1">
+  <div class="detail-header">
+    <a href="#describe_instances/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_instances(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_instances/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_key_pairs/0">
+  <div class="detail-header">
+    <a href="#describe_key_pairs/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_key_pairs()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_key_pairs/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_key_pairs/1">
+  <div class="detail-header">
+    <a href="#describe_key_pairs/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_key_pairs(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_key_pairs/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_regions/0">
+  <div class="detail-header">
+    <a href="#describe_regions/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_regions()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_regions/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_regions/1">
+  <div class="detail-header">
+    <a href="#describe_regions/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_regions(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_regions/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_security_groups/0">
+  <div class="detail-header">
+    <a href="#describe_security_groups/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_security_groups()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_security_groups/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_security_groups/1">
+  <div class="detail-header">
+    <a href="#describe_security_groups/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_security_groups(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_security_groups/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_snapshot_attribute/2">
+  <div class="detail-header">
+    <a href="#describe_snapshot_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_snapshot_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_snapshot_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_snapshot_attribute/3">
+  <div class="detail-header">
+    <a href="#describe_snapshot_attribute/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_snapshot_attribute(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_snapshot_attribute/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_snapshots/0">
+  <div class="detail-header">
+    <a href="#describe_snapshots/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_snapshots()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_snapshots/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_snapshots/1">
+  <div class="detail-header">
+    <a href="#describe_snapshots/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_snapshots(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_snapshots/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_subnets/0">
+  <div class="detail-header">
+    <a href="#describe_subnets/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_subnets()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_subnets/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_subnets/1">
+  <div class="detail-header">
+    <a href="#describe_subnets/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_subnets(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_subnets/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_tags/0">
+  <div class="detail-header">
+    <a href="#describe_tags/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_tags()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_tags/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_tags/1">
+  <div class="detail-header">
+    <a href="#describe_tags/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_tags(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_tags/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_volume_attribute/1">
+  <div class="detail-header">
+    <a href="#describe_volume_attribute/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_volume_attribute(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volume_attribute/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_volume_attribute/2">
+  <div class="detail-header">
+    <a href="#describe_volume_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_volume_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volume_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_volume_status/0">
+  <div class="detail-header">
+    <a href="#describe_volume_status/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_volume_status()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volume_status/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_volume_status/1">
+  <div class="detail-header">
+    <a href="#describe_volume_status/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_volume_status(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volume_status/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_volumes/0">
+  <div class="detail-header">
+    <a href="#describe_volumes/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_volumes()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volumes/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_volumes/1">
+  <div class="detail-header">
+    <a href="#describe_volumes/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_volumes(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_volumes/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_vpc_attribute/2">
+  <div class="detail-header">
+    <a href="#describe_vpc_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_vpc_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_vpc_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_vpc_attribute/3">
+  <div class="detail-header">
+    <a href="#describe_vpc_attribute/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_vpc_attribute(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_vpc_attribute/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_vpcs/0">
+  <div class="detail-header">
+    <a href="#describe_vpcs/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_vpcs()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_vpcs/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="describe_vpcs/1">
+  <div class="detail-header">
+    <a href="#describe_vpcs/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">describe_vpcs(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.describe_vpcs/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="detach_volume/1">
+  <div class="detail-header">
+    <a href="#detach_volume/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">detach_volume(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.detach_volume/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="detach_volume/2">
+  <div class="detail-header">
+    <a href="#detach_volume/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">detach_volume(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.detach_volume/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="enable_volume_io/1">
+  <div class="detail-header">
+    <a href="#enable_volume_io/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">enable_volume_io(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.enable_volume_io/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="enable_volume_io/2">
+  <div class="detail-header">
+    <a href="#enable_volume_io/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">enable_volume_io(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.enable_volume_io/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="get_console_output/1">
+  <div class="detail-header">
+    <a href="#get_console_output/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_console_output(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.get_console_output/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="get_console_output/2">
+  <div class="detail-header">
+    <a href="#get_console_output/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_console_output(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.get_console_output/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="get_password_data/1">
+  <div class="detail-header">
+    <a href="#get_password_data/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_password_data(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.get_password_data/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="get_password_data/2">
+  <div class="detail-header">
+    <a href="#get_password_data/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_password_data(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.get_password_data/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="import_key_pair/2">
+  <div class="detail-header">
+    <a href="#import_key_pair/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">import_key_pair(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.import_key_pair/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="import_key_pair/3">
+  <div class="detail-header">
+    <a href="#import_key_pair/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">import_key_pair(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.import_key_pair/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_id_format/2">
+  <div class="detail-header">
+    <a href="#modify_id_format/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_id_format(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_id_format/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_image_attribute/1">
+  <div class="detail-header">
+    <a href="#modify_image_attribute/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_image_attribute(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_image_attribute/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_image_attribute/2">
+  <div class="detail-header">
+    <a href="#modify_image_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_image_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_image_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_instance_attribute/1">
+  <div class="detail-header">
+    <a href="#modify_instance_attribute/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_instance_attribute(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_instance_attribute/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_instance_attribute/2">
+  <div class="detail-header">
+    <a href="#modify_instance_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_instance_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_instance_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_snapshot_attribute/1">
+  <div class="detail-header">
+    <a href="#modify_snapshot_attribute/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_snapshot_attribute(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_snapshot_attribute/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_snapshot_attribute/2">
+  <div class="detail-header">
+    <a href="#modify_snapshot_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_snapshot_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_snapshot_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_subnet_attribute/1">
+  <div class="detail-header">
+    <a href="#modify_subnet_attribute/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_subnet_attribute(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_subnet_attribute/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_subnet_attribute/2">
+  <div class="detail-header">
+    <a href="#modify_subnet_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_subnet_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_subnet_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_volume_attribute/1">
+  <div class="detail-header">
+    <a href="#modify_volume_attribute/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_volume_attribute(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_volume_attribute/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_volume_attribute/2">
+  <div class="detail-header">
+    <a href="#modify_volume_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_volume_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_volume_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_vpc_attribute/1">
+  <div class="detail-header">
+    <a href="#modify_vpc_attribute/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_vpc_attribute(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_vpc_attribute/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="modify_vpc_attribute/2">
+  <div class="detail-header">
+    <a href="#modify_vpc_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">modify_vpc_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.modify_vpc_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="monitor_instances/1">
+  <div class="detail-header">
+    <a href="#monitor_instances/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">monitor_instances(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.monitor_instances/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="monitor_instances/2">
+  <div class="detail-header">
+    <a href="#monitor_instances/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">monitor_instances(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.monitor_instances/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="new/1">
+  <div class="detail-header">
+    <a href="#new/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">new(opts \\ [])</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="reboot_instances/1">
+  <div class="detail-header">
+    <a href="#reboot_instances/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reboot_instances(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reboot_instances/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="reboot_instances/2">
+  <div class="detail-header">
+    <a href="#reboot_instances/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reboot_instances(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reboot_instances/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="register_image/1">
+  <div class="detail-header">
+    <a href="#register_image/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">register_image(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.register_image/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="register_image/2">
+  <div class="detail-header">
+    <a href="#register_image/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">register_image(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.register_image/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="report_instance_status/2">
+  <div class="detail-header">
+    <a href="#report_instance_status/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">report_instance_status(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.report_instance_status/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="report_instance_status/3">
+  <div class="detail-header">
+    <a href="#report_instance_status/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">report_instance_status(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.report_instance_status/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="reset_image_attribute/2">
+  <div class="detail-header">
+    <a href="#reset_image_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reset_image_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_image_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="reset_image_attribute/3">
+  <div class="detail-header">
+    <a href="#reset_image_attribute/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reset_image_attribute(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_image_attribute/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="reset_instance_attribute/2">
+  <div class="detail-header">
+    <a href="#reset_instance_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reset_instance_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_instance_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="reset_instance_attribute/3">
+  <div class="detail-header">
+    <a href="#reset_instance_attribute/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reset_instance_attribute(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_instance_attribute/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="reset_snapshot_attribute/2">
+  <div class="detail-header">
+    <a href="#reset_snapshot_attribute/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reset_snapshot_attribute(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_snapshot_attribute/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="reset_snapshot_attribute/3">
+  <div class="detail-header">
+    <a href="#reset_snapshot_attribute/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reset_snapshot_attribute(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.reset_snapshot_attribute/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="revoke_security_group_egress/1">
+  <div class="detail-header">
+    <a href="#revoke_security_group_egress/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">revoke_security_group_egress(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.revoke_security_group_egress/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="revoke_security_group_egress/2">
+  <div class="detail-header">
+    <a href="#revoke_security_group_egress/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">revoke_security_group_egress(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.revoke_security_group_egress/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="revoke_security_group_ingress/0">
+  <div class="detail-header">
+    <a href="#revoke_security_group_ingress/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">revoke_security_group_ingress()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.revoke_security_group_ingress/0</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="revoke_security_group_ingress/1">
+  <div class="detail-header">
+    <a href="#revoke_security_group_ingress/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">revoke_security_group_ingress(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.revoke_security_group_ingress/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="run_instances/3">
+  <div class="detail-header">
+    <a href="#run_instances/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">run_instances(arg0, arg1, arg2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.run_instances/3</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="run_instances/4">
+  <div class="detail-header">
+    <a href="#run_instances/4" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">run_instances(arg0, arg1, arg2, arg3)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.run_instances/4</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="start_instances/1">
+  <div class="detail-header">
+    <a href="#start_instances/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">start_instances(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.start_instances/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="start_instances/2">
+  <div class="detail-header">
+    <a href="#start_instances/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">start_instances(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.start_instances/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="stop_instances/1">
+  <div class="detail-header">
+    <a href="#stop_instances/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">stop_instances(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.stop_instances/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="stop_instances/2">
+  <div class="detail-header">
+    <a href="#stop_instances/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">stop_instances(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.stop_instances/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="terminate_instances/1">
+  <div class="detail-header">
+    <a href="#terminate_instances/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">terminate_instances(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.terminate_instances/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="terminate_instances/2">
+  <div class="detail-header">
+    <a href="#terminate_instances/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">terminate_instances(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.terminate_instances/2</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="unmonitor_instances/1">
+  <div class="detail-header">
+    <a href="#unmonitor_instances/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">unmonitor_instances(arg0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.unmonitor_instances/1</code>.</p>
+
+  </section>
+</div>
+<div class="detail" id="unmonitor_instances/2">
+  <div class="detail-header">
+    <a href="#unmonitor_instances/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">unmonitor_instances(arg0, arg1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.unmonitor_instances/2</code>.</p>
+
+  </section>
+</div>
+
+        </section>
+      
+
+      
+
+      
+        <footer class="footer">
+      <p>
+        <span class="line">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" rel="help" target="_blank">ExDoc</a> (v0.11.5),
+        </span>
+        <span class="line">
+          designed by
+          <a href="https://twitter.com/dignifiedquire" target="_blank" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+      </p>
+      <button class="night-mode-toggle" />
+    </footer>
+  </div>
+</section>
+</div>
+  <script src="dist/app-918614602f.js"></script>
+  </body>
+</html>
+

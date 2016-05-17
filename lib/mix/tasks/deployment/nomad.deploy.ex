@@ -19,12 +19,12 @@ defmodule Mix.Tasks.Nomad.Deploy do
   @doc """
   Deploy the application in the current project's directory.
   Arguments must be in order:
-  <HOSTNAME/IP> : Required - the remote host hostname or IP address 
-  <PORT>        : Required - the port for the production application
-  <SSH KEY>     : Required - the SSH Key for accessing the remote host,
+  HOSTNAME/IP : Required - the remote host hostname or IP address 
+  PORT        : Required - the port for the production application
+  SSH KEY     : Required - the SSH Key for accessing the remote host,
                              only the filename and it must be in ~/.ssh 
-  <USERNAME>    : Required - the username to use to access the remote host
-  <-f>          : Optional - bypass all the questions during deployment
+  USERNAME    : Required - the username to use to access the remote host
+  -f          : Optional - bypass all the questions during deployment
   """
   def run(args) do
     setup_config args
