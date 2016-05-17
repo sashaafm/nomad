@@ -2,6 +2,9 @@
 
 **Create cloud portable Elixir and Phoenix apps. Write once, use everywhere!**
 
+**Regular API service interation**
+![Imgur](http://i.imgur.com/CKpiFFb.gifv)
+
 ## What is the Nomad Project?
 Nomad is an Open-Source API for Elixir that enables developer to use the most popular cloud providers interchangeabily at will without having to change any of their code. Nomad provides generic API's for cloud services (mainly Virtual Machines, Storage, SQL and JSON datastores). These API's offer the most useful features and functionalities that are common across the same kind of service between cloud providers. They are meant to be simple and user friendly. This enables applications to be portable and allows the migration of applications from one provider to the next.
 

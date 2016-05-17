@@ -3,4 +3,5 @@
 /deps
 erl_crash.dump
 *.ez
-/config
+/config/creds.json
+/config/*.*
