@@ -96,6 +96,12 @@ Where 'creds.json' is the JSON file with your account credentials that you may d
     
          Nomad.Storage.create_storage "bucket_name", "region_name", "bucket_class"
          # => :ok
+
+  4. Combine API functions
+
+         Nomad.Storage.list_storages |> Enum.map(fn storage -> {storage, Nomad.Storage.get_storage_region(storage)} end)
+         [{"bucket_1", "EUROPE-WEST1"}, {"bucket_2", "US"}]
+
   
 #### SQL
 **Specification Docs**
