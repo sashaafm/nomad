@@ -25,6 +25,27 @@ Each adapter will implement the APIs for each cloud service (Virtual Machines, S
 
 Finally through macros and metaprogramming, the adapters logic will be generated for the Nomad main modules (VirtualMachines, SQL, Storage and Datastore modules).
 
+### Roadmap
+#### SDK
+- [x] Storage API 
+- [x] SQL API
+- [ ] Virtual Machines API
+- [ ] Datastore API
+- [ ] Friendly Mode and Full Control Mode (return parsed response vs. complete HTTP response)
+
+
+#### Mix Tasks/Deployment Tool
+- [x] Database Listing
+- [x] Database Creation
+- [x] Database Deletion
+- [x] Database Reboot
+- [ ] Automatic Deployment
+- [ ] Virtual Machine Creation
+- [ ] Virtual Machine Reboot
+- [ ] Virtual Machine Deletion
+- [ ] Storage Creation
+- [ ] Storage Deletion
+
 ### Installation
 
   1. Add nomad to your list of dependencies in mix.exs:
