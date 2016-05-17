@@ -87,10 +87,10 @@ Where 'creds.json' is the JSON file with your account credentials that you may d
   
   2. List files inside a storage
   
-       Nomad.Storage.list_items "bucket_1"
-       # => [".gitignore", "/random/archive/Director-free.zip",
-      "/new_dir/other_dir/some_file.txt", "README.md", "architecture.png",
-      "examples/examples.desktop", "storage_API"]    
+         Nomad.Storage.list_items "bucket_1"
+         # => [".gitignore", "/random/archive/Director-free.zip",
+         "/new_dir/other_dir/some_file.txt", "README.md", "architecture.png",
+         "examples/examples.desktop", "storage_API"]    
         
   3. Create a storage
     
