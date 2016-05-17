@@ -7,17 +7,19 @@ Nomad is an Open-Source API for Elixir that enables developer to use the most po
 
 Moreso Nomad offers Mix Tasks for automatic management of cloud resources for your application. Need a SQL database in the Cloud for your application? Create it and automatically configure your app to use the one you just created. Want to host your Phoenix app in the Cloud? Launch a Virtual Machine through Nomad Mix Tasks and let it automatically deploy a production release of your app in said VM.
 
-**Disclaimer: Nomad is under heavy development**
+This project is my subject for my Master's Thesis but once it's delivered it will be a pure Open Source application.
+
+**Disclaimer: Nomad is under heavy development and is prone to changes**
 
 ### What are the use cases for Nomad?
 The main goal of the Nomad project is to defeat Cloud Vendor Lock-in in the Elixir ecosystem. With the rise in popularity of cloud services Elixir users should not be restricted to one provider and should be able to make the most out of Cloud Computing. Some of the identified use cases are the following (but there are many more):
 
-  1. You're S3 storage for a Phoenix application but a few months later Google has better pricing? Just let Nomad automatically copy your whole S3 bucket to a Google Storage bucket and relaunch the app with Google configurations.
+  1. You're using S3 storage for a Phoenix application but a few months later Google has better pricing? Just let Nomad automatically copy your whole S3 bucket to a Google Storage bucket and relaunch the app with Google configurations.
   2. Recently got a new userbase in a remote region? Launch a new Virtual Machine with your application in the closest available region.
   3. Need a powerful SQL database but you're not really knowledgeable in Cloud related affairs? Just use Nomad's user friendly API and it will get done in a jiffy!
 
 ### How is this achieved?
-Nomad takes a lot of inspiration from Ecto and uses adapters in a similar fashion. First and foremost the needed API functions are identified based on what the cloud providers' APIs have to offer and on what are the most recurring use cases and used functionalities. From this a general Elixir Behaviour is defined. These Behaviours must be implemented by each provider's adapter. 
+Nomad takes a lot of inspiration from [Ecto](https://github.com/elixir-lang/ecto) and uses adapters in a similar fashion. First and foremost the needed API functions are identified based on what the cloud providers' APIs have to offer and on what are the most recurring use cases and used functionalities. From this a general Elixir Behaviour is defined. These Behaviours must be implemented by each provider's adapter. 
 
 Each adapter will implement the APIs for each cloud service (Virtual Machines, SQL, Storage and Datastore). Upon starting up an application a simple config in the desired environment config is needed - mainly cloud account credentials and a key to identify the chosen provider.
 
@@ -28,7 +30,7 @@ Finally through macros and metaprogramming, the adapters logic will be generated
   1. Add nomad to your list of dependencies in mix.exs:
 
           def deps do
-              [{:nomad, "~> 0.5.0"}]
+              [{:nomad, "~> 0.5.1"}]
           end
         or
           def deps do 
@@ -73,6 +75,7 @@ Where 'creds.json' is the JSON file with your account credentials that you may d
 #### Storage
 
 **Specification Docs**
+[Online Documentation](https://hexdocs.pm/nomad/Nomad.Storage.html) - Docs still under development
 
 **Examples**
 
@@ -96,9 +99,15 @@ Where 'creds.json' is the JSON file with your account credentials that you may d
   
 #### SQL
 **Specification Docs**
+[Online Documentation](https://hexdocs.pm/nomad/Nomad.SQL.html) - Docs still under development
+
 **Examples**
+
 #### Virtual Machines
 **Under development**
+
+#### Datastore
+** Under development**
 
 ### Mix Tasks
 
