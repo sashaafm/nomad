@@ -4,6 +4,7 @@
 
 **Regular API service interaction**
 ![Imgur](http://i.imgur.com/CKpiFFb.gif)
+
 Use the same universal API across all cloud providers. Changes are only minimal and at configuration level. No code has to be changed.
 
 ## What is the Nomad Project?
