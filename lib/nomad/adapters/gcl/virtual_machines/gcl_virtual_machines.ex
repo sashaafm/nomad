@@ -44,6 +44,46 @@ if Code.ensure_loaded?(GCloudex) do
           }
         end
 
+        def get_virtual_machine(region, instance, fun \\ &get_instance/3) do 
+          fields = "machineType, networkInterfaces, status"
+          case fun.(region, instance, fields) do 
+            {:ok, res} ->
+              case res.status_code do 
+                200 ->
+                  res.body
+                  |> Poison.decode!
+                  |> gvm(instance, region)
+
+                _   ->
+                  res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        defp gvm(body, instance, region) do
+          ip = body["networkInterfaces"] 
+          |> List.first 
+          |> Map.get("accessConfigs") 
+          |> List.first 
+          |> Map.get("natIP")
+
+          {instance, body["status"], region, ip}
+        end
+
+        def delete_virtual_machine(region, instance, fun \\ &delete_instance/2) do 
+          case fun.(region, instance) do 
+            {:ok, res} ->
+              case res.status_code do 
+                200 -> :ok
+                _   -> res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
       end
     end
   end
