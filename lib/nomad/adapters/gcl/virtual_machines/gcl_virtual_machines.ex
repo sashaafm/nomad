@@ -22,7 +22,7 @@ if Code.ensure_loaded?(GCloudex) do
                   |> Map.get("items")
                   |> Enum.map(fn vm -> get_vm_data(vm) end)
                 _   ->
-                  res |> show_error_message_and_code
+                  res |> show_error_message_and_code(:json)
               end
             {:error, reason} ->
               parse_http_error reason
