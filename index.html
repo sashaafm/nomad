@@ -31,12 +31,19 @@
         <hr>
 
         <section id="main_content">
-          <ol>
-<li># Nomad Tutorials</li>
-</ol>
+          <h1>
+<a id="nomad-tutorials" class="anchor" href="#nomad-tutorials" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nomad Tutorials</h1>
+
+<p><strong>Table of Contents</strong></p>
+
+<ul>
+<li><a href="#installation">Installation and Configuration</a></li>
+<li><a href="#storage_tutorial">Storage Tutorial</a></li>
+</ul>
 
 <h2>
-<a id="installation-and-configuration" class="anchor" href="#installation-and-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation and Configuration</h2>
+<a id="installation-and-configuration" class="anchor" href="#installation-and-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation and Configuration<a name="installation"></a>
+</h2>
 
 <p>To use Nomad first do the following steps:</p>
 
@@ -82,7 +89,7 @@ or
 <pre><code> AWS_ACCESS_KEY_ID=&lt;aws_access_key_id&gt; AWS_SECRET_ACCESS_KEY=&lt;secret_access_key&gt;
 </code></pre>
 
-<p>To use <strong>Google Cloud Platofrm</strong> the following configurations are needed:</p>
+<p>To use <strong>Google Cloud Platform</strong> the following configurations are needed:</p>
 
 <pre><code> config :nomad,
    cloud_provider: :gcl
@@ -96,6 +103,54 @@ or
 </ol>
 
 <p>The atom passed in the <strong>:cloud_provider</strong> key will tell Nomad what API function blocks will need to be generated.</p>
+
+<h2>
+<a id="storage-tutorial" class="anchor" href="#storage-tutorial" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Storage Tutorial<a name="storage_tutorial"></a>
+</h2>
+
+<p>Nomad provides an API for interaction with cloud storage services like Amazon S3 or Google Cloud Storage. For this tutorial let's create a storage bucket, upload a file, delete it and then delete the bucket. We'll be using Google Cloud Storage so be sure to input the necessary configs first. Fire up Nomad in IEx with <code>iex -s mix</code>:</p>
+
+<p>First let's create the storage bucket. This function takes 3 arguments - the name, the region and the storage class.</p>
+
+<pre><code>iex&gt; Nomad.Storage.create_storage "storage_nomad_tutorial", "europe-west1", "STANDARD"
+:ok
+</code></pre>
+
+<p>All right! Let's check if it indeed was created.</p>
+
+<pre><code>iex&gt; Nomad.Storage.list_storages
+["storage_nomad_1", "storage_nomad_2", "storage_nomad_tutorial"]
+</code></pre>
+
+<p>Everything seems correct. Now let's upload a file to our new storage. The <code>Nomad.Storage.put_item</code> also takes 3 arguments - the desired storage name, the filepath of the file we want to upload and the storage path (the directory in the storage where we want to store the file).</p>
+
+<pre><code>iex&gt; Nomad.Storage.put_item "storage_nomad_tutorial", "README.md", "random/tutorial/README.md"
+:ok
+</code></pre>
+
+<p>Success! Let's confirm it was indeed uploaded with the <code>Nomad.Storage.list_items</code> function.</p>
+
+<pre><code>iex&gt; Nomad.Storage.list_items "storage_nomad_tutorial"     
+["random/tutorial/README.md"]
+</code></pre>
+
+<p>There it is. Nomad also creates the directory structure if it doesn't exist. Let's delete it.</p>
+
+<pre><code>iex&gt; Nomad.Storage.delete_item "storage_nomad_tutorial", "random/tutorial/README.md"
+:ok
+iex&gt; Nomad.Storage.list_items "storage_nomad_tutorial"
+[]
+</code></pre>
+
+<p>The file was deleted! Now to finish we'll delete the storage.</p>
+
+<pre><code>iex&gt; Nomad.Storage.delete_storage "storage_nomad_tutorial"
+:ok
+iex&gt; Nomad.Storage.list_storages
+["storage_nomad_1", "storage_nomad_2"]
+</code></pre>
+
+<p>And there it is! Remember that you could have used any other supported cloud provider in the exact same way as long as you change the configurations to the appropriate ones! <strong>No code changes required!</strong></p>
         </section>
 
         <footer>
