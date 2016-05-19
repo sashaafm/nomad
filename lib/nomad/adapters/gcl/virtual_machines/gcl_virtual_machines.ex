@@ -11,6 +11,10 @@ if Code.ensure_loaded?(GCloudex) do
         import GCloudex.ComputeEngine.Client
         import Nomad.Utils
 
+        ########################
+        ### Virtual Machines ###
+        ########################
+
         def list_virtual_machines(region, fun \\ &list_instances/2) do 
           query = %{"fields" => "items"}
           case fun.(region, query) do
@@ -135,6 +139,29 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        #############
+        ### Disks ###
+        #############
+
+        def list_disks(region, fun \\ &GCloudex.ComputeEngine.Client.list_disks/2) do
+          query_params = %{"fields" => }
+          case fun.(region, query_params) do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  res.body
+                _   ->
+                  res |> show_error_message_and_code
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        ##############
+        ### Others ###
+        ##############
 
         def list_regions(fun \\ &GCloudex.ComputeEngine.Client.list_regions/1) do
           query_params = %{"fields" => "items/name, items/zones"}
