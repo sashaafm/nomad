@@ -44,6 +44,10 @@ if Code.ensure_loaded?(GCloudex) do
           }
         end
 
+################################################################################
+######################### TODO: INSERT VIRTUAL MACHINE #########################
+################################################################################
+
         def get_virtual_machine(region, instance, fun \\ &get_instance/3) do 
           fields = "machineType, networkInterfaces, status"
           case fun.(region, instance, fields) do 
@@ -84,6 +88,98 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def start_virtual_machine(region, instance, fun \\ &start_instance/2) do 
+          case fun.(region, instance) do 
+            {:ok, res} ->
+              case res.status_code do 
+                200 -> :ok
+                _   -> res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        def stop_virtual_machine(region, instance, fun \\ &stop_instance/2) do 
+          case fun.(region, instance) do 
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        def reboot_virtual_machine(region, instance, fun \\ &reset_instance/2) do 
+          case fun.(region, instance) do 
+            {:ok, res} ->
+              case res.status_code do 
+                200 -> :ok
+                _   -> res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        def set_virtual_machine_class(region, instance, class, fun \\ &set_machine_type/3) do 
+          case fun.(region, instance, class) do 
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        def list_regions(fun \\ &GCloudex.ComputeEngine.Client.list_regions/1) do
+          query_params = %{"fields" => "items/name, items/zones"}
+          case fun.(query_params) do 
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  res.body
+                  |> Poison.decode! 
+                  |> Map.get("items") 
+                  |> Enum.map(
+                    fn map -> 
+                      {
+                        map["name"], Enum.map(map["zones"], 
+                          fn zone -> 
+                            zone |> String.split("/") |> List.last
+                          end)
+                      } 
+                    end)
+                _   ->
+                  res |> show_error_message_and_code
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        def list_classes(region, fun \\ &list_machine_types/2) do 
+          query_params = %{"fields" => "items/name"}
+          case fun.(region, query_params) do
+            {:ok , res} -> 
+              case res.status_code do 
+                200 ->
+                  res.body
+                  |> Poison.decode! 
+                  |> Map.get("items") 
+                  |> Enum.map(fn map -> map["name"] end)
+
+                _   -> 
+                  res |> show_error_message_and_code              
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
       end
     end
   end
