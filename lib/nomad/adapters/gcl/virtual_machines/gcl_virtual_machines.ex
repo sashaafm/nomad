@@ -24,7 +24,8 @@ if Code.ensure_loaded?(GCloudex) do
                   res.body
                   |> Poison.decode!
                   |> Map.get("items")
-                  |> Enum.map(fn vm -> get_vm_data(vm) end)
+                  |> check_for_nil(&get_vm_data/1)
+
                 _   ->
                   res |> show_error_message_and_code(:json)
               end
@@ -145,14 +146,74 @@ if Code.ensure_loaded?(GCloudex) do
         #############
 
         def list_disks(region, fun \\ &GCloudex.ComputeEngine.Client.list_disks/2) do
-          query_params = %{"fields" => }
+          query_params = %{"fields" => "items(name,sizeGb,sourceImage,status,type)"}
           case fun.(region, query_params) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
                   res.body
+                  |> Poison.decode!
+                  |> Map.get("items")
+                  |> check_for_nil(&ld/1)
                 _   ->
-                  res |> show_error_message_and_code
+                  res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        defp ld(item) do
+          image = item["sourceImage"] |> String.split("/") |> List.last
+          type  = item["type"] |> String.split("/") |> List.last
+          {item["name"], item["sizeGb"], image, item["status"], type}
+        end
+
+        def get_disk(region, disk, fun \\ &GCloudex.ComputeEngine.Client.get_disk/3) do
+          fields = "name,sizeGb,sourceImage,status,type"
+          case fun.(region, disk, fields) do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  res.body
+                  |> Poison.decode!
+                  |> gd
+
+                _   ->
+                  res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        defp gd(disk) do
+          image = disk["sourceImage"] |> String.split("/") |> List.last
+          type  = disk["type"] |> String.split("/") |> List.last
+
+          {disk["name"], disk["sizeGb"], image, disk["status"], type}
+        end
+
+        #!!!!!!!!!!!!!!!!!!!!!! INSERT DISK MISSING !!!!!!!!!!!!!!!!!!!!!!!!!!!#
+
+        def delete_disk(region, disk, fun \\ &GCloudex.ComputeEngine.Client.delete_disk/2) do
+          case fun.(region, disk) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> res |> show_error_message_and_code (:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        def resize_disk(region, disk, size, fun \\ &GCloudex.ComputeEngine.Client.resize_disk/3) do
+          case fun.(region, disk, size) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> res |> show_error_message_and_code(:json)
               end
             {:error, reason} ->
               parse_http_error reason
@@ -207,6 +268,13 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        defp check_for_nil(key, fun) do 
+          case key do 
+            nil -> []
+            _   -> Enum.map(key, fn x -> fun.(x) end)
+          end
+        end        
       end
     end
   end
