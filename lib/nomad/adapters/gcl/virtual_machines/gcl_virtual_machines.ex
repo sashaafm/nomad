@@ -201,7 +201,7 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code (:json)
+                _   -> res |> show_error_message_and_code(:json)
               end
             {:error, reason} ->
               parse_http_error reason
@@ -213,6 +213,22 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
+                _   -> res |> show_error_message_and_code(:json)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        #!!!!!!!!!!!!!!!!!!!!!! ATTACH DISK MISSING ###########################
+
+        def detach_disk(region, instance, disk, fun \\ &GCloudex.ComputeEngine.Client.detach_disk/3) do
+          case fun.(region, instance, disk) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> 
+                  IO.inspect res                  
+                  :ok
                 _   -> res |> show_error_message_and_code(:json)
               end
             {:error, reason} ->
@@ -268,6 +284,10 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        ###############
+        ### Helpers ###
+        ###############
 
         defp check_for_nil(key, fun) do 
           case key do 
