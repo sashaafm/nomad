@@ -52,6 +52,25 @@ if Code.ensure_loaded?(GCloudex) do
 ################################################################################
 ######################### TODO: INSERT VIRTUAL MACHINE #########################
 ################################################################################
+        def create_virtual_machine(region, name, class, disks, networks, fun \\ &insert_instance/2) do
+          resource = %{
+            "name"              => name,
+            "machineType"       => class,
+            "disks"             => disk,
+            "networkInterfaces" => networks
+          }
+
+          case fun.(region, resource) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> res |> show_error_message_and_code(:json) 
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end 
+        end 
+
 
         def get_virtual_machine(region, instance, fun \\ &get_instance/3) do 
           fields = "machineType, networkInterfaces, status"
