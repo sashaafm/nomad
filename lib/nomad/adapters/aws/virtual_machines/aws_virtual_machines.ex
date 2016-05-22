@@ -40,6 +40,32 @@ if Code.ensure_loaded?(ExAws) do
           List.zip([name, status, ip, class])
         end
 
+        def get_virtual_machine(region, instance, fun \\ &list_virtual_machines/0) do
+          res = fun.()
+          cond do
+            is_list(res) ->
+              res
+              |> Enum.filter(fn {a, b, c, d} = vm -> vm = {instance, b, c, d} end)
+              |> List.first
+            true -> res
+          end
+        end
+
+        # The param 'instance' is the id right now, should be allowed to pass name and the
+        # funtion should retrieve the id automatically.
+        def delete_virtual_machine(region, instance, fun \\ &terminate_instances/1) do
+          ids = [instance]
+          case fun.(ids) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> res
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
       end
     end
   end

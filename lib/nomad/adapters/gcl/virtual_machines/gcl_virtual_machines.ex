@@ -56,7 +56,7 @@ if Code.ensure_loaded?(GCloudex) do
           resource = %{
             "name"              => name,
             "machineType"       => class,
-            "disks"             => disk,
+            "disks"             => disks,
             "networkInterfaces" => networks
           }
 
