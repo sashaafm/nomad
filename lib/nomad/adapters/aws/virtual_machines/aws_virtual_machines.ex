@@ -45,7 +45,7 @@ if Code.ensure_loaded?(ExAws) do
           cond do
             is_list(res) ->
               res
-              |> Enum.filter(fn {a, b, c, d} = vm -> vm = {instance, b, c, d} end)
+              |> Enum.filter(fn {a, b, c, d} = vm -> vm == {instance, b, c, d} end)
               |> List.first
             true -> res
           end
@@ -54,7 +54,7 @@ if Code.ensure_loaded?(ExAws) do
         # The param 'instance' is the id right now, should be allowed to pass name and the
         # funtion should retrieve the id automatically.
         def delete_virtual_machine(region, instance, fun \\ &terminate_instances/1) do
-          ids = [instance]
+          ids = [get_instance_id_from_name(instance)]
           case fun.(ids) do
             {:ok, res} ->
               case res.status_code do
@@ -66,6 +66,74 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def start_virtual_machine(region, instance, fun \\ &start_instances/1) do
+          ids = [get_instance_id_from_name(instance)]
+          case fun.(ids) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        def stop_virtual_machine(region, instance, fun \\ &stop_instances/1) do
+          ids = [get_instance_id_from_name(instance)]
+          case fun.(ids) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        def reboot_virtual_machine(region, instance, fun \\ & reboot_instances/1) do
+          ids = [get_instance_id_from_name(instance)]
+          case fun.(ids) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        ###############
+        ### Helpers ###
+        ###############
+
+        defp get_instance_id_from_name(instance) do
+          case describe_instances do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  {_, id} = res.body
+                  |> get_name_and_id
+                  |> Enum.filter(fn {a, b} -> a == instance end)
+                  |> List.first
+
+                  id
+                _   ->
+                  get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
+        defp get_name_and_id(body) do
+          name = body |> Friendly.find("value")      |> Enum.map(fn a -> a.text end)
+          id   = body |> Friendly.find("instanceid") |> Enum.map(fn a -> a.text end)
+
+          List.zip([name, id])
+        end
       end
     end
   end
