@@ -92,7 +92,7 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def reboot_virtual_machine(region, instance, fun \\ & reboot_instances/1) do
+        def reboot_virtual_machine(region, instance, fun \\ &reboot_instances/1) do
           ids = [get_instance_id_from_name(instance)]
           case fun.(ids) do
             {:ok, res} ->
@@ -105,6 +105,50 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def set_virtual_machine_class(region, instance, class, fun \\ &modify_instance_attribute/2) do
+          id   = instance |> get_instance_id_from_name
+          opts = ["InstanceType.Value": class]
+
+          case fun.(id, opts) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        #############
+        ### Disks ###
+        #############
+
+        def list_disks(region, fun \\ &describe_volumes/0) do
+          case fun.() do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  res.body
+                  |> ld 
+                _   ->
+                  get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        defp ld(disk) do
+          names  = disk |> Friendly.find("volumeid")   |> Enum.map(fn a -> a.text end)
+          sizes  = disk |> Friendly.find("size")       |> Enum.map(fn a -> a.text end)
+          images = disk |> Friendly.find("snapshotid") |> Enum.map(fn a -> a.text end)
+          status = disk |> Friendly.find("status")     |> Enum.map(fn a -> a.text end)
+          type   = disk |> Friendly.find("volumetype") |> Enum.map(fn a -> a.text end)
+
+          List.zip [names, sizes, images, status, type] 
+        end
+
         ###############
         ### Helpers ###
         ###############
@@ -113,7 +157,7 @@ if Code.ensure_loaded?(ExAws) do
           case describe_instances do
             {:ok, res} ->
               case res.status_code do
-                200 ->
+                200 -> 
                   {_, id} = res.body
                   |> get_name_and_id
                   |> Enum.filter(fn {a, b} -> a == instance end)
