@@ -140,26 +140,131 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         defp ld(disk) do
-          names  = disk |> Friendly.find("volumeid")   |> Enum.map(fn a -> a.text end)
+          names  = disk |> Friendly.find("volumeid")   |> Enum.map(fn a -> a.text end) |> Enum.uniq
           sizes  = disk |> Friendly.find("size")       |> Enum.map(fn a -> a.text end)
           images = disk |> Friendly.find("snapshotid") |> Enum.map(fn a -> a.text end)
-          status = disk |> Friendly.find("status")     |> Enum.map(fn a -> a.text end)
+          status = disk |> Friendly.find("status")     |> Enum.map(fn a -> a.text end) |> Enum.filter(fn a -> a != "attached" end)
           type   = disk |> Friendly.find("volumetype") |> Enum.map(fn a -> a.text end)
 
           List.zip [names, sizes, images, status, type] 
+        end
+
+        def get_disk(region, disk, fun \\ &list_disks/1) do
+          res = fun.(region)
+
+          cond do
+            is_list(res) ->
+              [vol] = res
+              |> Enum.filter(fn {a, b, c, d, e} = vol -> a == disk end)
+
+              vol
+            true ->
+              res
+          end
+        end
+
+        #!!!!!!!!!!!!!!!!!!!!! INSERT DISK MISSING !!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        def delete_disk(region, disk, fun \\ &delete_volume/1) do
+          vol = 
+            if not String.contains?(disk, "vol-") do
+              get_volume_id_from_name(disk)          
+            else
+              disk
+            end
+
+          case fun.(disk) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        #!!!!!!!!!!!!!!!!! RESIZE DISK NOT POSSIBLE???!!!!!!!!!!!!!!!!!!!!
+
+
+
+        def detach_disk(region, instance, disk, fun \\ &detach_volume/2) do
+          vol =
+            if not String.contains?(disk, "vol-") do
+              get_volume_id_from_name(disk)
+            else
+              disk
+            end
+          instance =
+            if not String.contains?(instance, "i-") do
+              get_instance_id_from_name(instance)
+            else
+              instance
+            end
+
+          opts = ["InstanceId": instance]
+          case fun.(vol, opts) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        ##############
+        ### Others ###
+        ##############
+
+        def list_regions(fun \\ &describe_regions/0) do
+          case fun.() do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  res.body
+                  |> Friendly.find("regionname")
+                  |> Enum.map(fn region -> region.text end)
+                _   ->
+                  get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        def list_classes(fun \\ &lc/0) do
+          fun.()
+        end
+
+        defp lc do
+          [
+            "t2.nano", "t2.micro", "t2.small", "t2.medium", "t2.large",
+            "m4.large", "m4.xlarge", "m4.2xlarge", "m4.4xlarge", "m4.10xlarge",
+            "m3.medium", "m3.large", "m3.xlarge", "m3.2xlarge",
+            "c4.large", "c4.xlarge", "c4.2xlarge", "c4.4xlarge", "c4.8xlarge",
+            "c3.large", "c3.xlarge", "c3.2xlarge", "c3.4xlarge", "c3.8xlarge",
+            "x1.32xlarge",
+            "r3.large", "r3.xlarge", "r3.2xlarge", "r3.4xlarge", "r3.8xlarge",
+            "g2.2xlarge", "g2.8xlarge",
+            "i2.xlarge", "i2.2xlarge", "i2.4xlarge", "i2.8xlarge",
+            "d2.xlarge", "d2.2xlarge", "d2.4xlarge", "d2.8xlarge",
+          ]
         end
 
         ###############
         ### Helpers ###
         ###############
 
+        # REVIEW THIS FUNCTION
         defp get_instance_id_from_name(instance) do
           case describe_instances do
             {:ok, res} ->
               case res.status_code do
                 200 -> 
                   {_, id} = res.body
-                  |> get_name_and_id
+                  |> get_name_and_id(:instance)
                   |> Enum.filter(fn {a, b} -> a == instance end)
                   |> List.first
 
@@ -172,9 +277,33 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        defp get_name_and_id(body) do
+        defp get_volume_id_from_name(name) do
+          case describe_volumes do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  [{_, id}] = res.body
+                  |> get_name_and_id(:volume)
+                  |> Enum.filter(fn {a, b} -> a == name end)
+
+                  id
+                _   ->
+                  get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        defp get_name_and_id(body, :instance) do
           name = body |> Friendly.find("value")      |> Enum.map(fn a -> a.text end)
           id   = body |> Friendly.find("instanceid") |> Enum.map(fn a -> a.text end)
+
+          List.zip([name, id])
+        end
+        defp get_name_and_id(body, :volume) do
+          name = body |> Friendly.find("value")    |> Enum.map(fn a -> a.text end)
+          id   = body |> Friendly.find("volumeid") |> Enum.map(fn a -> a.text end) |> Enum.uniq
 
           List.zip([name, id])
         end
