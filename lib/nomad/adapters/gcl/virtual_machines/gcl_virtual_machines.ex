@@ -227,26 +227,38 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def resize_disk(region, disk, size, fun \\ &GCloudex.ComputeEngine.Client.resize_disk/3) do
-          case fun.(region, disk, size) do
+        #def resize_disk(region, disk, size, fun \\ &GCloudex.ComputeEngine.Client.resize_disk/3) do
+         # case fun.(region, disk, size) do
+         #   {:ok, res} ->
+         #     case res.status_code do
+         #       200 -> :ok
+         #       _   -> res |> show_error_message_and_code(:json)
+         #     end
+         #   {:error, reason} ->
+         #     parse_http_error reason
+         # end
+        #end
+
+        def attach_disk(region, instance, disk, device_name, fun \\ &GCloudex.ComputeEngine.Client.attach_disk/3) do
+          source   = get_disk_self_link(region, disk) 
+          resource = %{"source" => source, "deviceName" => device_name}
+          case fun.(region, instance, resource) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> res#show_error_message_and_code(res) 
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
-
-        #!!!!!!!!!!!!!!!!!!!!!! ATTACH DISK MISSING ###########################
 
         def detach_disk(region, instance, disk, fun \\ &GCloudex.ComputeEngine.Client.detach_disk/3) do
           case fun.(region, instance, disk) do
             {:ok, res} ->
               case res.status_code do
                 200 -> 
-                  IO.inspect res                  
+                  show_error_message_and_code(res)
                   :ok
                 _   -> res |> show_error_message_and_code(:json)
               end
@@ -314,6 +326,23 @@ if Code.ensure_loaded?(GCloudex) do
             _   -> Enum.map(key, fn x -> fun.(x) end)
           end
         end        
+
+        defp get_disk_self_link(region, disk, fun \\ &GCloudex.ComputeEngine.Client.get_disk/3) do
+          fields = "selfLink"
+          case fun.(region, disk, fields) do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  res.body
+                  |> Poison.decode!
+                  |> Map.get("selfLink")
+                _   ->
+                  show_message_and_error_code(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
       end
     end
   end

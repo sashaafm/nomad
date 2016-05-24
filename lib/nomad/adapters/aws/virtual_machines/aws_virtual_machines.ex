@@ -36,7 +36,7 @@ if Code.ensure_loaded?(ExAws) do
           status = data |> Friendly.find("name")         |> Enum.map(fn status -> status.text end)
           ip     = data |> Friendly.find("publicip")     |> Enum.map(fn ip -> ip.text end)
           class  = data |> Friendly.find("instancetype") |> Enum.map(fn class -> class.text end)
-          
+
           List.zip([name, status, ip, class])
         end
 
@@ -130,7 +130,7 @@ if Code.ensure_loaded?(ExAws) do
               case res.status_code do
                 200 ->
                   res.body
-                  |> ld 
+                  |> ld
                 _   ->
                   get_error_message(res)
               end
@@ -146,7 +146,7 @@ if Code.ensure_loaded?(ExAws) do
           status = disk |> Friendly.find("status")     |> Enum.map(fn a -> a.text end) |> Enum.filter(fn a -> a != "attached" end)
           type   = disk |> Friendly.find("volumetype") |> Enum.map(fn a -> a.text end)
 
-          List.zip [names, sizes, images, status, type] 
+          List.zip [names, sizes, images, status, type]
         end
 
         def get_disk(region, disk, fun \\ &list_disks/1) do
@@ -163,12 +163,44 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        #!!!!!!!!!!!!!!!!!!!!! INSERT DISK MISSING !!!!!!!!!!!!!!!!!!!!!!!!!!
+        def create_disk(region, size) when is_integer(size) do
+          cd region, size
+        end
+
+        def create_disk(region, size, image) do
+          cd_with_img region, size, image
+        end
+
+        defp cd(region, size, fun \\ &create_volume/2) do
+          case fun.(region, size) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        defp cd_with_img(region, size, image, fun \\ &create_volume/3) do
+          opts = ["SnapshotId": image]
+          case fun.(region, size, opts) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+
+        end
 
         def delete_disk(region, disk, fun \\ &delete_volume/1) do
-          vol = 
+          vol =
             if not String.contains?(disk, "vol-") do
-              get_volume_id_from_name(disk)          
+              get_volume_id_from_name(disk)
             else
               disk
             end
@@ -183,8 +215,6 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error(reason)
           end
         end
-
-        #!!!!!!!!!!!!!!!!! RESIZE DISK NOT POSSIBLE???!!!!!!!!!!!!!!!!!!!!
 
         def attach_disk(region, instance, disk, device_name, fun \\ &attach_volume/3) do
           case fun.(instance, disk, device_name) do
@@ -272,7 +302,7 @@ if Code.ensure_loaded?(ExAws) do
           case describe_instances do
             {:ok, res} ->
               case res.status_code do
-                200 -> 
+                200 ->
                   {_, id} = res.body
                   |> get_name_and_id(:instance)
                   |> Enum.filter(fn {a, b} -> a == instance end)
