@@ -186,7 +186,17 @@ if Code.ensure_loaded?(ExAws) do
 
         #!!!!!!!!!!!!!!!!! RESIZE DISK NOT POSSIBLE???!!!!!!!!!!!!!!!!!!!!
 
-
+        def attach_disk(region, instance, disk, device_name, fun \\ &attach_volume/3) do
+          case fun.(instance, disk, device_name) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
 
         def detach_disk(region, instance, disk, fun \\ &detach_volume/2) do
           vol =
