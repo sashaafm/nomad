@@ -27,10 +27,10 @@ if Code.ensure_loaded?(GCloudex) do
                   |> check_for_nil(&get_vm_data/1)
 
                 _   ->
-                  res |> show_error_message_and_code(:json)
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -49,25 +49,43 @@ if Code.ensure_loaded?(GCloudex) do
           }
         end
 
-################################################################################
-######################### TODO: INSERT VIRTUAL MACHINE #########################
-################################################################################
-        def create_virtual_machine(region, name, class, disks, networks, fun \\ &insert_instance/2) do
+        def create_virtual_machine(region, class, image, auto_delete, fun \\ &insert_instance/2) do
+          epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
+          name     = "instance-#{epoch}"
           resource = %{
-            "name"              => name,
-            "machineType"       => class,
-            "disks"             => disks,
-            "networkInterfaces" => networks
+            "name"        => name,
+            "machineType" => class,
+            "disks" => [
+              %{
+                "autoDelete"       => auto_delete,
+                "boot"             => true,
+                "type"             => "PERSISTENT",
+                "initializeParams" => %{
+                  "sourceImage" => image
+                }
+              }
+            ],
+            "networkInterfaces" => [
+              %{
+                "accessConfigs" => [
+                %{
+                  "name" => "External NAT",
+                  "type" => "ONE_TO_ONE_NAT"
+                }
+              ],
+                "network" => "global/networks/default"
+              }
+            ]
           }
 
           case fun.(region, resource) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -83,10 +101,10 @@ if Code.ensure_loaded?(GCloudex) do
                   |> gvm(instance, region)
 
                 _   ->
-                  res |> show_error_message_and_code(:json)
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -105,10 +123,10 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -117,10 +135,10 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -129,10 +147,10 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -141,10 +159,10 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -153,10 +171,10 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -175,10 +193,10 @@ if Code.ensure_loaded?(GCloudex) do
                   |> Map.get("items")
                   |> check_for_nil(&ld/1)
                 _   ->
-                  res |> show_error_message_and_code(:json)
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -199,10 +217,10 @@ if Code.ensure_loaded?(GCloudex) do
                   |> gd
 
                 _   ->
-                  res |> show_error_message_and_code(:json)
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -214,16 +232,16 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def create_disk(region, size) do
-          cd region, size  
+          cd region, size
         end
 
         def create_disk(region, size, image) do
-          cd_with_img region, size, image  
+          cd_with_img region, size, image
         end
 
         defp cd(region, size, fun \\ &GCloudex.ComputeEngine.Client.insert_disk/2) do
           epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
-          name     = "disk-#{epoch}" 
+          name     = "disk-#{epoch}"
           resource = %{"name" => name, "sizeGb" => size}
 
           case fun.(region, resource) do
@@ -239,7 +257,7 @@ if Code.ensure_loaded?(GCloudex) do
 
         defp cd_with_img(region, size, image, fun \\ &GCloudex.ComputeEngine.Client.insert_disk/3) do
           epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
-          name     = "disk-#{epoch}" 
+          name     = "disk-#{epoch}"
           resource = %{"name" => name, "sizeGb" => size}
 
           case fun.(region, resource, image) do
@@ -259,10 +277,10 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -285,7 +303,7 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> res#show_error_message_and_code(res)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
               parse_http_error(reason)
@@ -299,10 +317,10 @@ if Code.ensure_loaded?(GCloudex) do
                 200 ->
                   show_error_message_and_code(res)
                   :ok
-                _   -> res |> show_error_message_and_code(:json)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -329,10 +347,10 @@ if Code.ensure_loaded?(GCloudex) do
                       }
                     end)
                 _   ->
-                  res |> show_error_message_and_code
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -348,10 +366,10 @@ if Code.ensure_loaded?(GCloudex) do
                   |> Enum.map(fn map -> map["name"] end)
 
                 _   ->
-                  res |> show_error_message_and_code
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
-              parse_http_error reason
+              parse_http_error(reason)
           end
         end
 
@@ -376,7 +394,7 @@ if Code.ensure_loaded?(GCloudex) do
                   |> Poison.decode!
                   |> Map.get("selfLink")
                 _   ->
-                  show_message_and_error_code(res)
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
               parse_http_error(reason)

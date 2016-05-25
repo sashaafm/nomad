@@ -29,9 +29,9 @@ defmodule Nomad.Mixfile do
       {:httpoison,        "~> 0.8.1"},
       {:table_rex,        "~> 0.8.0"},
       {:friendly,         "~> 1.0.0"},
-      {:goth,             "~> 0.0.1"},
+      {:goth,             "~> 0.1.2"},
       {:ex_aws,           github: "sashaafm/ex_aws", branch: "merge-rds-and-ec2-for-testing", optional: true},
-      {:gcloudex,         "~> 0.4.3", optional: true}     
+      {:gcloudex,         github: "sashaafm/gcloudex", optional: true}     
     ]        
   end
 end
