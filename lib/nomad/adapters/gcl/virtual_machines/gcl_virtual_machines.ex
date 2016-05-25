@@ -213,16 +213,16 @@ if Code.ensure_loaded?(GCloudex) do
           {disk["name"], disk["sizeGb"], image, disk["status"], type}
         end
 
-        def create_disk(region, name, size) do
-          cd region, name, size  
+        def create_disk(region, size) do
+          cd region, size  
         end
 
-        def create_disk(region, name, size, image) do
-          cd_with_img region, name, size, image  
+        def create_disk(region, size, image) do
+          cd_with_img region, size, image  
         end
 
         defp cd(region, size, fun \\ &GCloudex.ComputeEngine.Client.insert_disk/2) do
-          epoch    = {{1970, 1, 1}, {0, 0, 0}} |> :calendar.datetime_to_gregorian_seconds
+          epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
           name     = "disk-#{epoch}" 
           resource = %{"name" => name, "sizeGb" => size}
 
@@ -230,7 +230,7 @@ if Code.ensure_loaded?(GCloudex) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> show_error_message_and_code(res)
+                _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
               parse_http_error(reason)
@@ -238,15 +238,16 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         defp cd_with_img(region, size, image, fun \\ &GCloudex.ComputeEngine.Client.insert_disk/3) do
-          epoch    = {{1970, 1, 1}, {0, 0, 0}} |> :calendar.datetime_to_gregorian_seconds
+          epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
           name     = "disk-#{epoch}" 
           resource = %{"name" => name, "sizeGb" => size}
 
-          case fun.(region, resource) do
+          case fun.(region, resource, image) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
-                _   -> show_error_message_and_code(res)
+                _   ->
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
               parse_http_error(reason)
