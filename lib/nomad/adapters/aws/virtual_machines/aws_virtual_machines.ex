@@ -51,6 +51,24 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def create_virtual_machine(region, class, image, auto_delete, fun \\ &run_instances/4) do
+          auto_delete = if auto_delete == true do "terminate" else "stop" end
+          opts        = [
+            "InstanceType":                      class,
+            "InstanceInitiatedShutdownBehavior": auto_delete,
+            "Placement.AvailabilityZone":       region
+          ]
+          case fun.(image, 1, 1, opts) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
         # The param 'instance' is the id right now, should be allowed to pass name and the
         # funtion should retrieve the id automatically.
         def delete_virtual_machine(region, instance, fun \\ &terminate_instances/1) do
