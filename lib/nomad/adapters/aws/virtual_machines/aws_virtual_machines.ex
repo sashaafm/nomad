@@ -56,7 +56,7 @@ if Code.ensure_loaded?(ExAws) do
           opts        = [
             "InstanceType":                      class,
             "InstanceInitiatedShutdownBehavior": auto_delete,
-            "Placement.AvailabilityZone":       region
+            "Placement.AvailabilityZone":        region
           ]
           case fun.(image, 1, 1, opts) do
             {:ok, res} ->
