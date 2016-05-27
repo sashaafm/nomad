@@ -11,6 +11,8 @@ if Code.ensure_loaded?(GCloudex) do
         import GCloudex.ComputeEngine.Client
         import Nomad.Utils
 
+        @behaviour NomadVirtualMachines
+
         ########################
         ### Virtual Machines ###
         ########################

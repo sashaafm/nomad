@@ -12,10 +12,11 @@ if Code.ensure_loaded?(ExAws) do
         use ExAws.EC2.Client
         import Nomad.Utils
 
+        @behaviour NomadVirtualMachines
+
         def config_root do
           Application.get_all_env(:my_aws_config_root)
         end
-
 
         def list_virtual_machines(region, fun \\ &ExAws.EC2.Impl.describe_instances/1) do
           case fun.(ExAws.EC2.new(region: region)) do
@@ -192,7 +193,7 @@ if Code.ensure_loaded?(ExAws) do
           cd zone, size
         end
 
-        def create_disk(zone, size, image) do
+        def create_disk(zone, size, image) when is_integer(size) do
           cd_with_img zone, size, image
         end
 
