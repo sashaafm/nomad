@@ -70,7 +70,7 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def get_region_from_zone(zone) do
+        defp get_region_from_zone(zone) do
           list_regions
           |> Enum.filter(fn region -> String.contains?(zone, region) end)
           |> List.first

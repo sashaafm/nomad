@@ -284,18 +284,6 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        #def resize_disk(region, disk, size, fun \\ &GCloudex.ComputeEngine.Client.resize_disk/3) do
-         # case fun.(region, disk, size) do
-         #   {:ok, res} ->
-         #     case res.status_code do
-         #       200 -> :ok
-         #       _   -> res |> show_error_message_and_code(:json)
-         #     end
-         #   {:error, reason} ->
-         #     parse_http_error reason
-         # end
-        #end
-
         def attach_disk(region, instance, disk, device_name, fun \\ &GCloudex.ComputeEngine.Client.attach_disk/3) do
           source   = get_disk_self_link(region, disk)
           resource = %{"source" => source, "deviceName" => device_name}
@@ -354,7 +342,18 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        def list_classes(region, fun \\ &list_machine_types/2) do
+        def list_classes(fun \\ &lc/1) do
+          list = __MODULE__.list_regions
+          |> Enum.map(fn {a, b} -> b end)
+          |> List.flatten
+
+          list
+          |> Enum.map(fn x -> lc(x) end)
+          |> List.flatten
+          |> Enum.uniq
+        end
+
+        defp lc(region, fun \\ &list_machine_types/2) do
           query_params = %{"fields" => "items/name"}
           case fun.(region, query_params) do
             {:ok , res} ->
