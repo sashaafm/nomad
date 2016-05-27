@@ -16,8 +16,9 @@ if Code.ensure_loaded?(ExAws) do
           Application.get_all_env(:my_aws_config_root)
         end
 
-        def list_virtual_machines(fun \\ &describe_instances/0) do
-          case fun.() do
+
+        def list_virtual_machines(region, fun \\ &ExAws.EC2.Impl.describe_instances/1) do
+          case fun.(ExAws.EC2.new(region: region)) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -40,8 +41,8 @@ if Code.ensure_loaded?(ExAws) do
           List.zip([name, status, ip, class])
         end
 
-        def get_virtual_machine(region, instance, fun \\ &list_virtual_machines/0) do
-          res = fun.()
+        def get_virtual_machine(region, instance, fun \\ &list_virtual_machines/1) do
+          res = fun.(region)
           cond do
             is_list(res) ->
               res
@@ -51,14 +52,14 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def create_virtual_machine(region, class, image, auto_delete, fun \\ &run_instances/4) do
+        def create_virtual_machine(zone, class, image, auto_delete, fun \\ &ExAws.EC2.Impl.run_instances/5) do
           auto_delete = if auto_delete == true do "terminate" else "stop" end
           opts        = [
             "InstanceType":                      class,
             "InstanceInitiatedShutdownBehavior": auto_delete,
-            "Placement.AvailabilityZone":        region
+            "Placement.AvailabilityZone":        zone
           ]
-          case fun.(image, 1, 1, opts) do
+          case fun.(ExAws.EC2.new(region: get_region_from_zone(zone)), image, 1, 1, opts) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -67,26 +68,19 @@ if Code.ensure_loaded?(ExAws) do
             {:error, reason} ->
               parse_http_error(reason)
           end
+        end
+
+        def get_region_from_zone(zone) do
+          list_regions
+          |> Enum.filter(fn region -> String.contains?(zone, region) end)
+          |> List.first
         end
 
         # The param 'instance' is the id right now, should be allowed to pass name and the
         # funtion should retrieve the id automatically.
-        def delete_virtual_machine(region, instance, fun \\ &terminate_instances/1) do
-          ids = [get_instance_id_from_name(instance)]
-          case fun.(ids) do
-            {:ok, res} ->
-              case res.status_code do
-                200 -> res
-                _   -> get_error_message(res)
-              end
-            {:error, reason} ->
-              parse_http_error(reason)
-          end
-        end
-
-        def start_virtual_machine(region, instance, fun \\ &start_instances/1) do
-          ids = [get_instance_id_from_name(instance)]
-          case fun.(ids) do
+        def delete_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.terminate_instances/2) do
+          ids = [get_instance_id_from_name(region, instance)]
+          case fun.(ExAws.EC2.new(region: region), ids) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -97,9 +91,9 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def stop_virtual_machine(region, instance, fun \\ &stop_instances/1) do
-          ids = [get_instance_id_from_name(instance)]
-          case fun.(ids) do
+        def start_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.start_instances/2) do
+          ids = [get_instance_id_from_name(region, instance)]
+          case fun.(ExAws.EC2.new(region: region), ids) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -110,9 +104,9 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def reboot_virtual_machine(region, instance, fun \\ &reboot_instances/1) do
-          ids = [get_instance_id_from_name(instance)]
-          case fun.(ids) do
+        def stop_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.stop_instances/2) do
+          ids = [get_instance_id_from_name(region, instance)]
+          case fun.(ExAws.EC2.new(region: region), ids) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -123,11 +117,24 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def set_virtual_machine_class(region, instance, class, fun \\ &modify_instance_attribute/2) do
-          id   = instance |> get_instance_id_from_name
+        def reboot_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.reboot_instances/2) do
+          ids = [get_instance_id_from_name(region, instance)]
+          case fun.(ExAws.EC2.new(region: region), ids) do
+            {:ok, res} ->
+              case res.status_code do
+                200 -> :ok
+                _   -> get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        def set_virtual_machine_class(region, instance, class, fun \\ &ExAws.EC2.Impl.modify_instance_attribute/3) do
+          id   = get_instance_id_from_name(region, instance)
           opts = ["InstanceType.Value": class]
 
-          case fun.(id, opts) do
+          case fun.(ExAws.EC2.new(region: region), id, opts) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -142,8 +149,8 @@ if Code.ensure_loaded?(ExAws) do
         ### Disks ###
         #############
 
-        def list_disks(region, fun \\ &describe_volumes/0) do
-          case fun.() do
+        def list_disks(region, fun \\ &ExAws.EC2.Impl.describe_volumes/1) do
+          case fun.(ExAws.EC2.new(region: region)) do
             {:ok, res} ->
               case res.status_code do
                 200 ->
@@ -181,12 +188,12 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def create_disk(region, size) when is_integer(size) do
-          cd region, size
+        def create_disk(zone, size) when is_integer(size) do
+          cd zone, size
         end
 
-        def create_disk(region, size, image) do
-          cd_with_img region, size, image
+        def create_disk(zone, size, image) do
+          cd_with_img zone, size, image
         end
 
         defp cd(region, size, fun \\ &create_volume/2) do
@@ -215,15 +222,15 @@ if Code.ensure_loaded?(ExAws) do
 
         end
 
-        def delete_disk(region, disk, fun \\ &delete_volume/1) do
+        def delete_disk(region, disk, fun \\ &ExAws.EC2.Impl.delete_volume/2) do
           vol =
             if not String.contains?(disk, "vol-") do
-              get_volume_id_from_name(disk)
+              get_volume_id_from_name(region, disk)
             else
               disk
             end
 
-          case fun.(disk) do
+          case fun.(ExAws.EC2.new(region: region), vol) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -234,8 +241,21 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def attach_disk(region, instance, disk, device_name, fun \\ &attach_volume/3) do
-          case fun.(instance, disk, device_name) do
+        def attach_disk(region, instance, disk, device_name, fun \\ &ExAws.EC2.Impl.attach_volume/4) do
+          vol =
+          if not String.contains?(disk, "vol-") do
+            get_volume_id_from_name(region, disk)
+          else
+            disk
+          end
+          instance =
+          if not String.contains?(instance, "i-") do
+            get_instance_id_from_name(region, instance)
+          else
+            instance
+          end
+
+          case fun.(ExAws.EC2.new(region: region), instance, disk, device_name) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -246,22 +266,22 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def detach_disk(region, instance, disk, fun \\ &detach_volume/2) do
+        def detach_disk(region, instance, disk, fun \\ &ExAws.EC2.Impl.detach_volume/3) do
           vol =
             if not String.contains?(disk, "vol-") do
-              get_volume_id_from_name(disk)
+              get_volume_id_from_name(region, disk)
             else
               disk
             end
           instance =
             if not String.contains?(instance, "i-") do
-              get_instance_id_from_name(instance)
+              get_instance_id_from_name(region, instance)
             else
               instance
             end
 
           opts = ["InstanceId": instance]
-          case fun.(vol, opts) do
+          case fun.(ExAws.EC2.new(region: region), vol, opts) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -335,8 +355,45 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        defp get_instance_id_from_name(region, instance) do
+          case ExAws.EC2.new(region: region) |> ExAws.EC2.Impl.describe_instances do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  {_, id} = res.body
+                  |> get_name_and_id(:instance)
+                  |> Enum.filter(fn {a, b} -> a == instance end)
+                  |> List.first
+
+                  id
+                _   ->
+                  get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error reason
+          end
+        end
+
         defp get_volume_id_from_name(name) do
           case describe_volumes do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  [{_, id}] = res.body
+                  |> get_name_and_id(:volume)
+                  |> Enum.filter(fn {a, b} -> a == name end)
+
+                  id
+                _   ->
+                  get_error_message(res)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
+        end
+
+        defp get_volume_id_from_name(region, name) do
+          case ExAws.EC2.new(region: region) |> ExAws.EC2.Impl.describe_volumes do
             {:ok, res} ->
               case res.status_code do
                 200 ->
