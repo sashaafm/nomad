@@ -112,7 +112,9 @@ if Code.ensure_loaded?(ExAws) do
           engine   = settings.engine
           settings = Map.put(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
 
-          Helper.create_sg_with_local_public_ip_allowed(instance, engine)
+          if Mix.env() != :test do
+            Helper.create_sg_with_local_public_ip_allowed(instance, engine)
+          end
 
           case fun.(instance, username, password, storage, tier, engine, settings) do 
             {:ok, res} ->
