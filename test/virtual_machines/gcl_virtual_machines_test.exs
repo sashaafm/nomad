@@ -2,25 +2,162 @@ defmodule Test.Dummy.GCLVirtualMachinesClient do
   use Nomad.GCL.VirtualMachines, :gcl
 
   def list_virtual_machines_test(state) do
+    {:ok, content} = File.read(__DIR__ <> "/response_samples/list_virtual_machine_gcl.rsp")
+    content = content |> Poison.decode!
+
     fn(_a, _b) ->
       case state do
-        200 ->
-{:ok,
- %HTTPoison.Response{body: "{\n \"kind\": \"compute#instanceList\",\n \"selfLink\": \"https://www.googleapis.com/compute/v1/projects/vocal-raceway-124010/zones/europe-west1-d/instances\",\n \"id\": \"projects/vocal-raceway-124010/zones/europe-west1-d/instances\",\n \"items\": [\n  {\n   \"kind\": \"compute#instance\",\n   \"id\": \"909193924032362522\",\n   \"creationTimestamp\": \"2016-05-28T09:27:33.635-07:00\",\n   \"zone\": \"https://www.googleapis.com/compute/v1/projects/vocal-raceway-124010/zones/europe-west1-d\",\n   \"status\": \"RUNNING\",\n   \"name\": \"instance-1\",\n   \"description\": \"\",\n   \"tags\": {\n    \"fingerprint\": \"42WmSpB8rSM=\"\n   },\n   \"machineType\": \"https://www.googleapis.com/compute/v1/projects/vocal-raceway-124010/zones/europe-west1-d/machineTypes/f1-micro\",\n   \"canIpForward\": false,\n   \"networkInterfaces\": [\n    {\n     \"network\": \"https://www.googleapis.com/compute/v1/projects/vocal-raceway-124010/global/networks/default\",\n     \"subnetwork\": \"https://www.googleapis.com/compute/v1/projects/vocal-raceway-124010/regions/europe-west1/subnetworks/default-98c87532e4a272cc\",\n     \"networkIP\": \"10.132.0.2\",\n     \"name\": \"nic0\",\n     \"accessConfigs\": [\n      {\n       \"kind\": \"compute#accessConfig\",\n       \"type\": \"ONE_TO_ONE_NAT\",\n       \"name\": \"External NAT\",\n       \"natIP\": \"130.211.106.11\"\n      }\n     ]\n    }\n   ],\n   \"disks\": [\n    {\n     \"kind\": \"compute#attachedDisk\",\n     \"index\": 0,\n     \"type\": \"PERSISTENT\",\n     \"mode\": \"READ_WRITE\",\n     \"source\": \"https://www.googleapis.com/compute/v1/projects/vocal-raceway-124010/zones/europe-west1-d/disks/instance-1\",\n     \"deviceName\": \"instance-1\",\n     \"boot\": true,\n     \"autoDelete\": true,\n     \"licenses\": [\n      \"https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/licenses/ubuntu-1604-xenial\"\n     ],\n     \"interface\": \"SCSI\"\n    }\n   ],\n   \"metadata\": {\n    \"kind\": \"compute#metadata\",\n    \"fingerprint\": \"7IGWSVjKT5M=\"\n   },\n   \"serviceAccounts\": [\n    {\n     \"email\": \"google-cloud-storage@vocal-raceway-124010.iam.gserviceaccount.com\",\n     \"scopes\": [\n      \"https://www.googleapis.com/auth/cloud-platform\"\n     ]\n    }\n   ],\n   \"selfLink\": \"https://www.googleapis.com/compute/v1/projects/vocal-raceway-124010/zones/europe-west1-d/instances/instance-1\",\n   \"scheduling\": {\n    \"onHostMaintenance\": \"MIGRATE\",\n    \"automaticRestart\": true,\n    \"preemptible\": false\n   },\n   \"cpuPlatform\": \"Intel Haswell\"\n  }\n ]\n}\n",
-  headers: [{"Expires", "Sat, 28 May 2016 16:28:07 GMT"},
-   {"Date", "Sat, 28 May 2016 16:28:07 GMT"},
-   {"Cache-Control", "private, max-age=0, must-revalidate, no-transform"},
-   {"ETag", "\"gX2CJOt7BbRCBP6GcIEKUc2LWGY/FXssKwHtcxoSIPWnzhZw6vH5DGs\""},
-   {"Vary", "Origin"}, {"Vary", "X-Origin"},
-   {"Content-Type", "application/json; charset=UTF-8"},
-   {"X-Content-Type-Options", "nosniff"}, {"X-Frame-Options", "SAMEORIGIN"},
-   {"X-XSS-Protection", "1; mode=block"}, {"Content-Length", "2359"},
-   {"Server", "GSE"}, {"Alternate-Protocol", "443:quic"},
-   {"Alt-Svc",
-    "quic=\":443\"; ma=2592000; v=\"34,33,32,31,30,29,28,27,26,25\""}],
-  status_code: 200}}
-
+        200 -> {:ok, %{body: content, status_code: 200}}
         555 -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def get_virtual_machine_test(state) do
+    {:ok, content} = File.read(__DIR__ <> "/response_samples/get_virtual_machine_gcl.rsp")
+    content = content |> Poison.decode!
+
+    fn(_a, _b, _c) ->
+      case state do
+        200    -> {:ok, %{body: content, status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def create_virtual_machine_test(state) do
+    fn(_a, _b) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def delete_virtual_machine_test(state) do
+    fn(_a, _b) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def start_virtual_machine_test(state) do
+    fn(_a, _b) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def stop_virtual_machine_test(state) do
+    fn(_a, _b) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def reboot_virtual_machine_test(state) do
+    fn(_a, _b) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def set_virtual_machine_class_test(state) do
+    fn(_a, _b, _c) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def list_disks_test(state) do
+    {:ok, content} = File.read(__DIR__ <> "/response_samples/list_disks_gcl.rsp")
+    content = content |> Poison.decode!
+
+    fn(_a, _b) ->
+      case state do
+        200    -> {:ok, %{body: content, status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def get_disk_test(state) do
+    {:ok, content} = File.read(__DIR__ <> "/response_samples/get_disk_gcl.rsp")
+    content        = content |> Poison.decode!
+
+    fn(_a, _b, _c) ->
+      case state do
+        200    -> {:ok, %{body: content, status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def create_disk_test(state) do
+    fn(_a, _b) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def create_disk_test(state) do
+    fn(_a, _b, _c) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def delete_disk_test(state) do
+    fn(_a, _b) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def attach_disk_test(state) do
+    fn(_a, _b, _c) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
+        :error -> http_error
+      end
+    end
+  end
+
+  def detach_disk_test(state) do
+    fn(_a, _b, _c) ->
+      case state do
+        200    -> {:ok, %{status_code: 200}}
+        555    -> code_555
         :error -> http_error
       end
     end
@@ -50,7 +187,7 @@ defmodule GCLVirtualMachinesTest do
   end
 
   test "list_virtual_machines 555" do
-    expected = "555: Error Message"
+    expected = get_error_message
 
     assert expected == list_virtual_machines "dummyRegion", Dummy.list_virtual_machines_test 555
   end
@@ -58,6 +195,218 @@ defmodule GCLVirtualMachinesTest do
   test "list_virtual_machines error" do
     expected = "reason"
 
-    assert expected == list_virtual_machines "dummyRegion", Dummy.list_virtual_machines_test :error 
+    assert expected == list_virtual_machines "dummyRegion", Dummy.list_virtual_machines_test :error
   end
+
+  test "get_virtual_machine 200" do
+    expected = {"dummyInstance", "RUNNING", "f1-micro", "130.211.106.11"}
+
+    assert expected == get_virtual_machine "dummyRegion", "dummyInstance", Dummy.get_virtual_machine_test 200
+  end
+
+  test "get_virtual_machine 555" do
+    expected = get_error_message
+
+    assert expected == get_virtual_machine "dummyRegion", "dummyInstance", Dummy.get_virtual_machine_test 555
+  end
+
+  test "get_virtual_machine error" do
+    expected = "reason"
+
+    assert expected == get_virtual_machine "dummyRegion", "dummyInstance", Dummy.get_virtual_machine_test :error
+  end
+
+  test "create_virtual_machine 200" do
+    expected = :ok
+
+    assert expected == create_virtual_machine "region", "class", "image", true, Dummy.create_virtual_machine_test(200)
+  end
+
+  test "create_virtual_machine 555" do
+    expected = get_error_message
+
+    assert expected == create_virtual_machine "region", "class", "image", true, Dummy.create_virtual_machine_test(555)
+  end
+
+  test "create_virtual_machine error" do
+    expected = "reason"
+
+    assert expected == create_virtual_machine "region", "class", "image", true, Dummy.create_virtual_machine_test(:error)
+  end
+
+  test "delete_virtual_machine 200" do
+    expected = :ok
+
+    assert expected == delete_virtual_machine "region", "instance", Dummy.delete_virtual_machine_test(200)
+  end
+
+  test "delete_virtual_machine 555" do
+    expected = get_error_message
+
+    assert expected == delete_virtual_machine "region", "instance", Dummy.delete_virtual_machine_test(555)
+  end
+
+  test "start_virtual_machine 200" do
+    expected = :ok
+
+    assert expected == start_virtual_machine "region", "instance", Dummy.start_virtual_machine_test(200)
+  end
+
+  test "start_virtual_machine 555" do
+    expected = get_error_message
+
+    assert expected == start_virtual_machine "region", "instance", Dummy.start_virtual_machine_test(555)
+  end
+
+  test "start_virtual_machine error" do
+    expected = "reason"
+
+    assert expected == start_virtual_machine "region", "instance", Dummy.start_virtual_machine_test(:error)
+  end
+
+  test "stop_virtual_machine 200" do
+    expected = :ok
+
+    assert expected == stop_virtual_machine "region", "instance", Dummy.stop_virtual_machine_test(200)
+  end
+
+  test "stop_virtual_machine 555" do
+    expected = get_error_message
+
+    assert expected == stop_virtual_machine "region", "instance", Dummy.stop_virtual_machine_test(555)
+  end
+
+  test "stop_virtual_machine error" do
+    expected = "reason"
+
+    assert expected == stop_virtual_machine "region", "instance", Dummy.stop_virtual_machine_test(:error)
+  end
+
+  test "reboot_virtual_machine 200" do
+    expected = :ok
+
+    assert expected == reboot_virtual_machine "region", "instance", Dummy.reboot_virtual_machine_test(200)
+  end
+
+  test "reboot_virtual_machine 555" do
+    expected = get_error_message
+
+    assert expected == reboot_virtual_machine "region", "instance", Dummy.reboot_virtual_machine_test(555)
+  end
+
+  test "reboot_virtual_machine error" do
+    expected = "reason"
+
+    assert expected == reboot_virtual_machine "region", "instance", Dummy.reboot_virtual_machine_test(:error)
+  end
+
+  test "set_virtual_machine_class 200" do
+    expected = :ok
+
+    assert expected == set_virtual_machine_class "region", "instance", "class", Dummy.set_virtual_machine_class_test(200)
+  end
+
+  test "set_virtual_machine_class 555" do
+    expected = get_error_message
+
+    assert expected == set_virtual_machine_class "region", "instance", "class", Dummy.set_virtual_machine_class_test(555)
+  end
+
+  test "set_virtual_machine_class error" do
+    expected = "reason"
+
+    assert expected == set_virtual_machine_class "region", "instance", "class", Dummy.set_virtual_machine_class_test(:error)
+  end
+
+  test "list_disks 200" do
+    expected = [{"instance-1", "10", "debian-8-jessie-v20160511", "READY", "pd-standard"}]
+
+    assert expected == __MODULE__.list_disks "region", Dummy.list_disks_test(200)
+  end
+
+  test "list_disks 555" do
+    expected = get_error_message
+
+    assert expected == __MODULE__.list_disks "region", Dummy.list_disks_test(555)
+  end
+
+  test "list_disks error" do
+    expected = "reason"
+
+    assert expected == __MODULE__.list_disks "region", Dummy.list_disks_test(:error)
+  end
+
+  test "get_disk 200" do
+    expected = {"instance-1", "10", "debian-8-jessie-v20160511", "READY", "pd-standard"}
+
+    assert expected == __MODULE__.get_disk "region", "disk", Dummy.get_disk_test(200)
+  end
+
+  test "get_disk 555" do
+    expected = get_error_message
+
+    assert expected == __MODULE__.get_disk "region", "disk", Dummy.get_disk_test(555)
+  end
+
+  test "get_disk error" do
+    expected = "reason"
+
+    assert expected == __MODULE__.get_disk "region", "disk", Dummy.get_disk_test(:error)
+  end
+
+  test "delete_disk 200" do
+    expected = :ok
+
+    assert expected == __MODULE__.delete_disk "region", "disk", Dummy.delete_disk_test(200)
+  end
+
+  test "delete_disk 555" do
+    expected = get_error_message
+
+    assert expected == __MODULE__.delete_disk "region", "disk", Dummy.delete_disk_test(555)
+  end
+
+  test "delete_disk error" do
+    expected = "reason"
+
+    assert expected == __MODULE__.delete_disk "region", "disk", Dummy.delete_disk_test(:error)
+  end
+
+  test "attach_disk 200" do
+    expected = :ok
+
+    assert expected == __MODULE__.attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(200)
+  end
+
+  test "attach_disk 555" do
+    expected = get_error_message
+
+    assert expected == __MODULE__.attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(555)
+  end
+
+  test "attach_disk error" do
+    expected = "reason"
+
+    assert expected == __MODULE__.attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(:error)
+  end
+
+  test "detach_disk 200" do
+    expected = :ok
+
+    assert expected == __MODULE__.detach_disk "region", "instance", "disk", Dummy.detach_disk_test(200)
+  end
+
+  test "detach_disk 555" do
+    expected = get_error_message
+
+    assert expected == __MODULE__.detach_disk "region", "instance", "disk", Dummy.detach_disk_test(555)
+  end
+
+  test "detach_disk error" do
+    expected = "reason"
+
+    assert expected == __MODULE__.detach_disk "region", "instance", "disk", Dummy.detach_disk_test(:error)
+  end
+
+  defp get_error_message, do: "555: Error Message"
 end

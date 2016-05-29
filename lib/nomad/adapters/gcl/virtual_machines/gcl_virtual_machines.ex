@@ -100,7 +100,7 @@ if Code.ensure_loaded?(GCloudex) do
                 200 ->
                   res.body
                   |> Poison.decode!
-                  |> gvm(instance, region)
+                  |> gvm(instance)
 
                 _   ->
                   show_error_message_and_code(res, :json)
@@ -110,14 +110,14 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
-        defp gvm(body, instance, region) do
+        defp gvm(body, instance) do
           ip = body["networkInterfaces"]
           |> List.first
           |> Map.get("accessConfigs")
           |> List.first
           |> Map.get("natIP")
 
-          {instance, body["status"], region, ip}
+          {instance, body["status"], body["machineType"] |> String.split("/") |> List.last, ip}
         end
 
         def delete_virtual_machine(region, instance, fun \\ &delete_instance/2) do
@@ -304,9 +304,7 @@ if Code.ensure_loaded?(GCloudex) do
           case fun.(region, instance, disk) do
             {:ok, res} ->
               case res.status_code do
-                200 ->
-                  show_error_message_and_code(res)
-                  :ok
+                200 -> :ok
                 _   -> show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
