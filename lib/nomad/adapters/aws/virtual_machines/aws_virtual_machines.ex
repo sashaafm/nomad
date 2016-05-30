@@ -34,7 +34,7 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         defp get_vm_data(data) do
-          name   = data |> Friendly.find("value")        |> Enum.map(fn name -> name.text end)
+          name   = data |> Friendly.find("instanceid")   |> Enum.map(fn name -> name.text end)
           status = data |> Friendly.find("name")         |> Enum.map(fn status -> status.text end)
           ip     = data |> Friendly.find("publicip")     |> Enum.map(fn ip -> ip.text end)
           class  = data |> Friendly.find("instancetype") |> Enum.map(fn class -> class.text end)
@@ -44,6 +44,7 @@ if Code.ensure_loaded?(ExAws) do
 
         def get_virtual_machine(region, instance, fun \\ &list_virtual_machines/1) do
           res = fun.(region)
+          IO.inspect fun.(region)
           cond do
             is_list(res) ->
               res
@@ -77,11 +78,8 @@ if Code.ensure_loaded?(ExAws) do
           |> List.first
         end
 
-        # The param 'instance' is the id right now, should be allowed to pass name and the
-        # funtion should retrieve the id automatically.
         def delete_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.terminate_instances/2) do
-          ids = [get_instance_id_from_name(region, instance)]
-          case fun.(ExAws.EC2.new(region: region), ids) do
+          case fun.(ExAws.EC2.new(region: region), [instance]) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -93,8 +91,7 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def start_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.start_instances/2) do
-          ids = [get_instance_id_from_name(region, instance)]
-          case fun.(ExAws.EC2.new(region: region), ids) do
+          case fun.(ExAws.EC2.new(region: region), [instance]) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -106,8 +103,7 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def stop_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.stop_instances/2) do
-          ids = [get_instance_id_from_name(region, instance)]
-          case fun.(ExAws.EC2.new(region: region), ids) do
+          case fun.(ExAws.EC2.new(region: region), [instance]) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -119,8 +115,7 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def reboot_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.reboot_instances/2) do
-          ids = [get_instance_id_from_name(region, instance)]
-          case fun.(ExAws.EC2.new(region: region), ids) do
+          case fun.(ExAws.EC2.new(region: region), [instance]) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -132,10 +127,9 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def set_virtual_machine_class(region, instance, class, fun \\ &ExAws.EC2.Impl.modify_instance_attribute/3) do
-          id   = get_instance_id_from_name(region, instance)
           opts = ["InstanceType.Value": class]
 
-          case fun.(ExAws.EC2.new(region: region), id, opts) do
+          case fun.(ExAws.EC2.new(region: region), instance, opts) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -224,14 +218,7 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def delete_disk(region, disk, fun \\ &ExAws.EC2.Impl.delete_volume/2) do
-          vol =
-            if not String.contains?(disk, "vol-") do
-              get_volume_id_from_name(region, disk)
-            else
-              disk
-            end
-
-          case fun.(ExAws.EC2.new(region: region), vol) do
+          case fun.(ExAws.EC2.new(region: region), disk) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
@@ -243,19 +230,6 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def attach_disk(region, instance, disk, device_name, fun \\ &ExAws.EC2.Impl.attach_volume/4) do
-          vol =
-          if not String.contains?(disk, "vol-") do
-            get_volume_id_from_name(region, disk)
-          else
-            disk
-          end
-          instance =
-          if not String.contains?(instance, "i-") do
-            get_instance_id_from_name(region, instance)
-          else
-            instance
-          end
-
           case fun.(ExAws.EC2.new(region: region), instance, disk, device_name) do
             {:ok, res} ->
               case res.status_code do
@@ -268,21 +242,8 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def detach_disk(region, instance, disk, fun \\ &ExAws.EC2.Impl.detach_volume/3) do
-          vol =
-            if not String.contains?(disk, "vol-") do
-              get_volume_id_from_name(region, disk)
-            else
-              disk
-            end
-          instance =
-            if not String.contains?(instance, "i-") do
-              get_instance_id_from_name(region, instance)
-            else
-              instance
-            end
-
           opts = ["InstanceId": instance]
-          case fun.(ExAws.EC2.new(region: region), vol, opts) do
+          case fun.(ExAws.EC2.new(region: region), disk, opts) do
             {:ok, res} ->
               case res.status_code do
                 200 -> :ok
