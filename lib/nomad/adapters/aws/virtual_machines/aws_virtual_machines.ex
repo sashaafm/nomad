@@ -43,8 +43,12 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def get_virtual_machine(region, instance, fun \\ &list_virtual_machines/1) do
-          res = fun.(region)
-          IO.inspect fun.(region)
+          res =
+            cond do
+              Mix.env() == :test -> fun
+              true               -> fun.(region)
+            end
+
           cond do
             is_list(res) ->
               res

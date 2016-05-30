@@ -14,16 +14,13 @@ defmodule Test.Dummy.AWSVirtualMachinesClient do
     end
   end
 
-  def get_virtual_machine_test(state) do
-    {:ok, content} = File.read(__DIR__ <> "/response_samples/list_virtual_machines_aws.rsp")
-    _content        = Poison.decode!(content)
+  def get_virtual_machine_test(region, state) do
+    apply(fn a, b -> dummy_list_vms(a, b) end, [region, state])
+  end
 
-    fn (_a) ->
-      case state do
-        200    -> list_virtual_machines_test(200)
-        555    -> code_555
-        :error -> http_error
-      end
+  defp dummy_list_vms(region, state) do
+    case state do
+      200 -> list_virtual_machines(region, list_virtual_machines_test(200))
     end
   end
 
@@ -167,15 +164,15 @@ defmodule AWSVirtualMachinesTest do
     assert expected == list_virtual_machines "us-east-1", Dummy.list_virtual_machines_test(:error)
   end
 
-#  test "get_virtual_machine 200" do
-#    expected = {"i-28c002b4", "running", "54.172.208.68", "t2.micro"}
-#
-#    assert expected ==
-#      get_virtual_machine(
-#        200,
-#        "instance",
-#        &Dummy.list_virtual_machines_test/1)
-#  end
+  test "get_virtual_machine 200" do
+    expected = {"i-28c002b4", "running", "54.172.208.68", "t2.micro"}
+
+    assert expected ==
+      get_virtual_machine(
+        200,
+        "i-28c002b4",
+        Dummy.get_virtual_machine_test("someregion", 200))
+  end
 
  # test "get_virtual_machine 555" do
  #   expected = get_error_message
