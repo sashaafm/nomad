@@ -20,7 +20,9 @@ defmodule Test.Dummy.AWSVirtualMachinesClient do
 
   defp dummy_list_vms(region, state) do
     case state do
-      200 -> list_virtual_machines(region, list_virtual_machines_test(200))
+      200    -> list_virtual_machines(region, list_virtual_machines_test(200))
+      555    -> list_virtual_machines(region, list_virtual_machines_test(555))
+      :error -> list_virtual_machines(region, list_virtual_machines_test(:error))
     end
   end
 
@@ -94,6 +96,18 @@ defmodule Test.Dummy.AWSVirtualMachinesClient do
         555    -> code_555
         :error -> http_error
       end
+    end
+  end
+
+  def get_disk_test(region, state) do
+    apply(fn a, b -> dummy_list_disks(a, b) end, [region, state])
+  end
+
+  defp dummy_list_disks(region, state) do
+    case state do
+      200    -> list_disks(region, list_disks_test(200))
+      555    -> list_disks(region, list_disks_test(555))
+      :error -> list_disks(region, list_disks_test(:error))
     end
   end
 
@@ -174,11 +188,17 @@ defmodule AWSVirtualMachinesTest do
         Dummy.get_virtual_machine_test("someregion", 200))
   end
 
- # test "get_virtual_machine 555" do
- #   expected = get_error_message
- #
- #   assert expected == get_virtual_machine "us-east-1", Dummy.list_virtual_machines_test(555)
- # end
+  test "get_virtual_machine 555" do
+    expected = get_error_message
+
+    assert expected == get_virtual_machine(555, "i-28c002b4", Dummy.get_virtual_machine_test("someregion", 555))
+  end
+
+  test "get_virtual_machine error" do
+    expected = "reason"
+
+    assert expected == get_virtual_machine(:error, "i-28c002b4", Dummy.get_virtual_machine_test("someregion", :error))
+  end
 
   test "create_virtual_machine 200" do
     expected = :ok
@@ -307,6 +327,24 @@ defmodule AWSVirtualMachinesTest do
     expected = "reason"
 
     assert expected == list_disks "us-east-1", Dummy.list_disks_test(:error)
+  end
+
+  test "get_disk 200" do
+    expected = {"vol-032798a6", "8", "snap-a9b8c94e", "available", "gp2"}
+
+    assert expected == get_disk(200, "vol-032798a6", Dummy.get_disk_test("someregion", 200))
+  end
+
+  test "get_disk 555" do
+    expected = get_error_message
+
+    assert expected == get_disk(555, "vol-032798a6", Dummy.get_disk_test("someregion", 555))
+  end
+
+  test "get_disk error" do
+    expected = "reason"
+
+    assert expected == get_disk(:error, "vol-032798a6", Dummy.get_disk_test("someregion", :error))
   end
 
   test "delete_disk 200" do

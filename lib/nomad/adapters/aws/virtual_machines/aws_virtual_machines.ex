@@ -174,7 +174,11 @@ if Code.ensure_loaded?(ExAws) do
         end
 
         def get_disk(region, disk, fun \\ &list_disks/1) do
-          res = fun.(region)
+          res =
+            cond do
+            Mix.env() == :test -> fun
+            true               -> fun.(region)
+          end
 
           cond do
             is_list(res) ->
