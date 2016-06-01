@@ -55,9 +55,9 @@ Finally through macros and metaprogramming, the adapters logic will be generated
 #### SDK<a name="sdk"></a>
 - [x] Storage API 
 - [x] SQL API
-- [ ] Virtual Machines API
+- [x] Virtual Machines API
 - [ ] Datastore API
-- [ ] Friendly Mode and Full Control Mode (return parsed response vs. complete HTTP response)
+- [ ] Friendly Mode and Full Control Mode (return parsed response vs. raw HTTP response)
 
 
 #### Mix Tasks/Deployment Tool<a name="mix_tasks"></a>
@@ -78,7 +78,7 @@ Finally through macros and metaprogramming, the adapters logic will be generated
   1. Add nomad to your list of dependencies in mix.exs:
 
           def deps do
-              [{:nomad, "~> 0.5.1"}]
+              [{:nomad, "~> 0.6.0"}]
           end
         or
           def deps do 
