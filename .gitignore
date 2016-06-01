@@ -5,3 +5,5 @@ erl_crash.dump
 *.ez
 /config/creds.json
 /config
+dev_run.sh
+dev_test.sh

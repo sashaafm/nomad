@@ -1,5 +1,4 @@
 if Code.ensure_loaded?(GCloudex) do 
-
   defmodule Nomad.GCL.Storage do
 
     @moduledoc"""

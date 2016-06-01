@@ -36,7 +36,23 @@ defmodule Nomad.Utils do
     code <> ": " <> msg
   end
 
+  def show_error_message_and_code(res, :json) do
+    msg  = res.body |> Poison.decode! |> Map.get("error") |> Map.get("message")
+    code = res.body |> Poison.decode! |> Map.get("error") |> Map.get("code") |> Integer.to_string
+
+    code <> ": " <> msg
+  end  
+
   def parse_http_error(%HTTPoison.Error{id: _id, reason: reason}) do
     reason |> Atom.to_string
+  end
+  def parse_http_error({:http_error, code, body}) do
+    cond do
+      String.contains?(body, "<?xml") ->
+        c = Integer.to_string(code)
+        m = body |> Friendly.find("message") |> List.first |> Map.get(:text)
+
+        "#{c}: #{m}"
+    end
   end
 end
