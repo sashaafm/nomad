@@ -5,10 +5,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.11.5">
-    <title>Nomad.AWS.SQL.Helper – nomad v0.6.0</title>
+    <title>Nomad.VirtualMachines – nomad v0.6.0</title>
     <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
     
-      <link rel="canonical" href="https://hexdocs.pm/nomad/Nomad.AWS.SQL.Helper.html" />
+      <link rel="canonical" href="https://hexdocs.pm/nomad/Nomad.VirtualMachines.html" />
     
     <script src="dist/sidebar_items.js"></script>
   </head>
@@ -63,7 +63,7 @@
 
       <h1>
         <small class="visible-xs">nomad v0.6.0</small>
-        Nomad.AWS.SQL.Helper
+        Nomad.VirtualMachines
         
         
       </h1>
@@ -91,6 +91,12 @@
       <a href="#functions">Functions</a>
     </h2>
     <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#attach_disk/5">attach_disk(region, instance, disk, device_name, fun \\ &amp;ExAws.EC2.Impl.attach_volume/4)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
   <div class="summary-signature">
     <a href="#attach_volume/3">attach_volume(arg0, arg1, arg2)</a>
   </div>
@@ -218,6 +224,24 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#create_disk/2">create_disk(zone, size)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <a href="NomadVirtualMachines.html#c:create_disk/2"><code class="inline">NomadVirtualMachines.create_disk/2</code></a></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_disk/3">create_disk(zone, size, image)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Callback implementation for <a href="NomadVirtualMachines.html#c:create_disk/3"><code class="inline">NomadVirtualMachines.create_disk/3</code></a></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#create_image/2">create_image(arg0, arg1)</a>
   </div>
   
@@ -267,18 +291,6 @@
   </div>
   
     <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_security_group/3</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_sg_with_local_public_ip_allowed/2">create_sg_with_local_public_ip_allowed(instance, engine)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Create a new Security Group that enables inbound traffic from the 
-current local machine’s public IP address. The Security Group will have
-the name ‘secgroup-<instance>’ and the port used will be determined by
-the provided SQL ‘engine’</p>
 </div>
   
 </div>
@@ -338,6 +350,12 @@ the provided SQL ‘engine’</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#create_virtual_machine/5">create_virtual_machine(zone, class, image, auto_delete, fun \\ &amp;ExAws.EC2.Impl.run_instances/5)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#create_volume/2">create_volume(arg0, arg1)</a>
   </div>
   
@@ -370,6 +388,12 @@ the provided SQL ‘engine’</p>
   
     <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_vpc/2</code></p>
 </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_disk/3">delete_disk(region, disk, fun \\ &amp;ExAws.EC2.Impl.delete_volume/2)</a>
+  </div>
   
 </div>
 <div class="summary-row">
@@ -442,6 +466,12 @@ the provided SQL ‘engine’</p>
   
     <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_tags/2</code></p>
 </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete_virtual_machine/3">delete_virtual_machine(region, instance, fun \\ &amp;ExAws.EC2.Impl.terminate_instances/2)</a>
+  </div>
   
 </div>
 <div class="summary-row">
@@ -878,6 +908,12 @@ the provided SQL ‘engine’</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#detach_disk/4">detach_disk(region, instance, disk, fun \\ &amp;ExAws.EC2.Impl.detach_volume/3)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#detach_volume/1">detach_volume(arg0)</a>
   </div>
   
@@ -932,6 +968,12 @@ the provided SQL ‘engine’</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#get_disk/3">get_disk(region, disk, fun \\ &amp;list_disks/1)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#get_password_data/1">get_password_data(arg0)</a>
   </div>
   
@@ -950,6 +992,12 @@ the provided SQL ‘engine’</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#get_virtual_machine/3">get_virtual_machine(region, instance, fun \\ &amp;list_virtual_machines/1)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#import_key_pair/2">import_key_pair(arg0, arg1)</a>
   </div>
   
@@ -964,6 +1012,30 @@ the provided SQL ‘engine’</p>
   
     <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.import_key_pair/3</code></p>
 </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_classes/1">list_classes(fun \\ &amp;lc/0)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_disks/2">list_disks(region, fun \\ &amp;ExAws.EC2.Impl.describe_volumes/1)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_regions/1">list_regions(fun \\ &amp;describe_regions/0)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_virtual_machines/2">list_virtual_machines(region, fun \\ &amp;ExAws.EC2.Impl.describe_instances/1)</a>
+  </div>
   
 </div>
 <div class="summary-row">
@@ -1127,6 +1199,12 @@ the provided SQL ‘engine’</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#reboot_virtual_machine/3">reboot_virtual_machine(region, instance, fun \\ &amp;ExAws.EC2.Impl.reboot_instances/2)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#register_image/1">register_image(arg0)</a>
   </div>
   
@@ -1271,6 +1349,12 @@ the provided SQL ‘engine’</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#set_virtual_machine_class/4">set_virtual_machine_class(region, instance, class, fun \\ &amp;ExAws.EC2.Impl.modify_instance_attribute/3)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#start_instances/1">start_instances(arg0)</a>
   </div>
   
@@ -1289,6 +1373,12 @@ the provided SQL ‘engine’</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#start_virtual_machine/3">start_virtual_machine(region, instance, fun \\ &amp;ExAws.EC2.Impl.start_instances/2)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#stop_instances/1">stop_instances(arg0)</a>
   </div>
   
@@ -1303,6 +1393,12 @@ the provided SQL ‘engine’</p>
   
     <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.stop_instances/2</code></p>
 </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#stop_virtual_machine/3">stop_virtual_machine(region, instance, fun \\ &amp;ExAws.EC2.Impl.stop_instances/2)</a>
+  </div>
   
 </div>
 <div class="summary-row">
@@ -1362,7 +1458,20 @@ the provided SQL ‘engine’</p>
             </a>
             Functions
           </h1>
-          <div class="detail" id="attach_volume/3">
+          <div class="detail" id="attach_disk/5">
+  <div class="detail-header">
+    <a href="#attach_disk/5" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">attach_disk(region, instance, disk, device_name, fun \\ &amp;ExAws.EC2.Impl.attach_volume/4)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="attach_volume/3">
   <div class="detail-header">
     <a href="#attach_volume/3" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
@@ -1558,6 +1667,34 @@ the provided SQL ‘engine’</p>
 
   </section>
 </div>
+<div class="detail" id="create_disk/2">
+  <div class="detail-header">
+    <a href="#create_disk/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_disk(zone, size)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <a href="NomadVirtualMachines.html#c:create_disk/2"><code class="inline">NomadVirtualMachines.create_disk/2</code></a>.</p>
+
+  </section>
+</div>
+<div class="detail" id="create_disk/3">
+  <div class="detail-header">
+    <a href="#create_disk/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_disk(zone, size, image)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Callback implementation for <a href="NomadVirtualMachines.html#c:create_disk/3"><code class="inline">NomadVirtualMachines.create_disk/3</code></a>.</p>
+
+  </section>
+</div>
 <div class="detail" id="create_image/2">
   <div class="detail-header">
     <a href="#create_image/2" class="detail-link" title="Link to this function">
@@ -1639,34 +1776,6 @@ the provided SQL ‘engine’</p>
   
   <section class="docstring">
     <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_security_group/3</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="create_sg_with_local_public_ip_allowed/2">
-  <div class="detail-header">
-    <a href="#create_sg_with_local_public_ip_allowed/2" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">create_sg_with_local_public_ip_allowed(instance, engine)</span>
-      
-  </div>
-  
-    <div class="specs">
-      <h4 class="specs-title">Specs</h4>
-      <div class="specs-list">
-        
-          <pre><code class="elixir">create_sg_with_local_public_ip_allowed(instance :: binary, engine :: binary) ::
-  :ok |
-  :error</code></pre>
-        
-      </div>
-    </div>
-  
-  <section class="docstring">
-    <p>Create a new Security Group that enables inbound traffic from the 
-current local machine’s public IP address. The Security Group will have
-the name ‘secgroup-<instance>’ and the port used will be determined by
-the provided SQL ‘engine’.</p>
 
   </section>
 </div>
@@ -1754,6 +1863,19 @@ the provided SQL ‘engine’.</p>
 
   </section>
 </div>
+<div class="detail" id="create_virtual_machine/5">
+  <div class="detail-header">
+    <a href="#create_virtual_machine/5" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_virtual_machine(zone, class, image, auto_delete, fun \\ &amp;ExAws.EC2.Impl.run_instances/5)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
 <div class="detail" id="create_volume/2">
   <div class="detail-header">
     <a href="#create_volume/2" class="detail-link" title="Link to this function">
@@ -1808,6 +1930,19 @@ the provided SQL ‘engine’.</p>
   <section class="docstring">
     <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.create_vpc/2</code>.</p>
 
+  </section>
+</div>
+<div class="detail" id="delete_disk/3">
+  <div class="detail-header">
+    <a href="#delete_disk/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_disk(region, disk, fun \\ &amp;ExAws.EC2.Impl.delete_volume/2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
   </section>
 </div>
 <div class="detail" id="delete_key_pair/1">
@@ -1920,6 +2055,19 @@ the provided SQL ‘engine’.</p>
   <section class="docstring">
     <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.delete_tags/2</code>.</p>
 
+  </section>
+</div>
+<div class="detail" id="delete_virtual_machine/3">
+  <div class="detail-header">
+    <a href="#delete_virtual_machine/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_virtual_machine(region, instance, fun \\ &amp;ExAws.EC2.Impl.terminate_instances/2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
   </section>
 </div>
 <div class="detail" id="delete_volume/1">
@@ -2594,6 +2742,19 @@ the provided SQL ‘engine’.</p>
 
   </section>
 </div>
+<div class="detail" id="detach_disk/4">
+  <div class="detail-header">
+    <a href="#detach_disk/4" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">detach_disk(region, instance, disk, fun \\ &amp;ExAws.EC2.Impl.detach_volume/3)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
 <div class="detail" id="detach_volume/1">
   <div class="detail-header">
     <a href="#detach_volume/1" class="detail-link" title="Link to this function">
@@ -2678,6 +2839,19 @@ the provided SQL ‘engine’.</p>
 
   </section>
 </div>
+<div class="detail" id="get_disk/3">
+  <div class="detail-header">
+    <a href="#get_disk/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_disk(region, disk, fun \\ &amp;list_disks/1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
 <div class="detail" id="get_password_data/1">
   <div class="detail-header">
     <a href="#get_password_data/1" class="detail-link" title="Link to this function">
@@ -2706,6 +2880,19 @@ the provided SQL ‘engine’.</p>
 
   </section>
 </div>
+<div class="detail" id="get_virtual_machine/3">
+  <div class="detail-header">
+    <a href="#get_virtual_machine/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_virtual_machine(region, instance, fun \\ &amp;list_virtual_machines/1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
 <div class="detail" id="import_key_pair/2">
   <div class="detail-header">
     <a href="#import_key_pair/2" class="detail-link" title="Link to this function">
@@ -2732,6 +2919,58 @@ the provided SQL ‘engine’.</p>
   <section class="docstring">
     <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.import_key_pair/3</code>.</p>
 
+  </section>
+</div>
+<div class="detail" id="list_classes/1">
+  <div class="detail-header">
+    <a href="#list_classes/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_classes(fun \\ &amp;lc/0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="list_disks/2">
+  <div class="detail-header">
+    <a href="#list_disks/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_disks(region, fun \\ &amp;ExAws.EC2.Impl.describe_volumes/1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="list_regions/1">
+  <div class="detail-header">
+    <a href="#list_regions/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_regions(fun \\ &amp;describe_regions/0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="list_virtual_machines/2">
+  <div class="detail-header">
+    <a href="#list_virtual_machines/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_virtual_machines(region, fun \\ &amp;ExAws.EC2.Impl.describe_instances/1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
   </section>
 </div>
 <div class="detail" id="modify_id_format/2">
@@ -2985,6 +3224,19 @@ the provided SQL ‘engine’.</p>
 
   </section>
 </div>
+<div class="detail" id="reboot_virtual_machine/3">
+  <div class="detail-header">
+    <a href="#reboot_virtual_machine/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reboot_virtual_machine(region, instance, fun \\ &amp;ExAws.EC2.Impl.reboot_instances/2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
 <div class="detail" id="register_image/1">
   <div class="detail-header">
     <a href="#register_image/1" class="detail-link" title="Link to this function">
@@ -3209,6 +3461,19 @@ the provided SQL ‘engine’.</p>
 
   </section>
 </div>
+<div class="detail" id="set_virtual_machine_class/4">
+  <div class="detail-header">
+    <a href="#set_virtual_machine_class/4" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">set_virtual_machine_class(region, instance, class, fun \\ &amp;ExAws.EC2.Impl.modify_instance_attribute/3)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
 <div class="detail" id="start_instances/1">
   <div class="detail-header">
     <a href="#start_instances/1" class="detail-link" title="Link to this function">
@@ -3237,6 +3502,19 @@ the provided SQL ‘engine’.</p>
 
   </section>
 </div>
+<div class="detail" id="start_virtual_machine/3">
+  <div class="detail-header">
+    <a href="#start_virtual_machine/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">start_virtual_machine(region, instance, fun \\ &amp;ExAws.EC2.Impl.start_instances/2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
 <div class="detail" id="stop_instances/1">
   <div class="detail-header">
     <a href="#stop_instances/1" class="detail-link" title="Link to this function">
@@ -3263,6 +3541,19 @@ the provided SQL ‘engine’.</p>
   <section class="docstring">
     <p>Callback implementation for <code class="inline">c:ExAws.EC2.Client.stop_instances/2</code>.</p>
 
+  </section>
+</div>
+<div class="detail" id="stop_virtual_machine/3">
+  <div class="detail-header">
+    <a href="#stop_virtual_machine/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">stop_virtual_machine(region, instance, fun \\ &amp;ExAws.EC2.Impl.stop_instances/2)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
   </section>
 </div>
 <div class="detail" id="terminate_instances/1">

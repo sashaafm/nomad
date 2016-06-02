@@ -1,0 +1,709 @@
+    <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.11.5">
+    <title>NomadVirtualMachines – nomad v0.6.0</title>
+    <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
+    
+      <link rel="canonical" href="https://hexdocs.pm/nomad/NomadVirtualMachines.html" />
+    
+    <script src="dist/sidebar_items.js"></script>
+  </head>
+  <body data-type="modules">
+
+    <div class="main">
+<button class="sidebar-toggle">
+  <i class="icon-menu"></i>
+</button>
+<section class="sidebar">
+  <button class="sidebar-toggle">
+    <i class="icon-menu"></i>
+  </button>
+
+  
+  <a href="api-reference.html" class="sidebar-projectLink">
+    <div class="sidebar-projectDetails">
+      <h1 class="sidebar-projectName">
+        nomad
+      </h1>
+      <h2 class="sidebar-projectVersion">
+        v0.6.0
+      </h2>
+    </div>
+    
+  </a>
+
+  <div class="sidebar-search">
+    <i class="icon-search"></i>
+    <input type="text" class="sidebar-searchInput" placeholder="search" autocomplete="off" />
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+    
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+    
+
+    
+
+    
+  </ul>
+
+  <ul id="full-list" class="sidebar-fullList"></ul>
+  <div class="sidebar-noResults"></div>
+</section>
+
+<section class="content">
+  <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="visible-xs">nomad v0.6.0</small>
+        NomadVirtualMachines
+        
+          <small>behaviour</small>
+        
+        
+      </h1>
+
+      
+
+      
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <i class="icon-link"></i>
+            </a>
+            Summary
+          </h1>
+          
+
+          
+
+          
+
+          
+  <div class="summary-callbacks summary">
+    <h2>
+      <a href="#callbacks">Callbacks</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:attach_disk/4">attach_disk(region, instance, disk, device_name)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Attaches the given ‘disk’ to the specified ‘instance’ and with the provided ‘device_name’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:create_disk/2">create_disk(region, size)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Creates an empty persistent disk in the given ‘region’ with the specified ‘size’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:create_disk/3">create_disk(region, size, image)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Creates a bootable disk in the given ‘region’ with the specified ‘size’ and ‘image’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:create_virtual_machine/4">create_virtual_machine(region, class, image, auto_delete)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Creates a new Virtual Machine in the given ‘region’ using the provided ‘class’, ‘image’ and ‘auto_delete’ behaviour</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:delete_disk/2">delete_disk(region, disk)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Deletes the given ‘disk’ in the specified ‘region’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:delete_virtual_machine/2">delete_virtual_machine(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Deletes the Virtual Machine ‘instance’ in the given ‘region’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:detach_disk/3">detach_disk(region, instance, disk)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Detaches the given ‘disk’ from the ‘instance’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get_disk/2">get_disk(region, disk)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Returns the specified ‘disk’ name, size, image, status and type</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get_virtual_machine/2">get_virtual_machine(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Returns the Virtal Machine ‘instance’ name, status, public IP and class</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:list_classes/0">list_classes()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Lists all available Virtual Machine classes</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:list_disks/1">list_disks(region)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Lists all disks in the given ‘region’ indicating their names, sizes, images, statuses and types</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:list_regions/0">list_regions()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Lists all available regions (and their zones if possible)</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:list_virtual_machines/1">list_virtual_machines(region)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Lists all Virtual Machines in the given ‘region’ with their names, status, public IP and class</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:reboot_virtual_machine/2">reboot_virtual_machine(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Reboots the Virtual Machine ‘instance’ in the given ‘region’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:set_virtual_machine_class/3">set_virtual_machine_class(region, instance, class)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Sets the Virtual Machine ‘instance’ in the given ‘region’ to the specified ‘class’ if possible</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:start_virtual_machine/2">start_virtual_machine(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Starts the Virtual Machine ‘instance’ in the given ‘region’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:stop_virtual_machine/2">stop_virtual_machine(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Stops the Virtual Machine ‘instance’ in the given ‘region’</p>
+</div>
+  
+</div>
+
+  </div>
+
+
+        </section>
+      
+
+      
+
+      
+
+      
+
+      
+        <section id="callbacks" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#callbacks">
+              <i class="icon-link"></i>
+            </a>
+            Callbacks
+          </h1>
+          <div class="detail" id="c:attach_disk/4">
+  <div class="detail-header">
+    <a href="#c:attach_disk/4" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">attach_disk(region, instance, disk, device_name)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">attach_disk(region :: binary, instance :: binary, disk :: binary, device_name :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Attaches the given ‘disk’ to the specified ‘instance’ and with the provided ‘device_name’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:create_disk/2">
+  <div class="detail-header">
+    <a href="#c:create_disk/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_disk(region, size)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">create_disk(region :: binary, size :: integer) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Creates an empty persistent disk in the given ‘region’ with the specified ‘size’. </p>
+
+  </section>
+</div>
+<div class="detail" id="c:create_disk/3">
+  <div class="detail-header">
+    <a href="#c:create_disk/3" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_disk(region, size, image)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">create_disk(region :: binary, size :: integer, image :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Creates a bootable disk in the given ‘region’ with the specified ‘size’ and ‘image’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:create_virtual_machine/4">
+  <div class="detail-header">
+    <a href="#c:create_virtual_machine/4" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_virtual_machine(region, class, image, auto_delete)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">create_virtual_machine(region :: binary, class :: binary, image :: binary, auto_delete :: boolean) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Creates a new Virtual Machine in the given ‘region’ using the provided ‘class’, ‘image’ and ‘auto_delete’ behaviour.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:delete_disk/2">
+  <div class="detail-header">
+    <a href="#c:delete_disk/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_disk(region, disk)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">delete_disk(region :: binary, disk :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Deletes the given ‘disk’ in the specified ‘region’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:delete_virtual_machine/2">
+  <div class="detail-header">
+    <a href="#c:delete_virtual_machine/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_virtual_machine(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">delete_virtual_machine(region :: binary, instance :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Deletes the Virtual Machine ‘instance’ in the given ‘region’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:detach_disk/3">
+  <div class="detail-header">
+    <a href="#c:detach_disk/3" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">detach_disk(region, instance, disk)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">detach_disk(region :: binary, instance :: binary, disk :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Detaches the given ‘disk’ from the ‘instance’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:get_disk/2">
+  <div class="detail-header">
+    <a href="#c:get_disk/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_disk(region, disk)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">get_disk(region :: binary, disk :: binary) ::
+  {binary, binary, binary, binary, binary} |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Returns the specified ‘disk’ name, size, image, status and type.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:get_virtual_machine/2">
+  <div class="detail-header">
+    <a href="#c:get_virtual_machine/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_virtual_machine(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">get_virtual_machine(region :: binary, instance :: binary) :: {binary, binary, binary, binary}</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Returns the Virtal Machine ‘instance’ name, status, public IP and class.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_classes/0">
+  <div class="detail-header">
+    <a href="#c:list_classes/0" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_classes()</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_classes :: [binary]</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Lists all available Virtual Machine classes.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_disks/1">
+  <div class="detail-header">
+    <a href="#c:list_disks/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_disks(region)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_disks(region :: binary) ::
+  [{binary, binary, binary, binary, binary}] |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Lists all disks in the given ‘region’ indicating their names, sizes, images, statuses and types.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_regions/0">
+  <div class="detail-header">
+    <a href="#c:list_regions/0" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_regions()</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_regions :: [binary] | [{binary, [binary]}]</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Lists all available regions (and their zones if possible).</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_virtual_machines/1">
+  <div class="detail-header">
+    <a href="#c:list_virtual_machines/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_virtual_machines(region)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_virtual_machines(region :: binary) ::
+  [{binary, binary, binary, binary}] |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Lists all Virtual Machines in the given ‘region’ with their names, status, public IP and class.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:reboot_virtual_machine/2">
+  <div class="detail-header">
+    <a href="#c:reboot_virtual_machine/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reboot_virtual_machine(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">reboot_virtual_machine(region :: binary, instance :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Reboots the Virtual Machine ‘instance’ in the given ‘region’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:set_virtual_machine_class/3">
+  <div class="detail-header">
+    <a href="#c:set_virtual_machine_class/3" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">set_virtual_machine_class(region, instance, class)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">set_virtual_machine_class(region :: binary, instance :: binary, class :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Sets the Virtual Machine ‘instance’ in the given ‘region’ to the specified ‘class’ if possible.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:start_virtual_machine/2">
+  <div class="detail-header">
+    <a href="#c:start_virtual_machine/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">start_virtual_machine(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">start_virtual_machine(region :: binary, instance :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Starts the Virtual Machine ‘instance’ in the given ‘region’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:stop_virtual_machine/2">
+  <div class="detail-header">
+    <a href="#c:stop_virtual_machine/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">stop_virtual_machine(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">stop_virtual_machine(region :: binary, instance :: binary) ::
+  :ok |
+  binary</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Stops the Virtual Machine ‘instance’ in the given ‘region’.</p>
+
+  </section>
+</div>
+
+        </section>
+      
+        <footer class="footer">
+      <p>
+        <span class="line">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" rel="help" target="_blank">ExDoc</a> (v0.11.5),
+        </span>
+        <span class="line">
+          designed by
+          <a href="https://twitter.com/dignifiedquire" target="_blank" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+      </p>
+      <button class="night-mode-toggle" />
+    </footer>
+  </div>
+</section>
+</div>
+  <script src="dist/app-918614602f.js"></script>
+  </body>
+</html>
+
