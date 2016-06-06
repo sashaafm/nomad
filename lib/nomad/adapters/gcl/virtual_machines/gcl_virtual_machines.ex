@@ -56,7 +56,7 @@ if Code.ensure_loaded?(GCloudex) do
           name     = "instance-#{epoch}"
           resource = %{
             "name"        => name,
-            "machineType" => class,
+            "machineType" => "zones/#{region}/machineTypes/#{class}",
             "disks" => [
               %{
                 "autoDelete"       => auto_delete,
@@ -326,14 +326,7 @@ if Code.ensure_loaded?(GCloudex) do
                   |> Poison.decode!
                   |> Map.get("items")
                   |> Enum.map(
-                    fn map ->
-                      {
-                        map["name"], Enum.map(map["zones"],
-                          fn zone ->
-                            zone |> String.split("/") |> List.last
-                          end)
-                      }
-                    end)
+                    fn map -> map["name"] end)
                 _   ->
                   show_error_message_and_code(res, :json)
               end
@@ -343,7 +336,7 @@ if Code.ensure_loaded?(GCloudex) do
         end
 
         def list_classes(fun \\ &lc/1) do
-          list = __MODULE__.list_regions
+          list = lr 
           |> Enum.map(fn {a, b} -> b end)
           |> List.flatten
 
@@ -351,6 +344,34 @@ if Code.ensure_loaded?(GCloudex) do
           |> Enum.map(fn x -> lc(x) end)
           |> List.flatten
           |> Enum.uniq
+        end
+
+        defp lr(fun \\ &GCloudex.ComputeEngine.Client.list_regions/1) do
+          query_params = %{"fields" => "items/name, items/zones"}
+          case fun.(query_params) do
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  res.body
+                  |> Poison.decode!
+                  |> Map.get("items")
+                  |> Enum.map(
+                    fn map -> 
+                      {
+                        map["name"], 
+                        Enum.map(
+                          map["zones"], 
+                          fn z -> 
+                            z |> String.split("/") |> List.last 
+                          end) 
+                      }
+                    end)
+                _   ->
+                  show_error_message_and_code(res, :json)
+              end
+            {:error, reason} ->
+              parse_http_error(reason)
+          end
         end
 
         defp lc(region, fun \\ &list_machine_types/2) do
