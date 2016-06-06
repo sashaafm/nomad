@@ -7,3 +7,4 @@ erl_crash.dump
 /config
 dev_run.sh
 dev_test.sh
+*.swp
