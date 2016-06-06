@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.List do
     mix nomad.virtual_machine_instance.list
   """
 
-  @shortdoc"Lists all virtual machines on the chosen cloud provider's infrastructure service."
+  @shortdoc"Lists all virtual machines on the chosen cloud provider's infrastructure service in the given region."
 
   @provider Application.get_env(:nomad, :cloud_provider)
 
