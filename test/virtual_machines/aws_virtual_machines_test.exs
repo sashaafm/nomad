@@ -161,7 +161,7 @@ defmodule AWSVirtualMachinesTest do
   use Nomad.AWS.VirtualMachines, :aws
 
   test "list_virtual_machines 200" do
-    expected = [{"i-28c002b4", "running", "54.172.208.68", "t2.micro"}]
+    expected = [{"i-28c002b4", "running", "t2.micro", "54.172.208.68"}]
 
     assert expected == list_virtual_machines "us-east-1", Dummy.list_virtual_machines_test(200)
   end
@@ -179,7 +179,7 @@ defmodule AWSVirtualMachinesTest do
   end
 
   test "get_virtual_machine 200" do
-    expected = {"i-28c002b4", "running", "54.172.208.68", "t2.micro"}
+    expected = {"i-28c002b4", "running", "t2.micro", "54.172.208.68"}
 
     assert expected ==
       get_virtual_machine(
