@@ -12,9 +12,7 @@ defmodule Mix.Tasks.Nomad.Deploy do
   www.phoenixframework.org.
   """
 
-  @shortdoc"""
-  Automatically deploys a production release of the appplication on a remote host.
-  """
+  @shortdoc"Automatically deploys a production release of the appplication on a remote host."
   
   @doc """
   Deploy the application in the current project's directory.

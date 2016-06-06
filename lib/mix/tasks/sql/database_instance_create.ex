@@ -12,9 +12,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
   means.
   """
 
-  @shortdoc"""
-  Create a SQL database instance on the chosen cloud provider's SQL service.
-  """
+  @shortdoc"Create a SQL database instance on the chosen cloud provider's SQL service."
 
   @doc """
   Runs the task for the chosen cloud provider. The shell prompts and necessary

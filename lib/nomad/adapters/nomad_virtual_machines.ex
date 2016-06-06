@@ -1,7 +1,7 @@
 defmodule NomadVirtualMachines do
 
   @doc"""
-  Lists all Virtual Machines in the given 'region' with their names, status, public IP and class.
+  Lists all Virtual Machines in the given 'region' with their names, status, class and public IP.
   """
   @callback list_virtual_machines(region :: binary) :: [{binary, binary, binary, binary}] | binary
 

@@ -15,9 +15,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Delete do
       # Won't be prompted for name  
   """
 
-  @shortdoc"""
-  Delete a SQL database instance on the chosen cloud provider's SQL service.
-  """
+  @shortdoc"Delete a SQL database instance on the chosen cloud provider's SQL service."
 
   @doc """
   Runs the task for the chosen cloud provider. The shell prompts for the 

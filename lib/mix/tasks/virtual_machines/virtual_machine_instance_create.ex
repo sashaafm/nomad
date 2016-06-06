@@ -2,12 +2,23 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.Create do
   use Mix.Task
 
   @moduledoc"""
+  Task for automatically creating a remote virtual machine instance on a
+  pre-determined cloud provider. The instace creation is done through the
+  cloud provider's API and restricted to the common options and operations
+  that are offered across APIs.
 
+  More in depth creation of instances with other options and configurations
+  not provided in here must be done in the cloud provider's console or by
+  other means.
   """
 
-  @shortdoc"""
-  """
+  @shortdoc"Create a virtual machine on the chosen cloud provider's infrastructure service."
 
+  @doc"""
+  Runs the task for the chosen cloud provider. The shell prompts and necessary
+  input parameters change with the chosen provider.
+  """
+  @spec run(args :: [binary] | []) :: binary
   def run(args) do
     case Application.get_env(:nomad, :cloud_provider) do
       :aws ->

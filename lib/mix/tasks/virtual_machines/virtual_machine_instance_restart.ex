@@ -2,11 +2,26 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.Restart do
   use Mix.Task
 
   @moduledoc"""
+  Task for automatically restarting a virtual machine instance on
+  a pre-determined cloud provider. The instance reboot is done through the
+  cloud provider's API.
+
+  Usage:
+
+    mix nomad.virtual_machine_instance.restart
+    # Will be prompted for region and instance id or name
+
+    mix nomad.virtual_machine_instance.restart <region> <name>
+    # Won't be promted for region and instance id
   """
 
-  @shortdoc"""
-  """
+  @shortdoc "Restart a virtual machine on the chosen cloud provider's infrastructure service."
 
+  @doc"""
+  Runs the task for the chosen cloud provider. The shell prompts for the
+  instance's region and name if the data wasn't passed through the arguments.
+  """
+  @spec run(args :: [binary] | []) :: binary
   def run(args) do
     case Application.get_env(:nomad, :cloud_provider) do
       :aws ->

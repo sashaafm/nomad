@@ -39,7 +39,7 @@ if Code.ensure_loaded?(ExAws) do
           ip     = data |> Friendly.find("publicip")     |> Enum.map(fn ip -> ip.text end)
           class  = data |> Friendly.find("instancetype") |> Enum.map(fn class -> class.text end)
 
-          List.zip([name, status, ip, class])
+          List.zip([name, status, class, ip])
         end
 
         def get_virtual_machine(region, instance, fun \\ &list_virtual_machines/1) do

@@ -15,9 +15,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Restart do
       # Won't be prompted for name
   """
 
-  @shortdoc"""
-  Restart a SQL database instance on the chosen cloud provider's SQL service.  
-  """
+  @shortdoc "Restart a SQL database instance on the chosen cloud provider's SQL service."
 
   @doc """
   Runs the task for the chosen cloud provider. The shell prompts for the 

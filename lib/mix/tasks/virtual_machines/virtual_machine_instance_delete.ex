@@ -2,11 +2,26 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.Delete do
   use Mix.Task
 
   @moduledoc"""
+  Task for automatically deleting a remote virtual machine on a
+  pre-determined cloud provider. The instance deletion is done through
+  the cloud provider's API.
+
+  Usage:
+
+    mix nomad.virtual_machine_instance.delete
+    # Will be prompted for region and instance id or name
+
+    mix nomad.virtual_machine_instance.delete <name> <region>
+    # Won't be prompted for region and instance id
   """
 
-  @shortdoc"""
-  """
+  @shortdoc"Delete a virtual machine on the chosen cloud provider's infrastructure service."
 
+  @doc"""
+  Runs the task for the chosen cloud provider. The shell prompts for the
+  instance's name or id and informs of the results.
+  """
+  @spec run(args :: [binary] | []) :: binary
   def run(args) do
     case Application.get_env(:nomad, :cloud_provider) do
       :aws ->
