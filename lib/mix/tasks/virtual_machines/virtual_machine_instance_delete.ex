@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.Delete do
     mix nomad.virtual_machine_instance.delete
     # Will be prompted for region and instance id or name
 
-    mix nomad.virtual_machine_instance.delete <name> <region>
+    mix nomad.virtual_machine_instance.delete <region> <name>
     # Won't be prompted for region and instance id
   """
 
@@ -50,7 +50,7 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.Delete do
     del name, region
   end
 
-  defp delete_instance_api_call([name, region]) do
+  defp delete_instance_api_call([region, name]) do
     del name, region
   end
 
