@@ -47,7 +47,7 @@ defmodule Mix.Tasks.Nomad.Storage.Create do
     if Mix.Shell.IO.yes?(summary) do
       create region, class, name
     else
-      create_storage args
+      create_storage []
     end
   end
 
