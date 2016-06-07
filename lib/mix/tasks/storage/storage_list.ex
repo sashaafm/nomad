@@ -2,7 +2,13 @@ defmodule Mix.Tasks.Nomad.Storage.List do
   use Mix.Task
 
   @moduledoc"""
+  Task for automatically listing all remote storages on a pre-determined
+  cloud provider. The storage listing in done through the cloud
+  provider's API.
 
+  Usage:
+
+    mix nomad.storage.list
   """
 
   @shortdoc"Lists all storages on the chosen cloud provider's storage service."

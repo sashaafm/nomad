@@ -53,7 +53,7 @@ if Code.ensure_loaded?(ExAws) do
         # end
 
         def create_storage(name, region, class, fun \\ &put_bucket/2) do 
-          case fun.(name, region, class) do 
+          case fun.(name, region) do 
             {:ok, res} ->
               case res.status_code do 
                 200 -> :ok
@@ -154,10 +154,13 @@ if Code.ensure_loaded?(ExAws) do
         def delete_storage(bucket, fun \\ &delete_bucket/1) do 
           case fun.(bucket) do 
             {:ok, res} ->
+              IO.inspect res
               case res.status_code do 
                 204 ->
                   :ok
-                _   -> get_error_message res
+                _   ->
+                  IO.inspect res
+                  get_error_message res
               end
             {:error, reason} ->
               parse_http_error reason
