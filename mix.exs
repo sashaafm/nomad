@@ -33,7 +33,7 @@ defmodule Nomad.Mixfile do
       {:friendly,         "~> 1.0.0"},
       {:goth,             "~> 0.1.2"},
       {:ex_aws,           github: "sashaafm/ex_aws", branch: "merge-rds-and-ec2-for-testing"},
-      {:gcloudex,         github: "sashaafm/gcloudex", optional: true}     
+      {:gcloudex,         github: "sashaafm/gcloudex"}     
     ]        
   end
 
