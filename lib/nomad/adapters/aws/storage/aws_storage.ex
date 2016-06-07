@@ -154,12 +154,10 @@ if Code.ensure_loaded?(ExAws) do
         def delete_storage(bucket, fun \\ &delete_bucket/1) do 
           case fun.(bucket) do 
             {:ok, res} ->
-              IO.inspect res
               case res.status_code do 
                 204 ->
                   :ok
                 _   ->
-                  IO.inspect res
                   get_error_message res
               end
             {:error, reason} ->
