@@ -10,30 +10,26 @@ defmodule Nomad.RemoteDeploy do
   Deploys the production release to the remote host.
   """
   def run do 
-    system_user = "whoami"
-    |> System.cmd([]) 
-    |> String.rstrip
-
     {_, 0} =
       if Mix.Shell.IO.yes? "Do you want to setup the remote host?" do
         :ok    = build_remote_setup_script
-        {_, 0} = transfer_remote_setup_script system_user
+        {_, 0} = transfer_remote_setup_script 
         execute_remote_setup_script
       end
 
     :ok    = build_deployment_script
     :ok    = build_upstart_script
     :ok    = build_nginx_script
-    {_, 0} = deploy_to_remote_host system_user
-    {_, 0} = transfer_deployment_script system_user
-    {_, 0} = transfer_upstart_script system_user
-    {_, 0} = transfer_nginx_script system_user
+    {_, 0} = deploy_to_remote_host 
+    {_, 0} = transfer_deployment_script 
+    {_, 0} = transfer_upstart_script 
+    {_, 0} = transfer_nginx_script 
     {_, 0} = execute_remote_deployment_script
     :ok    = local_cleanup
     remote_cleanup
   end
 
-  defp deploy_to_remote_host(system_user) do
+  defp deploy_to_remote_host do
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
                        "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/"
@@ -42,7 +38,7 @@ defmodule Nomad.RemoteDeploy do
                       ]                       
   end
 
-  defp transfer_deployment_script(system_user) do 
+  defp transfer_deployment_script do 
     Mix.Shell.IO.info "Going to transfer the after deployment script."
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
@@ -51,7 +47,7 @@ defmodule Nomad.RemoteDeploy do
                       ]
   end
 
-  defp transfer_upstart_script(system_user) do
+  defp transfer_upstart_script do
     Mix.Shell.IO.info "Going to transfer the Upstart script."
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
@@ -60,7 +56,7 @@ defmodule Nomad.RemoteDeploy do
                       ]    
   end
 
-  defp transfer_nginx_script(system_user) do
+  defp transfer_nginx_script do
     Mix.Shell.IO.info "Going to transfer the NGINX script."
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
@@ -69,7 +65,7 @@ defmodule Nomad.RemoteDeploy do
                       ]    
   end
 
-  defp transfer_remote_setup_script(system_user) do 
+  defp transfer_remote_setup_script do 
     Mix.Shell.IO.info "Going to transfer the remote setup script."
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
