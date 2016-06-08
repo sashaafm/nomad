@@ -12,10 +12,7 @@ defmodule Nomad.RemoteDeploy do
   def run do 
     system_user = "whoami"
     |> System.cmd([]) 
-    # |> Tuple.to_list # For some reason I added these functions but not sure if they are needed??? 
-    # |> List.first 
-    # |> String.split("\n") 
-    # |> List.first
+    |> String.rstrip
 
     {_, 0} =
       if Mix.Shell.IO.yes? "Do you want to setup the remote host?" do
