@@ -19,9 +19,9 @@ defmodule Mix.Tasks.Nomad.Deploy do
   Arguments must be in order:
   <HOSTNAME/IP> : Required - the remote host hostname or IP address 
   <PORT>        : Required - the port for the production application
+  <USERNAME>    : Required - the username to use to access the remote host
   <SSH KEY>     : Required - the SSH Key for accessing the remote host,
                              only the filename and it must be in ~/.ssh 
-  <USERNAME>    : Required - the username to use to access the remote host
   <-f>          : Optional - bypass all the questions during deployment
   """
   def run(args) do

@@ -11,18 +11,18 @@ defmodule Nomad.RemoteDeploy do
   """
   def run do 
     system_user = "whoami"
-                  |> System.cmd([]) 
-                  |> Tuple.to_list 
-                  |> List.first 
-                  |> String.split("\n") 
-                  |> List.first
+    |> System.cmd([]) 
+    # |> Tuple.to_list # For some reason I added these functions but not sure if they are needed??? 
+    # |> List.first 
+    # |> String.split("\n") 
+    # |> List.first
 
     {_, 0} =
-    if Mix.Shell.IO.yes? "Do you want to setup the remote host?" do
-      :ok = build_remote_setup_script
-      {_, 0} = transfer_remote_setup_script system_user
-      execute_remote_setup_script
-    end
+      if Mix.Shell.IO.yes? "Do you want to setup the remote host?" do
+        :ok    = build_remote_setup_script
+        {_, 0} = transfer_remote_setup_script system_user
+        execute_remote_setup_script
+      end
 
     :ok    = build_deployment_script
     :ok    = build_upstart_script
