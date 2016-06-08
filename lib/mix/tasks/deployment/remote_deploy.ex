@@ -10,6 +10,7 @@ defmodule Nomad.RemoteDeploy do
   Deploys the production release to the remote host.
   """
   def run do 
+    IO.inspect Application.get_env(:nomad, :ssh_key)
     {_, 0} =
       if Mix.Shell.IO.yes? "Do you want to setup the remote host?" do
         :ok    = build_remote_setup_script
@@ -34,7 +35,7 @@ defmodule Nomad.RemoteDeploy do
                        "-i", Application.get_env(:nomad, :ssh_key), 
                        "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/"
                        <> "#{System.get_env("APP_NAME")}.tar.gz", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/ubuntu"
                       ]                       
   end
 
@@ -43,7 +44,7 @@ defmodule Nomad.RemoteDeploy do
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
                        "after_deploy.sh", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/ubuntu"
                       ]
   end
 
@@ -70,7 +71,7 @@ defmodule Nomad.RemoteDeploy do
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
                        "remote_setup.sh", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/ubuntu"
                       ]      
   end  
 
