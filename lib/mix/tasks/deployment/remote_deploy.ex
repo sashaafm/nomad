@@ -54,8 +54,17 @@ defmodule Nomad.RemoteDeploy do
                        "-i",
                        System.get_env("SSH_KEY"), 
                        "#{System.get_env("APP_NAME")}.conf", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/init"
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/#{System.get_env("USERNAME")}" # Then must be moved to etc/init/
                       ]    
+
+    command = "base64 -w0 mv #{System.get_env("APP_NAME")}.conf /etc/init"
+    System.cmd "ssh", [
+                        "-t",
+                        "-i",
+                        System.get_env("SSH_KEY"),
+                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}",
+                        "echo #{command} | base64 -d | sudo bash"
+                      ]
   end
 
   defp transfer_nginx_script do
@@ -64,13 +73,12 @@ defmodule Nomad.RemoteDeploy do
                        "-i",
                        System.get_env("SSH_KEY"),
                        "#{System.get_env("APP_NAME")}", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/nginx/sites-available"
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/#{System.get_env("USERNAME")}" # then must be moved to /etc/nginx/sites-available"
                       ]    
   end
 
   defp transfer_remote_setup_script do 
     Mix.Shell.IO.info "Going to transfer the remote setup script."
-    IO.inspect System.get_env("SSH_KEY")
     System.cmd "scp", [
                        "-i",
                        System.get_env("SSH_KEY"),
