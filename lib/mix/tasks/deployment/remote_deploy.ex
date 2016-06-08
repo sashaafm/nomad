@@ -35,7 +35,7 @@ defmodule Nomad.RemoteDeploy do
                        "-i", Application.get_env(:nomad, :ssh_key), 
                        "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/"
                        <> "#{System.get_env("APP_NAME")}.tar.gz", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/ubuntu"
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/#{System.get_env("USERNAME")}"
                       ]                       
   end
 
@@ -44,7 +44,7 @@ defmodule Nomad.RemoteDeploy do
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
                        "after_deploy.sh", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/ubuntu"
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/#{System.get_env("USERNAME")}"
                       ]
   end
 
@@ -71,7 +71,7 @@ defmodule Nomad.RemoteDeploy do
     System.cmd "scp", [
                        "-i", Application.get_env(:nomad, :ssh_key), 
                        "remote_setup.sh", 
-                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/ubuntu"
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/#{System.get_env("USERNAME")}"
                       ]      
   end  
 
