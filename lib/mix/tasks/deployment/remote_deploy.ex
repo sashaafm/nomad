@@ -10,7 +10,6 @@ defmodule Nomad.RemoteDeploy do
   Deploys the production release to the remote host.
   """
   def run do 
-    IO.inspect Application.get_env(:nomad, :ssh_key)
     {_, 0} =
       if Mix.Shell.IO.yes? "Do you want to setup the remote host?" do
         :ok    = build_remote_setup_script
@@ -32,9 +31,9 @@ defmodule Nomad.RemoteDeploy do
 
   defp deploy_to_remote_host do
     System.cmd "scp", [
-                       "-i", Application.get_env(:nomad, :ssh_key), 
-                       "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/"
-                       <> "#{System.get_env("APP_NAME")}.tar.gz", 
+                       "-i",
+                       System.get_env("SSH_KEY"),
+                       "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/#{System.get_env("APP_NAME")}.tar.gz", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/#{System.get_env("USERNAME")}"
                       ]                       
   end
@@ -42,7 +41,8 @@ defmodule Nomad.RemoteDeploy do
   defp transfer_deployment_script do 
     Mix.Shell.IO.info "Going to transfer the after deployment script."
     System.cmd "scp", [
-                       "-i", Application.get_env(:nomad, :ssh_key), 
+                       "-i",
+                       System.get_env("SSH_KEY"), 
                        "after_deploy.sh", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/#{System.get_env("USERNAME")}"
                       ]
@@ -51,7 +51,8 @@ defmodule Nomad.RemoteDeploy do
   defp transfer_upstart_script do
     Mix.Shell.IO.info "Going to transfer the Upstart script."
     System.cmd "scp", [
-                       "-i", Application.get_env(:nomad, :ssh_key), 
+                       "-i",
+                       System.get_env("SSH_KEY"), 
                        "#{System.get_env("APP_NAME")}.conf", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/init"
                       ]    
@@ -60,7 +61,8 @@ defmodule Nomad.RemoteDeploy do
   defp transfer_nginx_script do
     Mix.Shell.IO.info "Going to transfer the NGINX script."
     System.cmd "scp", [
-                       "-i", Application.get_env(:nomad, :ssh_key), 
+                       "-i",
+                       System.get_env("SSH_KEY"),
                        "#{System.get_env("APP_NAME")}", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/nginx/sites-available"
                       ]    
@@ -68,8 +70,10 @@ defmodule Nomad.RemoteDeploy do
 
   defp transfer_remote_setup_script do 
     Mix.Shell.IO.info "Going to transfer the remote setup script."
+    IO.inspect System.get_env("SSH_KEY")
     System.cmd "scp", [
-                       "-i", Application.get_env(:nomad, :ssh_key), 
+                       "-i",
+                       System.get_env("SSH_KEY"),
                        "remote_setup.sh", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/home/#{System.get_env("USERNAME")}"
                       ]      
@@ -77,17 +81,21 @@ defmodule Nomad.RemoteDeploy do
 
   defp execute_remote_setup_script do 
     Mix.Shell.IO.info "Going to run the remote setup script."                                             
-    System.cmd "ssh", ["#{System.get_env("USERNAME")}@#{System.get_env("HOST")}", 
-                       "chmod o+rx remote_setup.sh;" 
-                       <> "./remote_setup.sh"
+    System.cmd "ssh", [
+                       "-i",
+                       System.get_env("SSH_KEY"),
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}", 
+                       "chmod 700 remote_setup.sh;./remote_setup.sh"
                       ]    
   end
 
   defp execute_remote_deployment_script do
     Mix.Shell.IO.info "Going to run the remote script."                                             
-    System.cmd "ssh", ["#{System.get_env("USERNAME")}@#{System.get_env("HOST")}", 
-                       "chmod o+rx after_deploy.sh;" 
-                       <> "./after_deploy.sh"
+    System.cmd "ssh", [
+                       "-i",
+                       System.get_env("SSH_KEY"),
+                       "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}", 
+                       "chmod 700 after_deploy.sh;./after_deploy.sh"
                       ]
   end
 

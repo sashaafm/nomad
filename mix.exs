@@ -25,7 +25,7 @@ defmodule Nomad.Mixfile do
 
   defp deps do
     [
-      {:exrm,             "~> 1.0.1"},
+      {:exrm,             github: "bitwalker/exrm"},
       {:credo,            "~> 0.3",  only: [:dev, :test]},
       {:ex_doc,           "~> 0.11", only: [:dev]},
       {:httpoison,        "~> 0.8.1"},

@@ -61,7 +61,7 @@ defmodule Mix.Tasks.Nomad.Deploy do
     System.put_env              "USERNAME", username
     # Getting the app name from the cwd may not always work?
     System.put_env              "APP_NAME", System.cwd |> String.split("/") |> List.last
-    Application.put_env         :nomad,     :ssh_key, ssh_key
+    System.put_env              "SSH_KEY",  ssh_key
   end
 
   defp compile_and_gen_release do 
