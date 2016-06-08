@@ -35,7 +35,7 @@ defmodule Nomad.RemoteDeploy do
 
   defp deploy_to_remote_host(system_user) do
     System.cmd "scp", [
-                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", Application.get_env(:nomad, :ssh_key), 
                        "rel/#{System.get_env("APP_NAME")}/releases/0.0.1/"
                        <> "#{System.get_env("APP_NAME")}.tar.gz", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
@@ -45,7 +45,7 @@ defmodule Nomad.RemoteDeploy do
   defp transfer_deployment_script(system_user) do 
     Mix.Shell.IO.info "Going to transfer the after deployment script."
     System.cmd "scp", [
-                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", Application.get_env(:nomad, :ssh_key), 
                        "after_deploy.sh", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
                       ]
@@ -54,7 +54,7 @@ defmodule Nomad.RemoteDeploy do
   defp transfer_upstart_script(system_user) do
     Mix.Shell.IO.info "Going to transfer the Upstart script."
     System.cmd "scp", [
-                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", Application.get_env(:nomad, :ssh_key), 
                        "#{System.get_env("APP_NAME")}.conf", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/init"
                       ]    
@@ -63,7 +63,7 @@ defmodule Nomad.RemoteDeploy do
   defp transfer_nginx_script(system_user) do
     Mix.Shell.IO.info "Going to transfer the NGINX script."
     System.cmd "scp", [
-                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", Application.get_env(:nomad, :ssh_key), 
                        "#{System.get_env("APP_NAME")}", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/etc/nginx/sites-available"
                       ]    
@@ -72,7 +72,7 @@ defmodule Nomad.RemoteDeploy do
   defp transfer_remote_setup_script(system_user) do 
     Mix.Shell.IO.info "Going to transfer the remote setup script."
     System.cmd "scp", [
-                       "-i", "/home/#{system_user}/.ssh/#{Application.get_env(:nomad, :ssh_key)}.pub", 
+                       "-i", Application.get_env(:nomad, :ssh_key), 
                        "remote_setup.sh", 
                        "#{System.get_env("USERNAME")}@#{System.get_env("HOST")}:/root"
                       ]      

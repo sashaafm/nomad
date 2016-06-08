@@ -21,7 +21,7 @@ defmodule Mix.Tasks.Nomad.Deploy do
   <PORT>        : Required - the port for the production application
   <USERNAME>    : Required - the username to use to access the remote host
   <SSH KEY>     : Required - the SSH Key for accessing the remote host,
-                             only the filename and it must be in ~/.ssh 
+                             The whole path to the .pub file must be passed.
   <-f>          : Optional - bypass all the questions during deployment
   """
   def run(args) do
