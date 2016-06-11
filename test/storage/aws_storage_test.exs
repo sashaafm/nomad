@@ -13,7 +13,7 @@ defmodule Dummy.Test.AWSStorageClient do
   end
 
   def create_bucket_test(state) do 
-    fn (_name, _region, _class) ->
+    fn (_name, _region) ->
       case state do 
         200    -> {:ok, %{status_code: 200}}
         555    -> code_555
