@@ -30,6 +30,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def list_storages!(fun \\ &list_buckets/0), do: fun.()
+
         # def create_storage(bucket, fun \\ &create_bucket/1)  when is_function(fun) do
         #   case fun.(bucket) do
         #     {:ok, res} ->
@@ -65,6 +67,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        def create_storage!(bucket, region, class, fun \\ &create_bucket/3), do: fun.(bucket, region, class)
 
         # def put_item(bucket, filepath, fun \\ &put_object/2) do
         #   case fun.(bucket, filepath) do
