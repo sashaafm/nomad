@@ -95,17 +95,12 @@ if Code.ensure_loaded?(GCloudex) do
         # and arrange them accordingly?
         
         def insert_instance(instance, settings, {region, tier}, _credentials = {user, password}, addresses \\ [], fun \\ &Client.insert_instance/4) do 
-
-          addresses = addresses |> Enum.map(fn ip -> %{"value" => ip} end)
-
-          auth_networks = Map.new
-          |> Map.put_new("authorizedNetworks", 
-              [%{"value" => find_public_ip_address}] ++  addresses)
-          |> Map.put_new("ipv4Enabled", true)
-
-          optional_properties = Map.new |> Map.put_new(:region, region)
-
-          settings = Map.put_new(settings, "ipConfiguration", auth_networks)
+          addresses           = addresses |> Enum.map(fn ip -> %{"value" => ip} end)
+          auth_networks       = Map.new
+          |> Map.put("authorizedNetworks", [%{"value" => find_public_ip_address}] ++  addresses)
+          |> Map.put("ipv4Enabled", true)
+          optional_properties = Map.new |> Map.put(:region, region)
+          settings            = Map.put_new(settings, "ipConfiguration", auth_networks)
 
           case fun.(instance, optional_properties, settings, tier) do 
             {:ok, res} ->
@@ -113,7 +108,7 @@ if Code.ensure_loaded?(GCloudex) do
                 200 ->
                   check_when_instance_is_runnable_and_insert_user(instance, user, password)
                 _   ->
-                  res |> show_error_message_and_code
+                  show_error_message_and_code(res, :json)
               end
             {:error, reason} ->
               parse_http_error reason

@@ -47,12 +47,8 @@ defmodule Nomad.Utils do
     reason |> Atom.to_string
   end
   def parse_http_error({:http_error, code, body}) do
-    cond do
-      String.contains?(body, "<?xml") ->
-        c = Integer.to_string(code)
-        m = body |> Friendly.find("message") |> List.first |> Map.get(:text)
-
-        "#{c}: #{m}"
-    end
+    c = Integer.to_string(code)
+    m = body |> Friendly.find("message") |> List.first |> Map.get(:text)
+    "#{c}: #{m}"
   end
 end
