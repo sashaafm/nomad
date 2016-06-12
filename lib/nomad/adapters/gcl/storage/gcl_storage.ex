@@ -116,7 +116,8 @@ if Code.ensure_loaded?(GCloudex) do
               case res.status_code do
                 200 ->
                   file_content = res.body
-                  {:ok, file}  = File.open object, [:write]
+                  sys_path     = object |> String.split("/") |> List.last 
+                  {:ok, file}  = File.open sys_path, [:write]
                   IO.binwrite file, file_content
                   :ok
                 _   ->
