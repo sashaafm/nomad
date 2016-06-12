@@ -182,7 +182,7 @@ if Code.ensure_loaded?(GCloudex) do
                       end)
         end
 
-        def get_item_acl!(buclet, object, fun \\ &get_object_acl/2), do: fun.(bucket, object)
+        def get_item_acl!(bucket, object, fun \\ &get_object_acl/2), do: fun.(bucket, object)
 
         def list_items(bucket, fun \\ &list_objects/1) do
           case fun.(bucket) do
@@ -201,6 +201,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def list_items!(bucket, fun \\ &list_objects/1), do: fun.(bucket)
+
         def delete_storage(bucket, fun \\ &delete_bucket/1) do
           case fun.(bucket) do
             {:ok, res} ->
@@ -212,6 +214,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        def delete_storage!(bucket, fun \\ &delete_bucket/1), do: fun.(bucket)
 
         def get_storage_region(bucket, fun \\ &get_bucket_region/1) do
           case fun.(bucket) do
@@ -232,6 +236,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def get_storage_region!(bucket, fun \\ &get_bucket_region/1), do: fun.(bucket)
+
         def get_storage_class(bucket, fun \\ &get_bucket_class/1) do
           case fun.(bucket) do
             {:ok, res} ->
@@ -249,6 +255,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        def get_storage_class!(bucket, fun \\ &get_bucket_class/1), do: fun.(bucket)
 
         def get_storage_acl(bucket, fun \\ &get_bucket_acl/1) do
           case fun.(bucket) do
@@ -279,6 +287,8 @@ if Code.ensure_loaded?(GCloudex) do
                            |> Map.get(:text)}
                       end)
         end
+
+        def get_storage_acl!(bucket, fun \\ &get_bucket_acl/1), do: fun.(bucket)
 
         @doc """
         Lists all the available classes for Cloud Storage buckets.
