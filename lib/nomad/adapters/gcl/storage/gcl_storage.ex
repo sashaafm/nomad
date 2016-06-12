@@ -94,6 +94,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def put_item!(bucket, filepath, storage_path, fun \\ &put_object/3), do: fun.(bucket, filepath, storage_path)
+
         def delete_item(bucket, object, fun \\ &delete_object/2) do
           case fun.(bucket, object) do
             {:ok, res} ->
@@ -105,6 +107,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        def delete_item!(bucket, object, fun \\ &delete_object/2), do: fun.(bucket, object)
 
         def get_item(bucket, object, fun \\ &get_object/2) do
           case fun.(bucket, object) do
