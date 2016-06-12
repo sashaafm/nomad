@@ -128,6 +128,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def get_item!(bucket, object, fun \\ &get_object/2), do: fun.(bucket, object)
+
         def get_item_acl(bucket, object, fun \\ &get_object_acl/2) do
           case fun.(bucket, object) do
             {:ok, res} ->
@@ -179,6 +181,8 @@ if Code.ensure_loaded?(GCloudex) do
                          |> Map.get(:text)
                       end)
         end
+
+        def get_item_acl!(buclet, object, fun \\ &get_object_acl/2), do: fun.(bucket, object)
 
         def list_items(bucket, fun \\ &list_objects/1) do
           case fun.(bucket) do
