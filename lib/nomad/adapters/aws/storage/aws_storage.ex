@@ -36,6 +36,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def list_storages!(fun \\ &list_buckets/0), do: fun.()
+
         # def create_storage(name) do 
         #   create_storage name, "us-east-1"
         # end
