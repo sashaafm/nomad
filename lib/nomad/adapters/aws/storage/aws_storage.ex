@@ -66,6 +66,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def create_storage!(name, region, class, fun \\ &put_bucket/2), do: fun.(name, region)
+
         # def put_item(bucket, filepath) do
         #   name           = filepath |> String.split("/") |> List.last 
         #   {:ok, content} = File.read filepath
@@ -95,6 +97,12 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def put_item!(bucket, filepath, bucket_path, fun \\ &put_object/3) do
+          {:ok, content} = File.read filepath
+
+          fun.(bucket, bucket_path, content)
+        end
+
         def list_items(bucket, fun \\ &list_objects/1) do 
           case fun.(bucket) do 
             {:ok, res} ->
@@ -110,6 +118,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def list_items!(bucket, fun \\ &list_objects/1), do: fun.(bucket)
+
         def delete_item(bucket, object, fun \\ &delete_object/2) do 
           case fun.(bucket, object) do 
             {:ok, res} ->
@@ -121,6 +131,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error reason
           end
         end
+
+        def delete_item!(bucket, object, fun \\ &delete_object/2), do: fun.(bucket, object)
 
         def get_item(bucket, object, fun \\ &get_object/2) do 
           case fun.(bucket, object) do 
@@ -136,6 +148,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error reason
           end
         end
+
+        def get_item!(bucket, object, fun \\ &get_object/2), do: fun.(bucket, object)
 
         def get_item_acl(bucket, object, fun \\ &get_object_acl/2) do 
           case fun.(bucket, object) do 
@@ -153,6 +167,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def get_item_acl!(bucket, object, fun \\ &get_object_acl/2), do: fun.(bucket, object)
+
         def delete_storage(bucket, fun \\ &delete_bucket/1) do 
           case fun.(bucket) do 
             {:ok, res} ->
@@ -166,6 +182,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error reason
           end
         end
+
+        def delete_storage!(bucket, fun \\ &delete_bucket/1), do: fun.(bucket)
 
         def get_storage_region(bucket, fun \\ &get_bucket_location/1) do 
           case fun.(bucket) do 
@@ -193,6 +211,8 @@ if Code.ensure_loaded?(ExAws) do
             location
           end
         end
+
+        def get_storage_region!(bucket, fun \\ &get_bucket_location/1), do: fun.(bucket)
 
         def get_storage_class(bucket) do 
           "STANDARD"
