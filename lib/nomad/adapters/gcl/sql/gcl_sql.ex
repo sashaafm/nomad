@@ -3,7 +3,7 @@ if Code.ensure_loaded?(GCloudex) do
   defmodule Nomad.GCL.SQL do
 
     @moduledoc """
-    
+    Google Cloud SQL adapter for Nomad. API interaction is done through GCloudex.
     """
 
     defmacro __using__(:gcl) do 
@@ -49,6 +49,8 @@ if Code.ensure_loaded?(GCloudex) do
                         }
                       end)
         end
+
+        def list_instances!(fun \\ &Client.list_instances/0), do: fun.()
         
         def get_instance(instance, fun \\ &Client.get_instance/1) do
           case fun.(instance) do 
@@ -82,6 +84,8 @@ if Code.ensure_loaded?(GCloudex) do
           }
         end
 
+        def get_instance!(instance, fun \\ &Client.get_instance/1), do: fun.(instance)
+
         # Creates a new instance with name 'instance' in the specified 'tier' and 
         # 'region' and with the provided 'settings'. In the settings the appropriate 
         # network authorization for the current machine will be added. Other desired 
@@ -94,7 +98,7 @@ if Code.ensure_loaded?(GCloudex) do
         # belong to settings, replicaConfiguration or the first level of the request 
         # and arrange them accordingly?
         
-        def insert_instance(instance, settings, {region, tier}, _credentials = {user, password}, addresses \\ [], fun \\ &Client.insert_instance/4) do 
+        def insert_instance(instance, settings, {region, tier}, {user, password}, addresses \\ [], fun \\ &Client.insert_instance/4) do 
           addresses           = addresses |> Enum.map(fn ip -> %{"value" => ip} end)
           auth_networks       = Map.new
           |> Map.put("authorizedNetworks", [%{"value" => find_public_ip_address}] ++  addresses)
@@ -113,6 +117,17 @@ if Code.ensure_loaded?(GCloudex) do
             {:error, reason} ->
               parse_http_error reason
           end
+        end
+
+        def insert_instance!(instance, settings, {region, tier}, {user, password}, addresses \\ [], fun \\ &Client.insert_instance/4) do
+          addresses           = addresses |> Enum.map(fn ip -> %{"value" => ip} end)
+          auth_networks       = Map.new
+          |> Map.put("authorizedNetworks", [%{"value" => find_public_ip_address}] ++  addresses)
+          |> Map.put("ipv4Enabled", true)
+          optional_properties = Map.new |> Map.put(:region, region)
+          settings            = Map.put_new(settings, "ipConfiguration", auth_networks)
+
+          fun.(instance, optional_properties, settings, tier)
         end
 
         defp check_when_instance_is_runnable_and_insert_user(instance, u, pw) do 
@@ -170,6 +185,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def delete_instance!(instance, fun \\ &Client.delete_instance/1), do: fun.(instance)
+
         def restart_instance(instance, fun \\ &Client.restart_instance/1) do 
           case fun.(instance) do 
             {:ok, res} ->
@@ -183,6 +200,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        def restart_instance!(instance, fun \\ &Client.restart_instance/1), do: fun.(instance)
 
         def list_databases(instance, fun \\ &Client.list_databases/1) do 
           case fun.(instance) do 
@@ -200,6 +219,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error reason
           end
         end
+
+        def list_databases!(instance, fun \\ &Client.list_databases/1), do: fun.(instance)
 
         defp parse_list_databases(res) do 
           res["items"]

@@ -48,6 +48,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def list_instances!(fun \\ &describe_db_instances/0), do: fun.()
+
         defp parse_list_instances(ids, zones, addresses, status, storage) do 
           ids_list = ids
           |> Enum.map(fn x -> x.text end)
@@ -107,6 +109,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def get_instance!(instance, fun \\ &describe_db_instances/1), do: fun.(%{"DBInstanceIdentifier" => instance})
+
         def insert_instance(instance, settings, {region, tier}, _credentials = {username, password}, addresses, fun \\ &create_db_instance/7) do 
           storage  = settings.storage
           engine   = settings.engine
@@ -129,6 +133,18 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def insert_instance!(instance, settings, {region, tier}, {username, password}, addresses, fun \\ &create_db_instance/7) do 
+          storage  = settings.storage
+          engine   = settings.engine
+          settings = Map.put(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
+
+          if Mix.env() != :test do
+            Helper.create_sg_with_local_public_ip_allowed(instance, engine)
+          end
+
+          fun.(instance, username, password, storage, tier, engine, settings)
+        end
+
         def delete_instance(instance, fun \\ &delete_db_instance/1) do 
           case fun.(instance) do 
             {:ok, res} ->
@@ -143,6 +159,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def delete_instance!(instance, fun \\ &delete_db_instance/1), do: fun.(instance)
+
         def restart_instance(instance, fun \\ &reboot_db_instance/1) do
           case fun.(instance) do 
             {:ok, res} ->
@@ -156,6 +174,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error reason
           end
         end
+
+        def restart_instance!(instance, fun \\ &reboot_db_instance/1), do: fun.(instance)
 
         def list_databases(instance, fun \\ &describe_db_instances/1) do 
           case fun.(%{"DBInstanceIdentifier" => instance}) do 
@@ -172,6 +192,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error reason
           end
         end
+
+        def list_databases!(instance, fun \\ &describe_db_instances/1), do: fun.(%{"DBInstanceIdentifier" => instance})
         
         def list_classes do
           ["db.t1.micro",    "db.m1.small",   "db.m1.medium",  "db.m1.large", 
