@@ -270,7 +270,7 @@ defmodule AWSStorageTest do
     assert expected == get_item_acl :a, :b, Dummy.get_object_acl_test 555
   end
 
-  test "get_item error" do 
+  test "get_item_acl error" do 
     expected = "reason"
 
     assert expected == get_item_acl :a, :b, Dummy.get_object_acl_test :error

@@ -123,16 +123,6 @@ defmodule Test.Dummy.GCLVirtualMachinesClient do
     end
   end
 
-  def create_disk_test(state) do
-    fn(_a, _b, _c) ->
-      case state do
-        200    -> {:ok, %{status_code: 200}}
-        555    -> code_555
-        :error -> http_error
-      end
-    end
-  end
-
   def delete_disk_test(state) do
     fn(_a, _b) ->
       case state do

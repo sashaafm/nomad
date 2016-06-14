@@ -235,6 +235,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def get_storage_acl!(bucket, fun \\ &get_bucket_acl/1), do: fun.(bucket)
+
         @spec list_classes() :: list(binary)
         def list_classes do 
           ["STANDARD"]

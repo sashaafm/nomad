@@ -100,11 +100,6 @@ defmodule NomadStorage do
   """
   @callback get_storage_class(storage :: binary) :: binary
 
-  @doc"""
-  Same as get_storage_class/1 but returns the complete HTTP reply.
-  """
-  @callback get_storage_class!(storage :: binary) :: HTTPoison.Response.t
-
   @doc """
   Returns the given 'storage' ACL.
   """
