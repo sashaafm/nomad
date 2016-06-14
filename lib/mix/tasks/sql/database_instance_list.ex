@@ -19,7 +19,7 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.List do
   Runs the task for the chosen cloud provider.
   """
   @spec run(list) :: binary
-  def run(args) do 
+  def run(_args) do 
     case @provider do 
       :aws -> 
         Application.ensure_all_started(:ex_aws)

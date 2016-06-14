@@ -51,10 +51,6 @@ defmodule Mix.Tasks.Nomad.Storage.Create do
     end
   end
 
-  defp create([name, region, class]) do
-    create region, class, name
-  end
-
   defp create(region, class, name) do
     case Nomad.Storage.create_storage name, region, class do
       :ok -> Mix.Shell.IO.info("The storage has been created successfully.")

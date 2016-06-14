@@ -15,7 +15,8 @@ defmodule Mix.Tasks.Nomad.Storage.List do
 
   @provider Application.get_env(:nomad, :cloud_provider)
 
-  def run(args) do
+  @spec run(list) :: binary
+  def run(_args) do
     case @provider do
       :aws ->
         Application.ensure_all_started(:ex_aws)
