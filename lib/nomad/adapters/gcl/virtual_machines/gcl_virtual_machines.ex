@@ -36,6 +36,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def list_virtual_machines!(region, fun \\ &list_instances/2), do: fun.(region, %{"fields" => "items"})
+
         defp get_vm_data(vm) do
           ip = vm["networkInterfaces"]
           |> List.first
@@ -91,6 +93,37 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def create_virtual_machine!(region, class, image, auto_delete, fun \\ &insert_instance/2) do
+          epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
+          name     = "instance-#{epoch}"
+          resource = %{
+            "name"        => name,
+            "machineType" => "zones/#{region}/machineTypes/#{class}",
+            "disks" => [
+              %{
+                "autoDelete"       => auto_delete,
+                "boot"             => true,
+                "type"             => "PERSISTENT",
+                "initializeParams" => %{
+                  "sourceImage" => image
+                }
+              }
+            ],
+            "networkInterfaces" => [
+              %{
+                "accessConfigs" => [
+                %{
+                  "name" => "External NAT",
+                  "type" => "ONE_TO_ONE_NAT"
+                }
+              ],
+                "network" => "global/networks/default"
+              }
+            ]
+          }
+
+          fun.(region, resource)
+        end
 
         def get_virtual_machine(region, instance, fun \\ &get_instance/3) do
           fields = "machineType, networkInterfaces, status"
@@ -109,6 +142,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error(reason)
           end
         end
+
+        def get_virtual_machine!(region, instance, fun \\ &get_instance/3), do: fun.(region, instance, "machineType, networkInterfaces, status")
 
         defp gvm(body, instance) do
           ip = body["networkInterfaces"]
@@ -132,6 +167,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def delete_virtual_machine!(region, instance, fun \\ &delete_instance/2), do: fun.(region, instance)
+
         def start_virtual_machine(region, instance, fun \\ &start_instance/2) do
           case fun.(region, instance) do
             {:ok, res} ->
@@ -143,6 +180,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error(reason)
           end
         end
+
+        def start_virtual_machine!(region, instance, fun \\ &start_instance/2), do: fun.(region, instance)
 
         def stop_virtual_machine(region, instance, fun \\ &stop_instance/2) do
           case fun.(region, instance) do
@@ -156,6 +195,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def stop_virtual_machine!(region, instance, fun \\ &stop_instance/2), do: fun.(region, instance)
+
         def reboot_virtual_machine(region, instance, fun \\ &reset_instance/2) do
           case fun.(region, instance) do
             {:ok, res} ->
@@ -168,6 +209,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def reboot_virtual_machine!(region, instance, fun \\ &reset_instance/2), do: fun.(region, instance)
+
         def set_virtual_machine_class(region, instance, class, fun \\ &set_machine_type/3) do
           case fun.(region, instance, class) do
             {:ok, res} ->
@@ -179,6 +222,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error(reason)
           end
         end
+
+        def set_virtual_machine_class!(region, instance, class, fun \\ &set_machine_type/3), do: fun.(region, instance, class) 
 
         #############
         ### Disks ###
@@ -201,6 +246,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error(reason)
           end
         end
+
+        def list_disks!(region, fun \\ &GCloudex.ComputeEngine.Client.list_disks/2), do: fun.(region, %{"fields" => "items(name,sizeGb,sourceImage,status,type)"})
 
         defp ld(item) do
           image = item["sourceImage"] |> String.split("/") |> List.last
@@ -226,6 +273,8 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def get_disk!(region, disk, fun \\ &GCloudex.ComputeEngine.Client.get_disk/3), do: fun.(region, disk, "name,sizeGb,sourceImage,status,type")
+
         defp gd(disk) do
           image = disk["sourceImage"] |> String.split("/") |> List.last
           type  = disk["type"] |> String.split("/") |> List.last
@@ -233,13 +282,13 @@ if Code.ensure_loaded?(GCloudex) do
           {disk["name"], disk["sizeGb"], image, disk["status"], type}
         end
 
-        def create_disk(region, size) do
-          cd region, size
-        end
+        def create_disk(region, size), do: cd region, size
 
-        def create_disk(region, size, image) do
-          cd_with_img region, size, image
-        end
+        def create_disk(region, size, image), do: cd_with_img region, size, image
+
+        def create_disk!(region, size), do: cd! region, size
+
+        def create_disk!(region, size, image), do: cd_with_img! region, size, image
 
         defp cd(region, size, fun \\ &GCloudex.ComputeEngine.Client.insert_disk/2) do
           epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
@@ -255,6 +304,14 @@ if Code.ensure_loaded?(GCloudex) do
             {:error, reason} ->
               parse_http_error(reason)
           end
+        end
+
+        defp cd!(region, size, fun \\ &GCloudex.ComputeEngine.Client.insert_disk/2) do
+          epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
+          name     = "disk-#{epoch}"
+          resource = %{"name" => name, "sizeGb" => size}
+
+          fun.(region, resource)
         end
 
         defp cd_with_img(region, size, image, fun \\ &GCloudex.ComputeEngine.Client.insert_disk/3) do
@@ -274,6 +331,14 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        defp cd_with_img!(region, size, image, fun \\ &GCloudex.ComputeEngine.Client.insert_disk/3) do
+          epoch    = :calendar.universal_time |> :calendar.datetime_to_gregorian_seconds
+          name     = "disk-#{epoch}"
+          resource = %{"name" => name, "sizeGb" => size}
+
+          fun.(region, resource, image)
+        end
+
         def delete_disk(region, disk, fun \\ &GCloudex.ComputeEngine.Client.delete_disk/2) do
           case fun.(region, disk) do
             {:ok, res} ->
@@ -285,6 +350,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error(reason)
           end
         end
+
+        def delete_disk!(region, disk, fun \\ &GCloudex.ComputeEngine.Client.delete_disk/2), do: fun.(region, disk)
 
         def attach_disk(region, instance, disk, device_name, fun \\ &GCloudex.ComputeEngine.Client.attach_disk/3) do
           source   = get_disk_self_link(region, disk)
@@ -300,6 +367,13 @@ if Code.ensure_loaded?(GCloudex) do
           end
         end
 
+        def attach_disk!(region, instance, disk, device_name, fun \\ &GCloudex.ComputeEngine.Client.attach_disk/3) do
+          source   = get_disk_self_link(region, disk)
+          resource = %{"source" => source, "deviceName" => device_name}
+
+          fun.(region, instance, resource)
+        end
+
         def detach_disk(region, instance, disk, fun \\ &GCloudex.ComputeEngine.Client.detach_disk/3) do
           case fun.(region, instance, disk) do
             {:ok, res} ->
@@ -311,6 +385,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error(reason)
           end
         end
+
+        def detach_disk!(region, instance, disk, fun \\ &GCloudex.ComputeEngine.Client.detach_disk/3), do: fun.(region, instance, disk)
 
         ##############
         ### Others ###
@@ -334,6 +410,8 @@ if Code.ensure_loaded?(GCloudex) do
               parse_http_error(reason)
           end
         end
+
+        def list_regions!(fun \\ &GCloudex.ComputeEngine.Client.list_regions/1), do: fun.(%{"fields" => "items/name, items/zones"})
 
         def list_classes(fun \\ &lc/1) do
           list = lr 
