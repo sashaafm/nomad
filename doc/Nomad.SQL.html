@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.11.5">
-    <title>Nomad.SQL – nomad v0.6.0</title>
+    <title>Nomad.SQL – nomad v0.7.0</title>
     <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
     
       <link rel="canonical" href="https://hexdocs.pm/nomad/Nomad.SQL.html" />
@@ -30,7 +30,7 @@
         nomad
       </h1>
       <h2 class="sidebar-projectVersion">
-        v0.6.0
+        v0.7.0
       </h2>
     </div>
     
@@ -62,7 +62,7 @@
 
 
       <h1>
-        <small class="visible-xs">nomad v0.6.0</small>
+        <small class="visible-xs">nomad v0.7.0</small>
         Nomad.SQL
         
         
@@ -70,7 +70,21 @@
 
       
         <section id="moduledoc" class="docstring">
-          <p>Consult the documentation in ExAws.RDS.Client</p>
+          <p>Interface for the Nomad SQL API. All the functions here will call their
+respective callbacks to the desired cloud’s client adapter.</p>
+<p>To use the SQL API - at least - the following system variables must be 
+passed on startup:</p>
+<p>  DB_NAME:     The name of the database
+  DB_INSTANCE: The instance to which the database belongs
+  DB_USERNAME: The username for the given database
+  DB_PASSWORD: The password for the given database</p>
+<p>  The hostname will be retrieved through the API.</p>
+<p>To use the SQL API and the regular Ecto Mix tasks:</p>
+<p>  DB_NAME:     The name of the database
+  DB_INSTANCE: The instance to which the database belongs
+  DB_USERNAME: The username for the given database
+  DB_PASSWORD: The password for the given database
+  DB_HOSTNAME: The host for the given database instance</p>
 
         </section>
       
@@ -92,193 +106,85 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#add_source_id_to_subscription/2">add_source_id_to_subscription(arg0, arg1)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.add_source_id_to_subscription/2</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#add_tags_to_resource/2">add_tags_to_resource(arg0, arg1)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.add_tags_to_resource/2</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#apply_pending_maintenance/3">apply_pending_maintenance(arg0, arg1, arg2)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.apply_pending_maintenance/3</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_db_instance/6">create_db_instance(arg0, arg1, arg2, arg3, arg4, arg5)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.create_db_instance/6</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_db_instance/7">create_db_instance(arg0, arg1, arg2, arg3, arg4, arg5, arg6)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.create_db_instance/7</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_db_instance/1">delete_db_instance(arg0)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.delete_db_instance/1</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_db_instance/2">delete_db_instance(arg0, arg1)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.delete_db_instance/2</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_instance/2">delete_instance(instance, fun \\ &amp;delete_db_instance/1)</a>
+    <a href="#delete_instance/2">delete_instance(instance, fun \\ &amp;Client.delete_instance/1)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#describe_db_instances/0">describe_db_instances()</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.describe_db_instances/0</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#describe_db_instances/1">describe_db_instances(arg0)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.describe_db_instances/1</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#describe_events/0">describe_events()</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.describe_events/0</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#describe_events/1">describe_events(arg0)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.describe_events/1</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#get_instance/2">get_instance(instance, fun \\ &amp;describe_db_instances/1)</a>
+    <a href="#delete_instance!/2">delete_instance!(instance, fun \\ &amp;Client.delete_instance/1)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#get_instance_address/2">get_instance_address(instance, fun \\ &amp;get_instance/1)</a>
+    <a href="#get_instance/2">get_instance(instance, fun \\ &amp;Client.get_instance/1)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#insert_instance/6">insert_instance(instance, settings, arg1, arg2, addresses, fun \\ &amp;create_db_instance/7)</a>
+    <a href="#get_instance!/2">get_instance!(instance, fun \\ &amp;Client.get_instance/1)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#list_classes/0">list_classes()</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <a href="NomadSQL.html#c:list_classes/0"><code class="inline">NomadSQL.list_classes/0</code></a></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#list_databases/2">list_databases(instance, fun \\ &amp;describe_db_instances/1)</a>
+    <a href="#get_instance_address/2">get_instance_address(instance, fun \\ &amp;Client.get_instance/1)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#list_instances/1">list_instances(fun \\ &amp;describe_db_instances/0)</a>
+    <a href="#insert_instance/6">insert_instance(instance, settings, arg1, arg2, addresses \\ [], fun \\ &amp;Client.insert_instance/4)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#modify_db_instance/1">modify_db_instance(arg0)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.modify_db_instance/1</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#modify_db_instance/2">modify_db_instance(arg0, arg1)</a>
-  </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.modify_db_instance/2</code></p>
-</div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#new/1">new(opts \\ [])</a>
+    <a href="#insert_instance!/6">insert_instance!(instance, settings, arg1, arg2, addresses \\ [], fun \\ &amp;Client.insert_instance/4)</a>
   </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#reboot_db_instance/1">reboot_db_instance(arg0)</a>
+    <a href="#list_classes/1">list_classes(fun \\ &amp;Client.list_tiers/0)</a>
   </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.reboot_db_instance/1</code></p>
-</div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#reboot_db_instance/2">reboot_db_instance(arg0, arg1)</a>
+    <a href="#list_databases/2">list_databases(instance, fun \\ &amp;Client.list_databases/1)</a>
   </div>
-  
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.reboot_db_instance/2</code></p>
-</div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#restart_instance/2">restart_instance(instance, fun \\ &amp;reboot_db_instance/1)</a>
+    <a href="#list_databases!/2">list_databases!(instance, fun \\ &amp;Client.list_databases/1)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_instances/1">list_instances(fun \\ &amp;Client.list_instances/0)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_instances!/1">list_instances!(fun \\ &amp;Client.list_instances/0)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#restart_instance/2">restart_instance(instance, fun \\ &amp;Client.restart_instance/1)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#restart_instance!/2">restart_instance!(instance, fun \\ &amp;Client.restart_instance/1)</a>
   </div>
   
 </div>
@@ -312,110 +218,12 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="add_source_id_to_subscription/2">
-  <div class="detail-header">
-    <a href="#add_source_id_to_subscription/2" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">add_source_id_to_subscription(arg0, arg1)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.add_source_id_to_subscription/2</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="add_tags_to_resource/2">
-  <div class="detail-header">
-    <a href="#add_tags_to_resource/2" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">add_tags_to_resource(arg0, arg1)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.add_tags_to_resource/2</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="apply_pending_maintenance/3">
-  <div class="detail-header">
-    <a href="#apply_pending_maintenance/3" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">apply_pending_maintenance(arg0, arg1, arg2)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.apply_pending_maintenance/3</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="create_db_instance/6">
-  <div class="detail-header">
-    <a href="#create_db_instance/6" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">create_db_instance(arg0, arg1, arg2, arg3, arg4, arg5)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.create_db_instance/6</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="create_db_instance/7">
-  <div class="detail-header">
-    <a href="#create_db_instance/7" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">create_db_instance(arg0, arg1, arg2, arg3, arg4, arg5, arg6)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.create_db_instance/7</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="delete_db_instance/1">
-  <div class="detail-header">
-    <a href="#delete_db_instance/1" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">delete_db_instance(arg0)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.delete_db_instance/1</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="delete_db_instance/2">
-  <div class="detail-header">
-    <a href="#delete_db_instance/2" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">delete_db_instance(arg0, arg1)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.delete_db_instance/2</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="delete_instance/2">
+          <div class="detail" id="delete_instance/2">
   <div class="detail-header">
     <a href="#delete_instance/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">delete_instance(instance, fun \\ &amp;delete_db_instance/1)</span>
+    <span class="signature">delete_instance(instance, fun \\ &amp;Client.delete_instance/1)</span>
       
   </div>
   
@@ -423,60 +231,17 @@
     
   </section>
 </div>
-<div class="detail" id="describe_db_instances/0">
+<div class="detail" id="delete_instance!/2">
   <div class="detail-header">
-    <a href="#describe_db_instances/0" class="detail-link" title="Link to this function">
+    <a href="#delete_instance!/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">describe_db_instances()</span>
+    <span class="signature">delete_instance!(instance, fun \\ &amp;Client.delete_instance/1)</span>
       
   </div>
   
   <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.describe_db_instances/0</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="describe_db_instances/1">
-  <div class="detail-header">
-    <a href="#describe_db_instances/1" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">describe_db_instances(arg0)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.describe_db_instances/1</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="describe_events/0">
-  <div class="detail-header">
-    <a href="#describe_events/0" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">describe_events()</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.describe_events/0</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="describe_events/1">
-  <div class="detail-header">
-    <a href="#describe_events/1" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">describe_events(arg0)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.describe_events/1</code>.</p>
-
+    
   </section>
 </div>
 <div class="detail" id="get_instance/2">
@@ -484,7 +249,20 @@
     <a href="#get_instance/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">get_instance(instance, fun \\ &amp;describe_db_instances/1)</span>
+    <span class="signature">get_instance(instance, fun \\ &amp;Client.get_instance/1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="get_instance!/2">
+  <div class="detail-header">
+    <a href="#get_instance!/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_instance!(instance, fun \\ &amp;Client.get_instance/1)</span>
       
   </div>
   
@@ -497,7 +275,7 @@
     <a href="#get_instance_address/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">get_instance_address(instance, fun \\ &amp;get_instance/1)</span>
+    <span class="signature">get_instance_address(instance, fun \\ &amp;Client.get_instance/1)</span>
       
   </div>
   
@@ -510,7 +288,7 @@
     <a href="#insert_instance/6" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">insert_instance(instance, settings, arg1, arg2, addresses, fun \\ &amp;create_db_instance/7)</span>
+    <span class="signature">insert_instance(instance, settings, arg1, arg2, addresses \\ [], fun \\ &amp;Client.insert_instance/4)</span>
       
   </div>
   
@@ -518,18 +296,30 @@
     
   </section>
 </div>
-<div class="detail" id="list_classes/0">
+<div class="detail" id="insert_instance!/6">
   <div class="detail-header">
-    <a href="#list_classes/0" class="detail-link" title="Link to this function">
+    <a href="#insert_instance!/6" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">list_classes()</span>
+    <span class="signature">insert_instance!(instance, settings, arg1, arg2, addresses \\ [], fun \\ &amp;Client.insert_instance/4)</span>
       
   </div>
   
   <section class="docstring">
-    <p>Callback implementation for <a href="NomadSQL.html#c:list_classes/0"><code class="inline">NomadSQL.list_classes/0</code></a>.</p>
-
+    
+  </section>
+</div>
+<div class="detail" id="list_classes/1">
+  <div class="detail-header">
+    <a href="#list_classes/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_classes(fun \\ &amp;Client.list_tiers/0)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
   </section>
 </div>
 <div class="detail" id="list_databases/2">
@@ -537,7 +327,20 @@
     <a href="#list_databases/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">list_databases(instance, fun \\ &amp;describe_db_instances/1)</span>
+    <span class="signature">list_databases(instance, fun \\ &amp;Client.list_databases/1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="list_databases!/2">
+  <div class="detail-header">
+    <a href="#list_databases!/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_databases!(instance, fun \\ &amp;Client.list_databases/1)</span>
       
   </div>
   
@@ -550,7 +353,7 @@
     <a href="#list_instances/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">list_instances(fun \\ &amp;describe_db_instances/0)</span>
+    <span class="signature">list_instances(fun \\ &amp;Client.list_instances/0)</span>
       
   </div>
   
@@ -558,73 +361,17 @@
     
   </section>
 </div>
-<div class="detail" id="modify_db_instance/1">
+<div class="detail" id="list_instances!/1">
   <div class="detail-header">
-    <a href="#modify_db_instance/1" class="detail-link" title="Link to this function">
+    <a href="#list_instances!/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">modify_db_instance(arg0)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.modify_db_instance/1</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="modify_db_instance/2">
-  <div class="detail-header">
-    <a href="#modify_db_instance/2" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">modify_db_instance(arg0, arg1)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.modify_db_instance/2</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="new/1">
-  <div class="detail-header">
-    <a href="#new/1" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">new(opts \\ [])</span>
+    <span class="signature">list_instances!(fun \\ &amp;Client.list_instances/0)</span>
       
   </div>
   
   <section class="docstring">
     
-  </section>
-</div>
-<div class="detail" id="reboot_db_instance/1">
-  <div class="detail-header">
-    <a href="#reboot_db_instance/1" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">reboot_db_instance(arg0)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.reboot_db_instance/1</code>.</p>
-
-  </section>
-</div>
-<div class="detail" id="reboot_db_instance/2">
-  <div class="detail-header">
-    <a href="#reboot_db_instance/2" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">reboot_db_instance(arg0, arg1)</span>
-      
-  </div>
-  
-  <section class="docstring">
-    <p>Callback implementation for <code class="inline">c:ExAws.RDS.Client.reboot_db_instance/2</code>.</p>
-
   </section>
 </div>
 <div class="detail" id="restart_instance/2">
@@ -632,7 +379,20 @@
     <a href="#restart_instance/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">restart_instance(instance, fun \\ &amp;reboot_db_instance/1)</span>
+    <span class="signature">restart_instance(instance, fun \\ &amp;Client.restart_instance/1)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="restart_instance!/2">
+  <div class="detail-header">
+    <a href="#restart_instance!/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">restart_instance!(instance, fun \\ &amp;Client.restart_instance/1)</span>
       
   </div>
   

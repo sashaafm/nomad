@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.11.5">
-    <title>NomadSQL – nomad v0.6.0</title>
+    <title>NomadSQL – nomad v0.7.0</title>
     <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
     
       <link rel="canonical" href="https://hexdocs.pm/nomad/NomadSQL.html" />
@@ -30,7 +30,7 @@
         nomad
       </h1>
       <h2 class="sidebar-projectVersion">
-        v0.6.0
+        v0.7.0
       </h2>
     </div>
     
@@ -62,7 +62,7 @@
 
 
       <h1>
-        <small class="visible-xs">nomad v0.6.0</small>
+        <small class="visible-xs">nomad v0.7.0</small>
         NomadSQL
         
           <small>behaviour</small>
@@ -102,11 +102,29 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:delete_instance!/1">delete_instance!(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as delete_instance/1 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:get_instance/1">get_instance(instance)</a>
   </div>
   
     <div class="summary-synopsis"><p>Returns a tuple with info about the given ‘instance’ with the format:
   {instance_name, region, address, status, allocated_storage}</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get_instance!/1">get_instance!(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as get_instance/1 but returns the complete HTTP reply</p>
 </div>
   
 </div>
@@ -131,6 +149,15 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:insert_instance!/5">insert_instance!(instance, settings, {}, {}, addresses)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as insert_instance/5 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:list_classes/0">list_classes()</a>
   </div>
   
@@ -149,6 +176,15 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:list_databases!/1">list_databases!(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as list_databases/1 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:list_instances/0">list_instances()</a>
   </div>
   
@@ -160,10 +196,28 @@ returns a list of tuples with the following format:
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:list_instances!/0">list_instances!()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as list_instances/0 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:restart_instance/1">restart_instance(instance)</a>
   </div>
   
     <div class="summary-synopsis"><p>Restarts the given ‘instance’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:restart_instance!/1">restart_instance!(instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as restart_instance/1 but returns the complete HTTP reply</p>
 </div>
   
 </div>
@@ -211,6 +265,29 @@ returns a list of tuples with the following format:
 
   </section>
 </div>
+<div class="detail" id="c:delete_instance!/1">
+  <div class="detail-header">
+    <a href="#c:delete_instance!/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_instance!(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">delete_instance!(instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as delete_instance/1 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:get_instance/1">
   <div class="detail-header">
     <a href="#c:get_instance/1" class="detail-link" title="Link to this callback">
@@ -232,6 +309,29 @@ returns a list of tuples with the following format:
   <section class="docstring">
     <p>Returns a tuple with info about the given ‘instance’ with the format:
   {instance_name, region, address, status, allocated_storage}</p>
+
+  </section>
+</div>
+<div class="detail" id="c:get_instance!/1">
+  <div class="detail-header">
+    <a href="#c:get_instance!/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_instance!(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">get_instance!(instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as get_instance/1 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -271,7 +371,7 @@ returns a list of tuples with the following format:
       <h4 class="specs-title">Specs</h4>
       <div class="specs-list">
         
-          <pre><code class="elixir">insert_instance(instance :: binary, settings :: map | list, {region :: binary, tier :: binary}, {user :: binary, password :: binary}, addresses :: list) ::
+          <pre><code class="elixir">insert_instance(instance :: binary, settings :: map | list, {region :: binary, tier :: binary}, {username :: binary, password :: binary}, addresses :: list) ::
   :ok |
   binary</code></pre>
         
@@ -282,6 +382,29 @@ returns a list of tuples with the following format:
     <p>Creates a new database instance with name ‘instance’, the provided 
 ‘settings’ and in the desired pricing/performance ‘tier’.</p>
 <p>The ‘settings’ must be passed as a Map in the format: %{key: value}</p>
+
+  </section>
+</div>
+<div class="detail" id="c:insert_instance!/5">
+  <div class="detail-header">
+    <a href="#c:insert_instance!/5" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">insert_instance!(instance, settings, {}, {}, addresses)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">insert_instance!(instance :: binary, settings :: map | list, {region :: binary, tier :: binary}, {username :: binary, password :: binary}, addresses :: list) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as insert_instance/5 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -333,6 +456,29 @@ returns a list of tuples with the following format:
 
   </section>
 </div>
+<div class="detail" id="c:list_databases!/1">
+  <div class="detail-header">
+    <a href="#c:list_databases!/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_databases!(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_databases!(instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as list_databases/1 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:list_instances/0">
   <div class="detail-header">
     <a href="#c:list_instances/0" class="detail-link" title="Link to this callback">
@@ -358,6 +504,29 @@ returns a list of tuples with the following format:
 
   </section>
 </div>
+<div class="detail" id="c:list_instances!/0">
+  <div class="detail-header">
+    <a href="#c:list_instances!/0" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_instances!()</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_instances! :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as list_instances/0 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:restart_instance/1">
   <div class="detail-header">
     <a href="#c:restart_instance/1" class="detail-link" title="Link to this callback">
@@ -378,6 +547,29 @@ returns a list of tuples with the following format:
   
   <section class="docstring">
     <p>Restarts the given ‘instance’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:restart_instance!/1">
+  <div class="detail-header">
+    <a href="#c:restart_instance!/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">restart_instance!(instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">restart_instance!(instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as restart_instance/1 but returns the complete HTTP reply.</p>
 
   </section>
 </div>

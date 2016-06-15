@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.11.5">
-    <title>NomadVirtualMachines – nomad v0.6.0</title>
+    <title>NomadVirtualMachines – nomad v0.7.0</title>
     <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
     
       <link rel="canonical" href="https://hexdocs.pm/nomad/NomadVirtualMachines.html" />
@@ -30,7 +30,7 @@
         nomad
       </h1>
       <h2 class="sidebar-projectVersion">
-        v0.6.0
+        v0.7.0
       </h2>
     </div>
     
@@ -62,7 +62,7 @@
 
 
       <h1>
-        <small class="visible-xs">nomad v0.6.0</small>
+        <small class="visible-xs">nomad v0.7.0</small>
         NomadVirtualMachines
         
           <small>behaviour</small>
@@ -102,6 +102,15 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:attach_disk!/4">attach_disk!(region, instance, disk, device_name)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as attach_disk/4 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:create_disk/2">create_disk(region, size)</a>
   </div>
   
@@ -120,10 +129,37 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:create_disk!/2">create_disk!(region, size)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as create_disk/2 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:create_disk!/3">create_disk!(region, size, image)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as create_disk/3 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:create_virtual_machine/4">create_virtual_machine(region, class, image, auto_delete)</a>
   </div>
   
     <div class="summary-synopsis"><p>Creates a new Virtual Machine in the given ‘region’ using the provided ‘class’, ‘image’ and ‘auto_delete’ behaviour</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:create_virtual_machine!/4">create_virtual_machine!(region, class, image, auto_delete)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as create_virtual_machine/4 but returns the complete HTTP reply</p>
 </div>
   
 </div>
@@ -138,10 +174,28 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:delete_disk!/2">delete_disk!(region, disk)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as delete_disk/2 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:delete_virtual_machine/2">delete_virtual_machine(region, instance)</a>
   </div>
   
     <div class="summary-synopsis"><p>Deletes the Virtual Machine ‘instance’ in the given ‘region’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:delete_virtual_machine!/2">delete_virtual_machine!(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as delete_virtual_machine/2 but returns the complete HTTP reply</p>
 </div>
   
 </div>
@@ -156,6 +210,15 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:detach_disk!/3">detach_disk!(region, instance, disk)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as detach_disk/3 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:get_disk/2">get_disk(region, disk)</a>
   </div>
   
@@ -165,10 +228,28 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:get_disk!/2">get_disk!(region, disk)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as get_disk/2 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:get_virtual_machine/2">get_virtual_machine(region, instance)</a>
   </div>
   
     <div class="summary-synopsis"><p>Returns the Virtal Machine ‘instance’ name, status, public IP and class</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get_virtual_machine!/2">get_virtual_machine!(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as get_virtual_machine/2 but returns the complete HTTP reply</p>
 </div>
   
 </div>
@@ -192,6 +273,15 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:list_disks!/1">list_disks!(region)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as list_disks/1 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:list_regions/0">list_regions()</a>
   </div>
   
@@ -201,10 +291,28 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:list_regions!/0">list_regions!()</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as list_regions/0 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:list_virtual_machines/1">list_virtual_machines(region)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Lists all Virtual Machines in the given ‘region’ with their names, status, public IP and class</p>
+    <div class="summary-synopsis"><p>Lists all Virtual Machines in the given ‘region’ with their names, status, class and public IP</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:list_virtual_machines!/1">list_virtual_machines!(region)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as list_virtual_machines/1 but returns the complete HTTP reply</p>
 </div>
   
 </div>
@@ -219,10 +327,28 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:reboot_virtual_machine!/2">reboot_virtual_machine!(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as reboot_virtual_machine/2 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:set_virtual_machine_class/3">set_virtual_machine_class(region, instance, class)</a>
   </div>
   
     <div class="summary-synopsis"><p>Sets the Virtual Machine ‘instance’ in the given ‘region’ to the specified ‘class’ if possible</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:set_virtual_machine_class!/3">set_virtual_machine_class!(region, instance, class)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as set_virtual_machine_class/3 but returns the complete HTTP reply</p>
 </div>
   
 </div>
@@ -237,10 +363,28 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:start_virtual_machine!/2">start_virtual_machine!(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as start_virtual_machine/2 but returns the complete HTTP reply</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:stop_virtual_machine/2">stop_virtual_machine(region, instance)</a>
   </div>
   
     <div class="summary-synopsis"><p>Stops the Virtual Machine ‘instance’ in the given ‘region’</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:stop_virtual_machine!/2">stop_virtual_machine!(region, instance)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Same as stop_virtual_machine/2 but returns the complete HTTP reply</p>
 </div>
   
 </div>
@@ -287,6 +431,29 @@
   
   <section class="docstring">
     <p>Attaches the given ‘disk’ to the specified ‘instance’ and with the provided ‘device_name’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:attach_disk!/4">
+  <div class="detail-header">
+    <a href="#c:attach_disk!/4" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">attach_disk!(region, instance, disk, device_name)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">attach_disk!(region :: binary, instance :: binary, disk :: binary, device_name :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as attach_disk/4 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -340,6 +507,52 @@
 
   </section>
 </div>
+<div class="detail" id="c:create_disk!/2">
+  <div class="detail-header">
+    <a href="#c:create_disk!/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_disk!(region, size)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">create_disk!(region :: binary, size :: integer) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as create_disk/2 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:create_disk!/3">
+  <div class="detail-header">
+    <a href="#c:create_disk!/3" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_disk!(region, size, image)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">create_disk!(region :: binary, size :: integer, image :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as create_disk/3 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:create_virtual_machine/4">
   <div class="detail-header">
     <a href="#c:create_virtual_machine/4" class="detail-link" title="Link to this callback">
@@ -362,6 +575,29 @@
   
   <section class="docstring">
     <p>Creates a new Virtual Machine in the given ‘region’ using the provided ‘class’, ‘image’ and ‘auto_delete’ behaviour.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:create_virtual_machine!/4">
+  <div class="detail-header">
+    <a href="#c:create_virtual_machine!/4" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_virtual_machine!(region, class, image, auto_delete)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">create_virtual_machine!(region :: binary, class :: binary, image :: binary, auto_delete :: boolean) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as create_virtual_machine/4 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -390,6 +626,29 @@
 
   </section>
 </div>
+<div class="detail" id="c:delete_disk!/2">
+  <div class="detail-header">
+    <a href="#c:delete_disk!/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_disk!(region, disk)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">delete_disk!(region :: binary, disk :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as delete_disk/2 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:delete_virtual_machine/2">
   <div class="detail-header">
     <a href="#c:delete_virtual_machine/2" class="detail-link" title="Link to this callback">
@@ -412,6 +671,29 @@
   
   <section class="docstring">
     <p>Deletes the Virtual Machine ‘instance’ in the given ‘region’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:delete_virtual_machine!/2">
+  <div class="detail-header">
+    <a href="#c:delete_virtual_machine!/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">delete_virtual_machine!(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">delete_virtual_machine!(region :: binary, instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as delete_virtual_machine/2 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -440,6 +722,29 @@
 
   </section>
 </div>
+<div class="detail" id="c:detach_disk!/3">
+  <div class="detail-header">
+    <a href="#c:detach_disk!/3" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">detach_disk!(region, instance, disk)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">detach_disk!(region :: binary, instance :: binary, disk :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as detach_disk/3 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:get_disk/2">
   <div class="detail-header">
     <a href="#c:get_disk/2" class="detail-link" title="Link to this callback">
@@ -465,6 +770,29 @@
 
   </section>
 </div>
+<div class="detail" id="c:get_disk!/2">
+  <div class="detail-header">
+    <a href="#c:get_disk!/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_disk!(region, disk)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">get_disk!(region :: binary, disk :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as get_disk/2 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:get_virtual_machine/2">
   <div class="detail-header">
     <a href="#c:get_virtual_machine/2" class="detail-link" title="Link to this callback">
@@ -485,6 +813,29 @@
   
   <section class="docstring">
     <p>Returns the Virtal Machine ‘instance’ name, status, public IP and class.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:get_virtual_machine!/2">
+  <div class="detail-header">
+    <a href="#c:get_virtual_machine!/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_virtual_machine!(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">get_virtual_machine!(region :: binary, instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as get_virtual_machine/2 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -536,6 +887,29 @@
 
   </section>
 </div>
+<div class="detail" id="c:list_disks!/1">
+  <div class="detail-header">
+    <a href="#c:list_disks!/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_disks!(region)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_disks!(region :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as list_disks/1 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:list_regions/0">
   <div class="detail-header">
     <a href="#c:list_regions/0" class="detail-link" title="Link to this callback">
@@ -556,6 +930,29 @@
   
   <section class="docstring">
     <p>Lists all available regions (and their zones if possible).</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_regions!/0">
+  <div class="detail-header">
+    <a href="#c:list_regions!/0" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_regions!()</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_regions! :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as list_regions/0 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -580,7 +977,30 @@
     </div>
   
   <section class="docstring">
-    <p>Lists all Virtual Machines in the given ‘region’ with their names, status, public IP and class.</p>
+    <p>Lists all Virtual Machines in the given ‘region’ with their names, status, class and public IP.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:list_virtual_machines!/1">
+  <div class="detail-header">
+    <a href="#c:list_virtual_machines!/1" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">list_virtual_machines!(region)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">list_virtual_machines!(region :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as list_virtual_machines/1 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -609,6 +1029,29 @@
 
   </section>
 </div>
+<div class="detail" id="c:reboot_virtual_machine!/2">
+  <div class="detail-header">
+    <a href="#c:reboot_virtual_machine!/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">reboot_virtual_machine!(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">reboot_virtual_machine!(region :: binary, instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as reboot_virtual_machine/2 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:set_virtual_machine_class/3">
   <div class="detail-header">
     <a href="#c:set_virtual_machine_class/3" class="detail-link" title="Link to this callback">
@@ -631,6 +1074,29 @@
   
   <section class="docstring">
     <p>Sets the Virtual Machine ‘instance’ in the given ‘region’ to the specified ‘class’ if possible.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:set_virtual_machine_class!/3">
+  <div class="detail-header">
+    <a href="#c:set_virtual_machine_class!/3" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">set_virtual_machine_class!(region, instance, class)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">set_virtual_machine_class!(region :: binary, instance :: binary, class :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as set_virtual_machine_class/3 but returns the complete HTTP reply.</p>
 
   </section>
 </div>
@@ -659,6 +1125,29 @@
 
   </section>
 </div>
+<div class="detail" id="c:start_virtual_machine!/2">
+  <div class="detail-header">
+    <a href="#c:start_virtual_machine!/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">start_virtual_machine!(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">start_virtual_machine!(region :: binary, instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as start_virtual_machine/2 but returns the complete HTTP reply.</p>
+
+  </section>
+</div>
 <div class="detail" id="c:stop_virtual_machine/2">
   <div class="detail-header">
     <a href="#c:stop_virtual_machine/2" class="detail-link" title="Link to this callback">
@@ -681,6 +1170,29 @@
   
   <section class="docstring">
     <p>Stops the Virtual Machine ‘instance’ in the given ‘region’.</p>
+
+  </section>
+</div>
+<div class="detail" id="c:stop_virtual_machine!/2">
+  <div class="detail-header">
+    <a href="#c:stop_virtual_machine!/2" class="detail-link" title="Link to this callback">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">stop_virtual_machine!(region, instance)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">stop_virtual_machine!(region :: binary, instance :: binary) :: HTTPoison.Response.t</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Same as stop_virtual_machine/2 but returns the complete HTTP reply.</p>
 
   </section>
 </div>

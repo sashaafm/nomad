@@ -5,10 +5,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.11.5">
-    <title>Nomad.Supervisor – nomad v0.7.0</title>
+    <title>Mix.Tasks.Nomad.Storage.Delete – nomad v0.7.0</title>
     <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
     
-      <link rel="canonical" href="https://hexdocs.pm/nomad/Nomad.Supervisor.html" />
+      <link rel="canonical" href="https://hexdocs.pm/nomad/Mix.Tasks.Nomad.Storage.Delete.html" />
     
     <script src="dist/sidebar_items.js"></script>
   </head>
@@ -63,11 +63,22 @@
 
       <h1>
         <small class="visible-xs">nomad v0.7.0</small>
-        Nomad.Supervisor
+        Mix.Tasks.Nomad.Storage.Delete
         
         
       </h1>
 
+      
+        <section id="moduledoc" class="docstring">
+          <p>Task for automatically deleting a remote storage on a pre-determined cloud
+provider. The storage deletion is done through the cloud provider’s API.</p>
+<p>Usage:</p>
+<p>  mix nomad.storage.delete
+  # Will be prompted for storage name</p>
+<p>  mix nomad.storage.delete <name>
+  # Will automaticallu delete the storage</p>
+
+        </section>
       
 
       
@@ -87,17 +98,11 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#init/1">init(atom)</a>
+    <a href="#run/1">run(args)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c::supervisor.init/1</code></p>
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:Mix.Task.run/1</code></p>
 </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#start_link/0">start_link()</a>
-  </div>
   
 </div>
 
@@ -121,31 +126,18 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="init/1">
+          <div class="detail" id="run/1">
   <div class="detail-header">
-    <a href="#init/1" class="detail-link" title="Link to this function">
+    <a href="#run/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">init(atom)</span>
+    <span class="signature">run(args)</span>
       
   </div>
   
   <section class="docstring">
-    <p>Callback implementation for <code class="inline">c::supervisor.init/1</code>.</p>
+    <p>Callback implementation for <code class="inline">c:Mix.Task.run/1</code>.</p>
 
-  </section>
-</div>
-<div class="detail" id="start_link/0">
-  <div class="detail-header">
-    <a href="#start_link/0" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">start_link()</span>
-      
-  </div>
-  
-  <section class="docstring">
-    
   </section>
 </div>
 
