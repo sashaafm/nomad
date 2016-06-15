@@ -33,6 +33,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def list_virtual_machines!(region, fun \\ &ExAws.EC2.Impl.describe_instances/1), do: fun.(ExAws.EC2.new(region: region))
+
         defp get_vm_data(data) do
           name   = data |> Friendly.find("instanceid")   |> Enum.map(fn name -> name.text end)
           status = data |> Friendly.find("name")         |> Enum.map(fn status -> status.text end)
@@ -57,6 +59,8 @@ if Code.ensure_loaded?(ExAws) do
             true -> res
           end
         end
+        
+        def get_virtual_machine!(region, instance, fun \\ &list_virtual_machines/1), do: fun.(ExAws.EC2.new(region: region))
 
         def create_virtual_machine(zone, class, image, auto_delete, fun \\ &ExAws.EC2.Impl.run_instances/5) do
           auto_delete = if auto_delete == true do "terminate" else "stop" end
@@ -74,6 +78,17 @@ if Code.ensure_loaded?(ExAws) do
             {:error, reason} ->
               parse_http_error(reason)
           end
+        end
+
+        def create_virtual_machine!(zone, class, image, auto_delete, fun \\ &ExAws.EC2.Impl.run_instances/5) do
+          auto_delete = if auto_delete == true do "terminate" else "stop" end
+          opts        = [
+            "InstanceType":                      class,
+            "InstanceInitiatedShutdownBehavior": auto_delete,
+            "Placement.AvailabilityZone":        zone
+          ]
+
+          fun.(ExAws.EC2.new(region: get_region_from_zone(zone)), image, 1, 1, opts) 
         end
 
         defp get_region_from_zone(zone) do
@@ -94,6 +109,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def delete_virtual_machine!(region, instance, fun \\ &ExAws.EC2.Impl.terminate_instances/2), do: fun.(ExAws.EC2.new(region: region), [instance])
+
         def start_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.start_instances/2) do
           case fun.(ExAws.EC2.new(region: region), [instance]) do
             {:ok, res} ->
@@ -105,6 +122,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error(reason)
           end
         end
+
+        def start_virtual_machine!(region, instance, fun \\ &ExAws.EC2.Impl.start_instances/2), do: fun.(ExAws.EC2.new(region: region), [instance])
 
         def stop_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.stop_instances/2) do
           case fun.(ExAws.EC2.new(region: region), [instance]) do
@@ -118,6 +137,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def stop_virtual_machine!(region, instance, fun \\ &ExAws.EC2.Impl.stop_instances/2), do: fun.(ExAws.EC2.new(region: region), [instance])
+
         def reboot_virtual_machine(region, instance, fun \\ &ExAws.EC2.Impl.reboot_instances/2) do
           case fun.(ExAws.EC2.new(region: region), [instance]) do
             {:ok, res} ->
@@ -129,6 +150,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error(reason)
           end
         end
+
+        def reboot_virtual_machine!(region, instance, fun \\ &ExAws.EC2.Impl.reboot_instances/2), do: fun.(ExAws.EC2.new(region: region), [instance])
 
         def set_virtual_machine_class(region, instance, class, fun \\ &ExAws.EC2.Impl.modify_instance_attribute/3) do
           opts = ["InstanceType.Value": class]
@@ -143,6 +166,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error(reason)
           end
         end
+
+        def set_virtual_machine_class!(region, instance, class, fun \\ &ExAws.EC2.Impl.modify_instance_attribute/3), do: fun.(ExAws.EC2.new(region: region), instance, ["InstanceType.Value": class])
 
         #############
         ### Disks ###
@@ -162,6 +187,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error(reason)
           end
         end
+
+        def list_disks!(region, fun \\ &ExAws.EC2.Impl.describe_volumes/1), do: fun.(ExAws.EC2.new(region: region))
 
         defp ld(disk) do
           names  = disk |> Friendly.find("volumeid")   |> Enum.map(fn a -> a.text end) |> Enum.uniq
@@ -191,13 +218,20 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
-        def create_disk(zone, size) when is_integer(size) do
-          cd zone, size
+        def get_disk!(region, disk, fun \\ &list_disks/1) do
+          cond do
+            Mix.env() == :text -> fun
+            true               -> fun.(region)
+          end
         end
 
-        def create_disk(zone, size, image) when is_integer(size) do
-          cd_with_img zone, size, image
-        end
+        def create_disk(zone, size) when is_integer(size), do: cd zone, size
+        
+        def create_disk!(zone, size) when is_integer(size), do: cd! zone, size
+
+        def create_disk(zone, size, image) when is_integer(size), do: cd_with_img zone, size, image
+
+        def create_disk!(zone, size, image) when is_integer(size), do: cd_with_img! zone, size, image
 
         defp cd(region, size, fun \\ &create_volume/2) do
           case fun.(region, size) do
@@ -211,6 +245,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        defp cd!(region, size, fun \\ &create_volume/2), do: fun.(region, size)
+
         defp cd_with_img(region, size, image, fun \\ &create_volume/3) do
           opts = ["SnapshotId": image]
           case fun.(region, size, opts) do
@@ -222,8 +258,9 @@ if Code.ensure_loaded?(ExAws) do
             {:error, reason} ->
               parse_http_error(reason)
           end
-
         end
+
+        defp cd_with_img!(region, size, image, fun \\ &create_volume/3), do: fun.(region, size, ["SnapshotId": image])
 
         def delete_disk(region, disk, fun \\ &ExAws.EC2.Impl.delete_volume/2) do
           case fun.(ExAws.EC2.new(region: region), disk) do
@@ -237,6 +274,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def delete_disk!(region, disk, fun \\ &ExAws.EC2.Impl.delete_volume/2), do: fun.(ExAws.EC2.new(region: region), disk)
+
         def attach_disk(region, instance, disk, device_name, fun \\ &ExAws.EC2.Impl.attach_volume/4) do
           case fun.(ExAws.EC2.new(region: region), instance, disk, device_name) do
             {:ok, res} ->
@@ -248,6 +287,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error(reason)
           end
         end
+
+        def attach_disk!(region, instance, disk, device_name, fun \\ &ExAws.EC2.Impl.attach_volume/4), do: fun.(ExAws.EC2.new(region: region), instance, disk, device_name)
 
         def detach_disk(region, instance, disk, fun \\ &ExAws.EC2.Impl.detach_volume/3) do
           opts = ["InstanceId": instance]
@@ -261,6 +302,8 @@ if Code.ensure_loaded?(ExAws) do
               parse_http_error(reason)
           end
         end
+
+        def detach_disk!(region, instance, disk, fun \\ &ExAws.EC2.Impl.detach_volume/3), do: fun.(ExAws.EC2.new(region: region), disk, ["InstanceId": instance])
 
         ##############
         ### Others ###
@@ -282,6 +325,8 @@ if Code.ensure_loaded?(ExAws) do
           end
         end
 
+        def list_regions!(fun \\ &describe_regions/0), do: fun.()
+
         def list_classes(fun \\ &lc/0) do
           fun.()
         end
@@ -300,99 +345,8 @@ if Code.ensure_loaded?(ExAws) do
             "d2.xlarge", "d2.2xlarge", "d2.4xlarge", "d2.8xlarge",
           ]
         end
-
-        ###############
-        ### Helpers ###
-        ###############
-
-        # REVIEW THIS FUNCTION
-        defp get_instance_id_from_name(instance) do
-          case describe_instances do
-            {:ok, res} ->
-              case res.status_code do
-                200 ->
-                  {_, id} = res.body
-                  |> get_name_and_id(:instance)
-                  |> Enum.filter(fn {a, b} -> a == instance end)
-                  |> List.first
-
-                  id
-                _   ->
-                  get_error_message(res)
-              end
-            {:error, reason} ->
-              parse_http_error reason
-          end
-        end
-
-        defp get_instance_id_from_name(region, instance) do
-          case ExAws.EC2.new(region: region) |> ExAws.EC2.Impl.describe_instances do
-            {:ok, res} ->
-              case res.status_code do
-                200 ->
-                  {_, id} = res.body
-                  |> get_name_and_id(:instance)
-                  |> Enum.filter(fn {a, b} -> a == instance end)
-                  |> List.first
-
-                  id
-                _   ->
-                  get_error_message(res)
-              end
-            {:error, reason} ->
-              parse_http_error reason
-          end
-        end
-
-        defp get_volume_id_from_name(name) do
-          case describe_volumes do
-            {:ok, res} ->
-              case res.status_code do
-                200 ->
-                  [{_, id}] = res.body
-                  |> get_name_and_id(:volume)
-                  |> Enum.filter(fn {a, b} -> a == name end)
-
-                  id
-                _   ->
-                  get_error_message(res)
-              end
-            {:error, reason} ->
-              parse_http_error(reason)
-          end
-        end
-
-        defp get_volume_id_from_name(region, name) do
-          case ExAws.EC2.new(region: region) |> ExAws.EC2.Impl.describe_volumes do
-            {:ok, res} ->
-              case res.status_code do
-                200 ->
-                  [{_, id}] = res.body
-                  |> get_name_and_id(:volume)
-                  |> Enum.filter(fn {a, b} -> a == name end)
-
-                  id
-                _   ->
-                  get_error_message(res)
-              end
-            {:error, reason} ->
-              parse_http_error(reason)
-          end
-        end
-
-        defp get_name_and_id(body, :instance) do
-          name = body |> Friendly.find("value")      |> Enum.map(fn a -> a.text end)
-          id   = body |> Friendly.find("instanceid") |> Enum.map(fn a -> a.text end)
-
-          List.zip([name, id])
-        end
-        defp get_name_and_id(body, :volume) do
-          name = body |> Friendly.find("value")    |> Enum.map(fn a -> a.text end)
-          id   = body |> Friendly.find("volumeid") |> Enum.map(fn a -> a.text end) |> Enum.uniq
-
-          List.zip([name, id])
-        end
       end
     end
   end
 end
+
