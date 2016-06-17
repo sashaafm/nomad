@@ -17,22 +17,15 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Delete do
 
   @shortdoc"Delete a SQL database instance on the chosen cloud provider's SQL service."
 
+  @provider Nomad.TasksHelper.get_provider
+
   @doc """
   Runs the task for the chosen cloud provider. The shell prompts for the 
   instance's name and informs of the result.
   """
   @spec run(list) :: binary
   def run(args) do 
-    case Application.get_env(:nomad, :cloud_provider) do 
-      :aws -> 
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-      :gcl -> 
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-    end
-    
+    Nomad.TasksHelper.start_apps_for_adapter(@provider)
     delete_instance_api_call args
   end
 

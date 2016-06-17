@@ -13,23 +13,14 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.List do
 
   @shortdoc"Lists all virtual machines on the chosen cloud provider's infrastructure service in the given region."
 
-  @provider Application.get_env(:nomad, :cloud_provider)
+  @provider Nomad.TasksHelper.get_provider
 
   @doc"""
   Runs the task for the chosen cloud provider.
   """
   @spec run(args :: [binary] | []) :: binary
   def run(args) do
-    case @provider do
-      :aws ->
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-      :gcl ->
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-    end
-    
+    Nomad.TasksHelper.start_apps_for_adapter(@provider)
     list_instances_api_call args
   end
 
@@ -61,8 +52,8 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.List do
   end
 
   defp convert_instance_tuples_to_lists(instances) do
-    instances 
-    |> Enum.map(fn instance -> Tuple.to_list(instance) end)    
+    instances
+    |> Enum.map(fn instance -> Tuple.to_list(instance) end) 
   end
 
   defp stringify(rows) do

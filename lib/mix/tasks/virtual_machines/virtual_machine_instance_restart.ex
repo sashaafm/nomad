@@ -17,28 +17,21 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.Restart do
 
   @shortdoc "Restart a virtual machine on the chosen cloud provider's infrastructure service."
 
+  @provider Nomad.TasksHelper.get_provider
+
   @doc"""
   Runs the task for the chosen cloud provider. The shell prompts for the
   instance's region and name if the data wasn't passed through the arguments.
   """
   @spec run(args :: [binary] | []) :: binary
   def run(args) do
-    case Application.get_env(:nomad, :cloud_provider) do
-      :aws ->
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-      :gcl ->
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-    end
-
+    Nomad.TasksHelper.start_apps_for_adapter(@provider)
     restart_instance_api_call args
   end
 
   defp restart_instance_api_call([]) do
     region = 
-      case Application.get_env(:nomad, :cloud_provider) do
+      case @provider do
         :gcl ->
           Mix.Shell.IO.prompt("Insert the instance's zone: ") |> String.rstrip
         :aws ->

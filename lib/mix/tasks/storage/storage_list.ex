@@ -13,20 +13,11 @@ defmodule Mix.Tasks.Nomad.Storage.List do
 
   @shortdoc"Lists all storages on the chosen cloud provider's storage service."
 
-  @provider Application.get_env(:nomad, :cloud_provider)
+  @provider Nomad.TasksHelper.get_provider
 
   @spec run(list) :: binary
   def run(_args) do
-    case @provider do
-      :aws ->
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-      :gcl ->
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-    end
-
+    Nomad.TasksHelper.start_apps_for_adapter(@provider)
     list_storages_api_call
   end
 

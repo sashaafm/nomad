@@ -17,28 +17,21 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.Delete do
 
   @shortdoc"Delete a virtual machine on the chosen cloud provider's infrastructure service."
 
+  @provider Nomad.TasksHelper.get_provider
+
   @doc"""
   Runs the task for the chosen cloud provider. The shell prompts for the
   instance's name or id and informs of the results.
   """
   @spec run(args :: [binary] | []) :: binary
   def run(args) do
-    case Application.get_env(:nomad, :cloud_provider) do
-      :aws ->
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-      :gcl ->
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-    end
-
+    Nomad.TasksHelper.start_apps_for_adapter(@provider)
     delete_instance_api_call args
   end
 
   defp delete_instance_api_call([]) do
     region = 
-      case Application.get_env(:nomad, :cloud_provider) do
+      case @provider do
         :gcl ->
           Mix.Shell.IO.prompt("Insert the instance's zone: ") |> String.rstrip
         :aws ->

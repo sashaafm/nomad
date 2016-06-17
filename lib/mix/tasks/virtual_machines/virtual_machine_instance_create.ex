@@ -14,23 +14,20 @@ defmodule Mix.Tasks.Nomad.VirtualMachineInstance.Create do
 
   @shortdoc"Create a virtual machine on the chosen cloud provider's infrastructure service."
 
+  @provider Nomad.TasksHelper.get_provider
+
   @doc"""
   Runs the task for the chosen cloud provider. The shell prompts and necessary
   input parameters change with the chosen provider.
   """
   @spec run(args :: [binary] | []) :: binary
   def run(args) do
-    case Application.get_env(:nomad, :cloud_provider) do
+    case @provider do
       :aws ->
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-
+        Nomad.TasksHelper.start_apps_for_adapter(@provider)
         create_instance_aws args
       :gcl ->
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-
+        Nomad.TasksHelper.start_apps_for_adapter(@provider)
         create_instance_gcl args
     end
   end

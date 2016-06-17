@@ -4,6 +4,7 @@ defmodule Mix.Tasks.Nomad.Storage.Migrate do
     :aws -> use Nomad.AWS.Storage, :aws
     :gcl -> use Nomad.GCL.Storage, :gcl
   end
+  alias Nomad.TasksHelper, as: Helper
 
   @moduledoc"""
   Task for automatically migrating a remote storage on the chosen cloud
@@ -14,11 +15,11 @@ defmodule Mix.Tasks.Nomad.Storage.Migrate do
   @shortdoc"Migrate a storage from one service to another copying all the files and directories."
 
   def run(args) when length(args) == 2 do
-    stor_origin  = args |> Enum.fetch!(0)
-    stor_dest    = args |> Enum.fetch!(1)
+    stor_origin = args |> Enum.fetch!(0)
+    stor_dest   = args |> Enum.fetch!(1)
 
-    start_apps(Application.get_env(:nomad, :cloud_provider))
-    start_apps(Application.get_env(:nomad, :cloud_to_migrate))
+    Helper.start_apps_for_adapter(Helper.get_provider)
+    Helper.start_apps_for_adapter(Application.get_env(:nomad, :cloud_to_migrate))
 
     files = stor_origin
     |> Nomad.Storage.list_items
@@ -28,19 +29,6 @@ defmodule Mix.Tasks.Nomad.Storage.Migrate do
       filename = file |> String.split("/") |> List.last
       :ok      = put_item(stor_dest, filename, file)
       File.rm! filename
-    end
-  end
-
-  defp start_apps(cloud) do
-    case cloud do
-      :aws -> 
-        for app <- [:ex_aws, :httpoison] do
-          Application.ensure_all_started(app)
-        end
-      :gcl ->
-        for app <- [:httpoison, :goth, :gcloudex] do
-          Application.ensure_all_started(app)
-        end
     end
   end
 end

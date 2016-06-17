@@ -16,17 +16,10 @@ defmodule Mix.Tasks.Nomad.Storage.Create do
 
   @shortdoc"Create a storage on the chosen cloud provider's storage service."
 
-  def run(args) do
-    case Application.get_env(:nomad, :cloud_provider) do
-      :aws ->
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-      :gcl ->
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-    end
+  @provider Nomad.TasksHelper.get_provider
 
+  def run(args) do
+    Nomad.TasksHelper.start_apps_for_adapter(@provider)
     create_storage args
   end
 

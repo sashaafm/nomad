@@ -14,28 +14,25 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.Create do
 
   @shortdoc"Create a SQL database instance on the chosen cloud provider's SQL service."
 
+  @provider Nomad.TasksHelper.get_provider
+
   @doc """
   Runs the task for the chosen cloud provider. The shell prompts and necessary
   input parameters change with the chosen provider.
   """
   @spec run(list) :: binary
   def run(args) do
-    case Application.get_env(:nomad, :cloud_provider) do 
-      :aws -> 
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-
+    case @provider do
+      :aws ->
+        Nomad.TasksHelper.start_apps_for_adapter(@provider)
         create_instance_aws args
-      :gcl -> 
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-
+      :gcl ->
+        Nomad.TasksHelper.start_apps_for_adapter(@provider)
         create_instance_gcl args
     end
   end
-  
-  defp create_instance_aws(args) do 
+
+  defp create_instance_aws(args) do
     name      = Mix.Shell.IO.prompt("Insert name for the instance: ") |> String.rstrip
     region    = Mix.Shell.IO.prompt("Insert the desired region "
     <> "(#{Enum.join(aws_regions, ", ")}):") |> String.rstrip()

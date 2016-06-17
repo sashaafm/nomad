@@ -13,23 +13,14 @@ defmodule Mix.Tasks.Nomad.DatabaseInstance.List do
 
   @shortdoc"Lists all SQL database instances on the chosen cloud provider's SQL service."
 
-  @provider Application.get_env(:nomad, :cloud_provider)
+  @provider Nomad.TasksHelper.get_provider
 
   @doc """
   Runs the task for the chosen cloud provider.
   """
   @spec run(list) :: binary
   def run(_args) do 
-    case @provider do 
-      :aws -> 
-        Application.ensure_all_started(:ex_aws)
-        Application.ensure_all_started(:httpoison)
-      :gcl -> 
-        Application.ensure_all_started(:httpoison)
-        Application.ensure_all_started(:goth)
-        Application.ensure_all_started(:gcloudex)
-    end
-
+    Nomad.TasksHelper.start_apps_for_adapter(@provider)
     list_instances_api_call
   end
 
