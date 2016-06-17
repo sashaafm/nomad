@@ -167,4 +167,3 @@ Where 'creds.json' is the JSON file with your account credentials that you may d
 
 ### Tutorials<a name="tutorials"></a>
 [**Tutorials**](http://sashaafm.github.io/nomad/)
-
