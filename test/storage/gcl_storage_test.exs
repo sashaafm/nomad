@@ -1,5 +1,5 @@
 defmodule Test.Dummy.GCLStorageClient do
-  use Nomad.GCL.Storage, :gcl
+#  use Nomad.GCL.Storage, :gcl
 
   def list_buckets_test(state) do 
     fn ->
@@ -225,7 +225,7 @@ end
 defmodule GCLStorageTest do
   use ExUnit.Case
   alias Test.Dummy.GCLStorageClient, as: Dummy
-  use Nomad.GCL.Storage, :gcl
+  import Nomad.GCL.Storage
 
   test "list_storages 200" do 
     expected = ["first_bucket", "second_bucket"]
