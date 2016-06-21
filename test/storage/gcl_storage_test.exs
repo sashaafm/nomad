@@ -1,5 +1,4 @@
 defmodule Test.Dummy.GCLStorageClient do
-#  use Nomad.GCL.Storage, :gcl
 
   def list_buckets_test(state) do 
     fn ->

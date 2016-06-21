@@ -1,9 +1,9 @@
 defmodule Mix.Tasks.Nomad.Storage.Migrate do
   use Mix.Task
-  case Application.get_env(:nomad, :cloud_to_migrate) do
-    :aws -> use Nomad.AWS.Storage, :aws
-    :gcl -> use Nomad.GCL.Storage, :gcl
-  end
+  #case Application.get_env(:nomad, :cloud_to_migrate) do
+    #  :aws -> use Nomad.AWS.Storage, :aws
+    #:gcl -> use Nomad.GCL.Storage, :gcl
+    #end
   alias Nomad.TasksHelper, as: Helper
 
   @moduledoc"""
@@ -27,7 +27,7 @@ defmodule Mix.Tasks.Nomad.Storage.Migrate do
     for file <- files do
       :ok      = Nomad.Storage.get_item(stor_origin, file)
       filename = file |> String.split("/") |> List.last
-      :ok      = put_item(stor_dest, filename, file)
+      # :ok      = put_item(stor_dest, filename, file)
       File.rm! filename
     end
   end

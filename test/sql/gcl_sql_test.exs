@@ -1,5 +1,4 @@
 defmodule Dummy.Test.GclSqlClient do
-  use Nomad.GCL.SQL, :gcl
 
   def list_instances_test(state) do 
     fn ->
@@ -149,10 +148,8 @@ defmodule Dummy.Test.GclSqlClient do
 
   defp code_555 do 
     {
-      :ok, 
-      %{body: """
-        <message>Error message</message>
-        """,
+      :ok,
+      %{body: "{\n \"error\": {\n  \"errors\": [\n   {\n    \"domain\": \"global\",\n    \"reason\": \"notFound\",\n    \"message\": \"Error Message\"\n   }\n  ],\n  \"code\": 555,\n  \"message\": \"Error Message\"\n }\n}\n",
         status_code: 555
       }
     }
@@ -164,7 +161,7 @@ end
 defmodule GclSqlTest do 
   use ExUnit.Case
   alias Dummy.Test.GclSqlClient, as: Dummy
-  use Nomad.GCL.SQL, :gcl
+  import Nomad.GCL.SQL
 
   test "list_instances 200" do 
     expected = [
@@ -295,5 +292,5 @@ defmodule GclSqlTest do
     assert expected == get_instance_address "ABC", Dummy.get_instance_address_test(:error)
   end    
 
-  defp other_code, do: "555: Error message"  
+  defp other_code, do: "555: Error Message"  
 end

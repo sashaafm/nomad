@@ -1,5 +1,4 @@
 defmodule Dummy.Test.AWSStorageClient do
-  use Nomad.AWS.Storage, :aws
 
   def list_buckets_test(state) do 
     fn ->
@@ -139,8 +138,8 @@ end
 
 defmodule AWSStorageTest do
   use ExUnit.Case
-  use Nomad.AWS.Storage, :aws
   alias Dummy.Test.AWSStorageClient, as: Dummy
+  import Nomad.AWS.Storage
 
   test "list_storages 200" do 
     expected = ["ABC", "DEF"]

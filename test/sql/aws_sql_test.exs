@@ -1,5 +1,4 @@
 defmodule Dummy.Test.AwsSqlClient do
-  use Nomad.AWS.SQL, :aws
 
   def describe_db_instances_test(state) do
     fn ->
@@ -98,7 +97,7 @@ end
 defmodule AwsSqlTest do
   use ExUnit.Case
   alias Dummy.Test.AwsSqlClient, as: Dummy
-  use Nomad.AWS.SQL, :aws
+  import Nomad.AWS.SQL
 
   test "list_instances 200" do
     expected = [

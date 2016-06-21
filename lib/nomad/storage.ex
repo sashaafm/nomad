@@ -144,6 +144,5 @@ defmodule Nomad.Storage do
   defdelegate get_storage_acl(storage),                   to: @adapter
   defdelegate get_storage_acl!(storage),                  to: @adapter
   defdelegate list_classes(),                             to: @adapter
-
 end
 

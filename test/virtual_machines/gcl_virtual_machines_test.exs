@@ -1,5 +1,4 @@
 defmodule Test.Dummy.GCLVirtualMachinesClient do
-  use Nomad.GCL.VirtualMachines, :gcl
 
   def list_virtual_machines_test(state) do
     {:ok, content} = File.read(__DIR__ <> "/response_samples/list_virtual_machine_gcl.rsp")
@@ -168,7 +167,7 @@ end
 defmodule GCLVirtualMachinesTest do
   use ExUnit.Case
   alias Test.Dummy.GCLVirtualMachinesClient, as: Dummy
-  use Nomad.GCL.VirtualMachines, :gcl
+  import Nomad.GCL.VirtualMachines
 
   test "list_virtual_machines 200" do
     expected = [{"instance-1", "RUNNING", "f1-micro", "130.211.106.11"}]
@@ -311,91 +310,91 @@ defmodule GCLVirtualMachinesTest do
   test "list_disks 200" do
     expected = [{"instance-1", "10", "debian-8-jessie-v20160511", "READY", "pd-standard"}]
 
-    assert expected == __MODULE__.list_disks "region", Dummy.list_disks_test(200)
+    assert expected == list_disks "region", Dummy.list_disks_test(200)
   end
 
   test "list_disks 555" do
     expected = get_error_message
 
-    assert expected == __MODULE__.list_disks "region", Dummy.list_disks_test(555)
+    assert expected == list_disks "region", Dummy.list_disks_test(555)
   end
 
   test "list_disks error" do
     expected = "reason"
 
-    assert expected == __MODULE__.list_disks "region", Dummy.list_disks_test(:error)
+    assert expected == list_disks "region", Dummy.list_disks_test(:error)
   end
 
   test "get_disk 200" do
     expected = {"instance-1", "10", "debian-8-jessie-v20160511", "READY", "pd-standard"}
 
-    assert expected == __MODULE__.get_disk "region", "disk", Dummy.get_disk_test(200)
+    assert expected == get_disk "region", "disk", Dummy.get_disk_test(200)
   end
 
   test "get_disk 555" do
     expected = get_error_message
 
-    assert expected == __MODULE__.get_disk "region", "disk", Dummy.get_disk_test(555)
+    assert expected == get_disk "region", "disk", Dummy.get_disk_test(555)
   end
 
   test "get_disk error" do
     expected = "reason"
 
-    assert expected == __MODULE__.get_disk "region", "disk", Dummy.get_disk_test(:error)
+    assert expected == get_disk "region", "disk", Dummy.get_disk_test(:error)
   end
 
   test "delete_disk 200" do
     expected = :ok
 
-    assert expected == __MODULE__.delete_disk "region", "disk", Dummy.delete_disk_test(200)
+    assert expected == delete_disk "region", "disk", Dummy.delete_disk_test(200)
   end
 
   test "delete_disk 555" do
     expected = get_error_message
 
-    assert expected == __MODULE__.delete_disk "region", "disk", Dummy.delete_disk_test(555)
+    assert expected == delete_disk "region", "disk", Dummy.delete_disk_test(555)
   end
 
   test "delete_disk error" do
     expected = "reason"
 
-    assert expected == __MODULE__.delete_disk "region", "disk", Dummy.delete_disk_test(:error)
+    assert expected == delete_disk "region", "disk", Dummy.delete_disk_test(:error)
   end
 
   test "attach_disk 200" do
     expected = :ok
 
-    assert expected == __MODULE__.attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(200)
+    assert expected == attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(200)
   end
 
   test "attach_disk 555" do
     expected = get_error_message
 
-    assert expected == __MODULE__.attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(555)
+    assert expected == attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(555)
   end
 
   test "attach_disk error" do
     expected = "reason"
 
-    assert expected == __MODULE__.attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(:error)
+    assert expected == attach_disk "region", "instance", "disk", "device", Dummy.attach_disk_test(:error)
   end
 
   test "detach_disk 200" do
     expected = :ok
 
-    assert expected == __MODULE__.detach_disk "region", "instance", "disk", Dummy.detach_disk_test(200)
+    assert expected == detach_disk "region", "instance", "disk", Dummy.detach_disk_test(200)
   end
 
   test "detach_disk 555" do
     expected = get_error_message
 
-    assert expected == __MODULE__.detach_disk "region", "instance", "disk", Dummy.detach_disk_test(555)
+    assert expected == detach_disk "region", "instance", "disk", Dummy.detach_disk_test(555)
   end
 
   test "detach_disk error" do
     expected = "reason"
 
-    assert expected == __MODULE__.detach_disk "region", "instance", "disk", Dummy.detach_disk_test(:error)
+    assert expected == detach_disk "region", "instance", "disk", Dummy.detach_disk_test(:error)
   end
 
   defp get_error_message, do: "555: Error Message"

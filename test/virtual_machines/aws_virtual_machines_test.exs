@@ -1,5 +1,5 @@
 defmodule Test.Dummy.AWSVirtualMachinesClient do
-  use Nomad.AWS.VirtualMachines, :aws
+  import Nomad.AWS.VirtualMachines
 
   def list_virtual_machines_test(state) do
     {:ok, content} = File.read(__DIR__ <> "/response_samples/list_virtual_machines_aws.rsp")
@@ -158,7 +158,7 @@ end
 defmodule AWSVirtualMachinesTest do
   use ExUnit.Case
   alias Test.Dummy.AWSVirtualMachinesClient, as: Dummy
-  use Nomad.AWS.VirtualMachines, :aws
+  import Nomad.AWS.VirtualMachines
 
   test "list_virtual_machines 200" do
     expected = [{"i-28c002b4", "running", "t2.micro", "54.172.208.68"}]

@@ -75,5 +75,5 @@ defmodule NomadSQL do
   Returns the address for the given 'instance'.
   """
   @callback get_instance_address(instance :: binary) :: binary
-  
 end
+
