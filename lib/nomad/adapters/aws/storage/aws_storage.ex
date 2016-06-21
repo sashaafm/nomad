@@ -32,7 +32,7 @@ if Code.ensure_loaded?(ExAws) do
 
     def list_storages!(fun \\ &list_buckets/0), do: fun.()
 
-    def create_storage(name, region, class, fun \\ &put_bucket/2) do 
+    def create_storage(name, region, _class, fun \\ &put_bucket/2) do 
       case fun.(name, region) do 
         {:ok, res} ->
           case res.status_code do 
@@ -44,7 +44,7 @@ if Code.ensure_loaded?(ExAws) do
       end
     end
 
-    def create_storage!(name, region, class, fun \\ &put_bucket/2), do: fun.(name, region)
+    def create_storage!(name, region, _class, fun \\ &put_bucket/2), do: fun.(name, region)
 
     def put_item(bucket, filepath, bucket_path, fun \\ &put_object/3) do
       {:ok, content} = File.read filepath
@@ -177,7 +177,7 @@ if Code.ensure_loaded?(ExAws) do
 
     def get_storage_region!(bucket, fun \\ &get_bucket_location/1), do: fun.(bucket)
 
-    def get_storage_class(bucket) do 
+    def get_storage_class(_bucket) do 
       "STANDARD"
     end
 
