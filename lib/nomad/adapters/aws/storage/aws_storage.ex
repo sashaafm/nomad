@@ -3,12 +3,7 @@ if Code.ensure_loaded?(ExAws) do
     use ExAws.S3.Client
     import Nomad.Utils
 
-    @moduledoc """
-    Amazon Simple Storage Service adapter for Nomad. API interaction is done
-    through Ex_AWS.
-    """
-
-    @behaviour NomadStorage
+    @behaviour Nomad.Storage
 
     def config_root do 
       Application.get_all_env(:my_aws_config_root)

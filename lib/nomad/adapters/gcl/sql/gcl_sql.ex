@@ -1,14 +1,10 @@
 if Code.ensure_loaded?(GCloudex) do 
   defmodule Nomad.GCL.SQL do
 
-    @moduledoc """
-    Google Cloud SQL adapter for Nomad. API interaction is done through GCloudex.
-    """
-
     alias GCloudex.CloudSQL.Client, as: Client
     import Nomad.Utils   
 
-    @behaviour NomadSQL        
+    @behaviour Nomad.SQL
 
     def list_instances(fun \\ &Client.list_instances/0) do
       case fun.() do

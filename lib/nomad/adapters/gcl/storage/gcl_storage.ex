@@ -1,16 +1,9 @@
 if Code.ensure_loaded?(GCloudex) do 
   defmodule Nomad.GCL.Storage do
-
-    @moduledoc"""
-    Google Cloud Storage adapter for Nomad. API interaction is done through
-    GCloudex.
-    """
-
-    # API functions will be used from this client
     import GCloudex.CloudStorage.Client 
     import Nomad.Utils
 
-    @behaviour NomadStorage
+    @behaviour Nomad.Storage
 
     def list_storages(fun \\ &list_buckets/0) do
       case fun.() do

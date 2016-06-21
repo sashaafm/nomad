@@ -3,12 +3,7 @@ if Code.ensure_loaded?(ExAws) do
     use ExAws.EC2.Client
     import Nomad.Utils
 
-    @moduledoc """
-    Amazon Elastic Compute Cloud adapter for Nomad. API interaction is done
-    through Ex_Aws.
-    """
-
-    @behaviour NomadVirtualMachines
+    @behaviour Nomad.VirtualMachines
 
     def config_root do
       Application.get_all_env(:my_aws_config_root)

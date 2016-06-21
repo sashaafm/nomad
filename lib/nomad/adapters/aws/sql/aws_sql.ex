@@ -1,16 +1,11 @@
 if Code.ensure_loaded?(ExAws) do 
   defmodule Nomad.AWS.SQL do
 
-    @moduledoc """
-    Amazon Relational Database Service adapter for Nomad. API interaction is done
-    through Ex_AWS.
-    """
-
     use ExAws.RDS.Client
     import Nomad.Utils
     alias Nomad.AWS.SQL.Helper, as: Helper
 
-    @behaviour NomadSQL
+    @behaviour Nomad.SQL
 
     def config_root do 
       Application.get_all_env(:my_aws_config_root)

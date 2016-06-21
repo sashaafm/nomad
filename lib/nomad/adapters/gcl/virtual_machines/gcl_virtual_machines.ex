@@ -3,12 +3,7 @@ if Code.ensure_loaded?(GCloudex) do
     import GCloudex.ComputeEngine.Client
     import Nomad.Utils
 
-    @moduledoc """
-    Google Compute Engine adapter for Nomad. API interaction is done through
-    GCloudex.
-    """
-
-    @behaviour NomadVirtualMachines
+    @behaviour Nomad.VirtualMachines
 
     ########################
     ### Virtual Machines ###
