@@ -109,7 +109,11 @@ if Code.ensure_loaded?(ExAws) do
       settings = Map.put(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
 
       if Mix.env() != :test do
-        Helper.create_sg_with_local_public_ip_allowed(instance, engine)
+        if addresses == [] do 
+          Helper.create_sg_with_local_public_ip_allowed(instance, engine)
+        else
+          Helper.create_sg_for_many_ips(instance, engine, addresses)
+        end
       end
 
       case fun.(instance, username, password, storage, tier, engine, settings) do 
@@ -131,7 +135,11 @@ if Code.ensure_loaded?(ExAws) do
       settings = Map.put(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
 
       if Mix.env() != :test do
-        Helper.create_sg_with_local_public_ip_allowed(instance, engine)
+        if addresses == [] do
+          Helper.create_sg_with_local_public_ip_allowed(instance, engine)
+        else
+          Helper.create_sg_for_many_ips(instance, engine, addresses)
+        end
       end
 
       fun.(instance, username, password, storage, tier, engine, settings)
@@ -227,16 +235,14 @@ if Code.ensure_loaded?(ExAws) do
       ip    = find_public_ip_address
       port  = determine_port engine
 
-      create_security_group(
-        group, 
-        "Security Group for the instance #{instance}.")
+      create_security_group(group, "Security Group for the instance #{instance}.")
 
       res = authorize_security_group_ingress(
         [
-          group_name: group, 
-          "IpPermissions.1.IpProtocol": "tcp",
-          "IpPermissions.1.FromPort": port,
-          "IpPermissions.1.ToPort": port,
+          group_name:                          group, 
+          "IpPermissions.1.IpProtocol":        "tcp",
+          "IpPermissions.1.FromPort":          port,
+          "IpPermissions.1.ToPort":            port,
           "IpPermissions.1.IpRanges.1.CidrIp": ip <> "/32"
         ])
       
@@ -244,6 +250,52 @@ if Code.ensure_loaded?(ExAws) do
         {:ok, _} -> :ok
         _        -> :error
       end
+    end
+
+    @doc"""
+    Create a new Security Group that enables inbound traffic from the
+    current local machine's public IP address as well as the addresses 
+    provided. The Security Group will have the name 'secgroup-<instance>' 
+    and the port used will be determined by the provided SQL 'engine'.
+    """
+    @spec create_sg_for_many_ips(instance :: binary, engine :: binary, ips :: [binary]) :: :ok | :error
+    def create_sg_for_many_ips(instance, engine, ips) do
+      group     = "secgroup-#{instance}"
+      public_ip = find_public_ip_address
+      port      = determine_port engine
+      count     = 1
+      opts_list = ip_list_builder(ips ++ [public_ip], port, count, []) |> List.flatten
+
+      create_security_group(group, "Security Group for the instance #{instance}.")
+
+      case authorize_security_group_ingress([group] ++ opts_list) do
+        {:ok, _} -> :ok
+        _        -> :error
+      end
+    end
+
+    defp ip_list_builder([h | []], port, count, state) do
+      elem = 
+        [
+          "IpPermissions.#{count}.IpProtocol":               "tcp",
+          "IpPermissions.#{count}.FromPort":                 port,
+          "IpPermissions.#{count}.ToPort":                   port,
+          "IpPermissions.#{count}.IpRanges.#{count}.CidrIp": h <> "/32" 
+        ]
+
+      state ++ elem
+    end
+
+    defp ip_list_builder([h | t], port, count, state) do
+      elem = 
+        [
+          "IpPermissions.#{count}.IpProtocol":               "tcp",
+          "IpPermissions.#{count}.FromPort":                 port,
+          "IpPermissions.#{count}.ToPort":                   port,
+          "IpPermissions.#{count}.IpRanges.#{count}.CidrIp": h <> "/32" 
+        ]
+
+      ip_list_builder(t, port, count + 1, state ++ elem)
     end
 
     defp determine_port(engine) do 
