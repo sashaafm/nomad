@@ -12,26 +12,26 @@ if Code.ensure_loaded?(ExAws) do
 
     def list_instances(fun \\ &ExAws.RDS.Impl.describe_db_instances/1) do 
       result = 
-      for region <- Helper.get_regions do
-        case fun.(ExAws.RDS.new(region: region)) do 
-          {:ok, res} ->
-              case res.status_code do 
-                200 ->
-                ids       = res.body |> Friendly.find("dbinstanceidentifier")
-                zones     = res.body |> Friendly.find("availabilityzone")
-                addresses = res.body |> Friendly.find("address")
-                status    = res.body |> Friendly.find("dbinstancestatus")
-                storage   = res.body |> Friendly.find("allocatedstorage")
-          
-                parse_list_instances ids, zones, addresses, status, storage
-            _   ->
-                  get_error_message res
-              end
-          {:error, reason} ->
-            parse_http_error reason
+        for region <- Helper.get_regions do
+          case fun.(ExAws.RDS.new(region: region)) do 
+            {:ok, res} ->
+                case res.status_code do 
+                  200 ->
+                  ids       = res.body |> Friendly.find("dbinstanceidentifier")
+                  zones     = res.body |> Friendly.find("availabilityzone")
+                  addresses = res.body |> Friendly.find("address")
+                  status    = res.body |> Friendly.find("dbinstancestatus")
+                  storage   = res.body |> Friendly.find("allocatedstorage")
+            
+                  parse_list_instances ids, zones, addresses, status, storage
+              _   ->
+                    get_error_message res
+                end
+            {:error, reason} ->
+              parse_http_error reason
+          end
         end
-      end
-      |> List.flatten
+        |> List.flatten
 
       if Enum.any?(result, fn x -> is_binary(x) end) do
         Enum.find(result, fn x -> is_binary(x) end)
@@ -58,38 +58,47 @@ if Code.ensure_loaded?(ExAws) do
       )
     end
 
-    def get_instance(instance, fun \\ &describe_db_instances/1) do 
-      case fun.(%{"DBInstanceIdentifier" => instance}) do 
-        {:ok, res} ->
-          case res.status_code do 
-            200 ->
-              name    = res.body
-              |> Friendly.find("dbinstanceidentifier")
-              |> List.first
-              |> Map.get(:text)
-              region  = res.body
-              |> Friendly.find("availabilityzone")
-              |> List.first
-              |> Map.get(:text)            
-              address = res.body
-              |> Friendly.find("address")
-              |> List.first
-              |> Map.get(:text)
-              status  = res.body
-              |> Friendly.find("dbinstancestatus")
-              |> List.first            
-              |> Map.get(:text)
-              storage = res.body
-              |> Friendly.find("allocatedstorage")
-              |> List.first
-              |> Map.get(:text)
+    def get_instance(instance, fun \\ &ExAws.RDS.Impl.describe_db_instances/2) do 
+      result = 
+        for region <- Helper.get_regions do
+          case fun.(ExAws.RDS.new(region: region), %{"DBInstanceIdentifier" => instance}) do 
+            {:ok, res} ->
+              case res.status_code do 
+                200 ->
+                  name    = res.body
+                  |> Friendly.find("dbinstanceidentifier")
+                  |> List.first
+                  |> Map.get(:text)
+                  region  = res.body
+                  |> Friendly.find("availabilityzone")
+                  |> List.first
+                  |> Map.get(:text)            
+                  address = res.body
+                  |> Friendly.find("address")
+                  |> List.first
+                  |> Map.get(:text)
+                  status  = res.body
+                  |> Friendly.find("dbinstancestatus")
+                  |> List.first            
+                  |> Map.get(:text)
+                  storage = res.body
+                  |> Friendly.find("allocatedstorage")
+                  |> List.first
+                  |> Map.get(:text)
 
-              {name, region, address, status, storage}
-            _   ->
-              get_error_message res
+                  {name, region, address, status, storage}
+                _   ->
+                  get_error_message res
+              end
+            {:error, reason} ->
+              parse_http_error reason
           end
-        {:error, reason} ->
-          parse_http_error reason
+        end
+        |> List.flatten
+
+      case val = Enum.find(result, fn x -> is_tuple(x) end) do
+        nil -> Enum.find(result, fn x -> is_binary(x) end)
+        _   -> val
       end
     end
 
