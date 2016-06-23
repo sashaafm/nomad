@@ -1,6 +1,5 @@
 if Code.ensure_loaded?(ExAws) do 
   defmodule Nomad.AWS.SQL do
-
     use ExAws.RDS.Client
     import Nomad.Utils
     alias Nomad.AWS.SQL.Helper, as: Helper
@@ -11,23 +10,33 @@ if Code.ensure_loaded?(ExAws) do
       Application.get_all_env(:my_aws_config_root)
     end  
 
-    def list_instances(fun \\ &describe_db_instances/0) do 
-      case fun.() do 
-        {:ok, res} ->
-          case res.status_code do 
-            200 ->
-              ids       = res.body |> Friendly.find("dbinstanceidentifier")
-              zones     = res.body |> Friendly.find("availabilityzone")
-              addresses = res.body |> Friendly.find("address")
-              status    = res.body |> Friendly.find("dbinstancestatus")
-              storage   = res.body |> Friendly.find("allocatedstorage")
-
-              parse_list_instances ids, zones, addresses, status, storage
+    def list_instances(fun \\ &ExAws.RDS.Impl.describe_db_instances/1) do 
+      result = 
+      for region <- Helper.get_regions do
+        case fun.(ExAws.RDS.new(region: region)) do 
+          {:ok, res} ->
+              case res.status_code do 
+                200 ->
+                ids       = res.body |> Friendly.find("dbinstanceidentifier")
+                zones     = res.body |> Friendly.find("availabilityzone")
+                addresses = res.body |> Friendly.find("address")
+                status    = res.body |> Friendly.find("dbinstancestatus")
+                storage   = res.body |> Friendly.find("allocatedstorage")
+          
+                parse_list_instances ids, zones, addresses, status, storage
             _   ->
-              get_error_message res
-          end
-        {:error, reason} ->
-          parse_http_error reason
+                  get_error_message res
+              end
+          {:error, reason} ->
+            parse_http_error reason
+        end
+      end
+      |> List.flatten
+
+      if Enum.any?(result, fn x -> is_binary(x) end) do
+        Enum.find(result, fn x -> is_binary(x) end)
+      else
+        result
       end
     end
 
@@ -54,26 +63,22 @@ if Code.ensure_loaded?(ExAws) do
         {:ok, res} ->
           case res.status_code do 
             200 ->
-              name = res.body
+              name    = res.body
               |> Friendly.find("dbinstanceidentifier")
               |> List.first
               |> Map.get(:text)
-
-              region = res.body
+              region  = res.body
               |> Friendly.find("availabilityzone")
               |> List.first
               |> Map.get(:text)            
-
               address = res.body
               |> Friendly.find("address")
               |> List.first
               |> Map.get(:text)
-
-              status = res.body
+              status  = res.body
               |> Friendly.find("dbinstancestatus")
               |> List.first            
               |> Map.get(:text)
-
               storage = res.body
               |> Friendly.find("allocatedstorage")
               |> List.first
@@ -106,10 +111,8 @@ if Code.ensure_loaded?(ExAws) do
       case fun.(instance, username, password, storage, tier, engine, settings) do 
         {:ok, res} ->
           case res.status_code do 
-            200 ->
-              :ok
-            _   ->
-              get_error_message res
+            200 -> :ok
+            _   -> get_error_message res
           end
         {:error, reason} ->
           parse_http_error reason
@@ -136,10 +139,8 @@ if Code.ensure_loaded?(ExAws) do
       case fun.(instance) do 
         {:ok, res} ->
           case res.status_code do 
-            200 ->
-              :ok
-            _   ->
-              get_error_message res
+            200 -> :ok
+            _   -> get_error_message res
           end
         {:error, reason} ->
           parse_http_error reason
@@ -152,10 +153,8 @@ if Code.ensure_loaded?(ExAws) do
       case fun.(instance) do 
         {:ok, res} ->
           case res.status_code do 
-            200 ->
-              :ok
-            _   ->
-              get_error_message res
+            200 -> :ok
+            _   -> get_error_message res
           end
         {:error, reason} ->
           parse_http_error reason
@@ -300,6 +299,8 @@ if Code.ensure_loaded?(ExAws) do
         "AURORA"        -> 3306 
       end
     end
+
+    def get_regions, do: Nomad.AWS.VirtualMachines.list_regions
   end
 end
 
