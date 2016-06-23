@@ -16,20 +16,11 @@ if Code.ensure_loaded?(ExAws) do
         {:ok, res} ->
           case res.status_code do 
             200 ->
-              ids = res.body
-              |> Friendly.find("dbinstanceidentifier")
-
-              zones = res.body
-              |> Friendly.find("availabilityzone")
-
-              addresses = res.body
-              |> Friendly.find("address")
-
-              status = res.body
-              |> Friendly.find("dbinstancestatus")
-
-              storage = res.body
-              |> Friendly.find("allocatedstorage")
+              ids       = res.body |> Friendly.find("dbinstanceidentifier")
+              zones     = res.body |> Friendly.find("availabilityzone")
+              addresses = res.body |> Friendly.find("address")
+              status    = res.body |> Friendly.find("dbinstancestatus")
+              storage   = res.body |> Friendly.find("allocatedstorage")
 
               parse_list_instances ids, zones, addresses, status, storage
             _   ->
@@ -43,23 +34,19 @@ if Code.ensure_loaded?(ExAws) do
     def list_instances!(fun \\ &describe_db_instances/0), do: fun.()
 
     defp parse_list_instances(ids, zones, addresses, status, storage) do 
-      ids_list = ids
-      |> Enum.map(fn x -> x.text end)
+      ids_list       = ids       |> Enum.map(fn x -> x.text end)
+      zones_list     = zones     |> Enum.map(fn x -> x.text end)
+      addresses_list = addresses |> Enum.map(fn x -> x.text end)
+      status_list    = status    |> Enum.map(fn x -> x.text end)
+      storage_list   = storage   |> Enum.map(fn x -> x.text end)        
 
-      zones_list = zones
-      |> Enum.map(fn x -> x.text end)
-
-      addresses_list = addresses
-      |> Enum.map(fn x -> x.text end)
-
-      status_list = status
-      |> Enum.map(fn x -> x.text end)
-
-      storage_list = storage
-      |> Enum.map(fn x -> x.text end)        
-
-      List.zip [ids_list] ++ [zones_list] ++ [addresses_list] ++ 
-        [status_list] ++ [storage_list]
+      List.zip(
+        [ids_list]       
+        ++ [zones_list]     
+        ++ [addresses_list] 
+        ++ [status_list]    
+        ++ [storage_list]
+      )
     end
 
     def get_instance(instance, fun \\ &describe_db_instances/1) do 
