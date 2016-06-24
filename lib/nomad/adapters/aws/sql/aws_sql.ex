@@ -8,7 +8,7 @@ if Code.ensure_loaded?(ExAws) do
 
     def config_root do 
       Application.get_all_env(:my_aws_config_root)
-    end  
+    end
 
     def list_instances(fun \\ &ExAws.RDS.Impl.describe_db_instances/1) do 
       result = 
@@ -22,7 +22,7 @@ if Code.ensure_loaded?(ExAws) do
                   addresses = res.body |> Friendly.find("address")
                   status    = res.body |> Friendly.find("dbinstancestatus")
                   storage   = res.body |> Friendly.find("allocatedstorage")
-            
+
                   parse_list_instances ids, zones, addresses, status, storage
               _   ->
                     get_error_message res
@@ -40,20 +40,20 @@ if Code.ensure_loaded?(ExAws) do
       end
     end
 
-    def list_instances!(fun \\ &describe_db_instances/0), do: fun.()
+    def list_instances!(fun \\ &ExAws.RDS.Impl.describe_db_instances/1), do: for region <- Helper.get_regions, do: fun.(ExAws.RDS.new(region: region)) 
 
     defp parse_list_instances(ids, zones, addresses, status, storage) do 
       ids_list       = ids       |> Enum.map(fn x -> x.text end)
       zones_list     = zones     |> Enum.map(fn x -> x.text end)
       addresses_list = addresses |> Enum.map(fn x -> x.text end)
       status_list    = status    |> Enum.map(fn x -> x.text end)
-      storage_list   = storage   |> Enum.map(fn x -> x.text end)        
+      storage_list   = storage   |> Enum.map(fn x -> x.text end)
 
       List.zip(
-        [ids_list]       
-        ++ [zones_list]     
-        ++ [addresses_list] 
-        ++ [status_list]    
+        [ids_list]
+        ++ [zones_list]
+        ++ [addresses_list]
+        ++ [status_list]
         ++ [storage_list]
       )
     end
@@ -102,9 +102,9 @@ if Code.ensure_loaded?(ExAws) do
       end
     end
 
-    def get_instance!(instance, fun \\ &describe_db_instances/1), do: fun.(%{"DBInstanceIdentifier" => instance})
+    def get_instance!(instance, fun \\ &ExAws.RDS.Impl.describe_db_instances/2), do: for region <- Helper.get_regions, do: fun.(ExAws.RDS.new(region: region), %{"DBInstanceIdentifier" => instance})
 
-    def insert_instance(instance, settings, {region, tier}, _credentials = {username, password}, addresses, fun \\ &create_db_instance/7) do 
+    def insert_instance(instance, settings, {region, tier}, _credentials = {username, password}, addresses, fun \\ &ExAws.RDS.Impl.create_db_instance/8) do 
       storage  = settings.storage
       engine   = settings.engine
       settings = Map.put(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
@@ -117,7 +117,7 @@ if Code.ensure_loaded?(ExAws) do
         end
       end
 
-      case fun.(instance, username, password, storage, tier, engine, settings) do 
+      case fun.(ExAws.RDS.new(region: region), instance, username, password, storage, tier, engine, settings) do 
         {:ok, res} ->
           case res.status_code do 
             200 -> :ok
@@ -128,7 +128,7 @@ if Code.ensure_loaded?(ExAws) do
       end
     end
 
-    def insert_instance!(instance, settings, {region, tier}, {username, password}, addresses, fun \\ &create_db_instance/7) do 
+    def insert_instance!(instance, settings, {region, tier}, {username, password}, addresses, fun \\ &ExAws.RDS.Impl.create_db_instance/7) do 
       storage  = settings.storage
       engine   = settings.engine
       settings = Map.put(settings, "VpcSecurityGroups.member.1", "secgroup-#{instance}")
@@ -141,54 +141,89 @@ if Code.ensure_loaded?(ExAws) do
         end
       end
 
-      fun.(instance, username, password, storage, tier, engine, settings)
+      fun.(ExAws.RDS.new(region: region), instance, username, password, storage, tier, engine, settings)
     end
 
-    def delete_instance(instance, fun \\ &delete_db_instance/1) do 
-      case fun.(instance) do 
-        {:ok, res} ->
-          case res.status_code do 
-            200 -> :ok
-            _   -> get_error_message res
+    def delete_instance(instance, fun \\ &ExAws.RDS.Impl.delete_db_instance/2) do 
+      result = 
+        for region <- Helper.get_regions do
+          case fun.(ExAws.RDS.new(region: region), instance) do 
+            {:ok, res} ->
+              case res.status_code do 
+                200 -> :ok
+                _   -> get_error_message res
+              end
+            {:error, reason} ->
+              parse_http_error reason
           end
-        {:error, reason} ->
-          parse_http_error reason
+        end
+
+      if Enum.any?(result, fn x -> x == :ok end) do
+        :ok
+      else
+        Enum.find(result, fn x -> is_binary(x) end)
       end
     end
 
-    def delete_instance!(instance, fun \\ &delete_db_instance/1), do: fun.(instance)
+    def delete_instance!(instance, fun \\ &ExAws.RDS.Impl.delete_db_instance/2) do
+      for region <- Helper.get_regions, do: fun.(ExAws.RDS.new(region: region), instance)
+    end
 
-    def restart_instance(instance, fun \\ &reboot_db_instance/1) do
-      case fun.(instance) do 
-        {:ok, res} ->
-          case res.status_code do 
-            200 -> :ok
-            _   -> get_error_message res
+    def restart_instance(instance, fun \\ &ExAws.RDS.Impl.reboot_db_instance/2) do
+      result = 
+        for region <- Helper.get_regions do
+          case fun.(ExAws.RDS.new(region: region), instance) do 
+            {:ok, res} ->
+              case res.status_code do 
+                200 -> :ok
+                _   -> get_error_message res
+              end
+            {:error, reason} ->
+              parse_http_error reason
           end
-        {:error, reason} ->
-          parse_http_error reason
+        end
+
+      if Enum.any?(result, fn x -> x == :ok end) do
+        :ok
+      else
+        Enum.find(result, fn x -> is_binary(x) end)
       end
     end
 
-    def restart_instance!(instance, fun \\ &reboot_db_instance/1), do: fun.(instance)
+    def restart_instance!(instance, fun \\ &ExAws.RDS.Impl.reboot_db_instance/2) do
+      for region <- Helper.get_region, do: fun.(ExAws.RDS.new(region: region), instance)
+    end
 
-    def list_databases(instance, fun \\ &describe_db_instances/1) do 
-      case fun.(%{"DBInstanceIdentifier" => instance}) do 
-        {:ok, res} ->
-          case res.status_code do
-            200 ->
-              res.body
-              |> Friendly.find("dbname")
-              |> Enum.map(fn map -> map.text end)
-            _   ->
-              get_error_message res
+    def list_databases(instance, fun \\ &ExAws.RDS.Impl.describe_db_instances/2) do 
+      result =
+        for region <- Helper.get_regions do
+          case fun.(ExAws.RDS.new(region: region), %{"DBInstanceIdentifier" => instance}) do 
+            {:ok, res} ->
+              case res.status_code do
+                200 ->
+                  res.body
+                  |> Friendly.find("dbname")
+                  |> Enum.map(fn map -> map.text end)
+                _   ->
+                  get_error_message res
+              end
+            {:error, reason} ->
+              parse_http_error reason
           end
-        {:error, reason} ->
-          parse_http_error reason
+        end
+
+      if Enum.any?(result, fn x -> not is_binary(x) end) do # If there is any result
+        Enum.find(result, fn x -> not is_binary(x) end) # Find it
+      else
+        Enum.find(result, fn x -> is_binary(x) end) # Else find the first error (a binary)
       end
     end
 
-    def list_databases!(instance, fun \\ &describe_db_instances/1), do: fun.(%{"DBInstanceIdentifier" => instance})
+    def list_databases!(instance, fun \\ &ExAws.RDS.Impl.describe_db_instances/2) do
+      for region <- Helper.get_regions do
+        fun.(ExAws.RDS.new(region: region), %{"DBInstanceIdentifier" => instance})
+      end
+    end
 
     def list_classes do
       ["db.t1.micro",    "db.m1.small",   "db.m1.medium",  "db.m1.large", 
