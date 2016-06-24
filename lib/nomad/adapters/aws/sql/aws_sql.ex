@@ -1,6 +1,5 @@
 if Code.ensure_loaded?(ExAws) do 
   defmodule Nomad.AWS.SQL do
-    use ExAws.RDS.Client
     import Nomad.Utils
     alias Nomad.AWS.SQL.Helper, as: Helper
 
