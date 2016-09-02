@@ -12,8 +12,8 @@
   "friendly": {:hex, :friendly, "1.0.1", "d5a9f5c28d63a764bfd87255ad3113f7ed6a74c7ba92aeb58e553ce4f84ef78e", [:mix], [{:floki, "~> 0.7", [hex: :floki, optional: false]}]},
   "gcloudex": {:git, "https://github.com/sashaafm/gcloudex.git", "2dfc1690ad0a4582f294b6cbdcfc3992c3d7c4f7", []},
   "getopt": {:hex, :getopt, "0.8.2", "b17556db683000ba50370b16c0619df1337e7af7ecbf7d64fbf8d1d6bce3109b", [:rebar], []},
-  "goth": {:hex, :goth, "0.1.3", "9833ef23e04cf210529f3db75a0bb8b22bfb9028aabf015c750f4b7113addbbe", [:mix], [{:poison, "~> 2.1", [hex: :poison, optional: false]}, {:json_web_token, "~> 0.2.5", [hex: :json_web_token, optional: false]}, {:httpoison, "~> 0.8.0", [hex: :httpoison, optional: false]}]},
-  "hackney": {:hex, :hackney, "1.6.0", "8d1e9440c9edf23bf5e5e2fe0c71de03eb265103b72901337394c840eec679ac", [:rebar3], [{:ssl_verify_fun, "1.1.0", [hex: :ssl_verify_fun, optional: false]}, {:mimerl, "1.0.2", [hex: :mimerl, optional: false]}, {:metrics, "1.0.1", [hex: :metrics, optional: false]}, {:idna, "1.2.0", [hex: :idna, optional: false]}, {:certifi, "0.4.0", [hex: :certifi, optional: false]}]},
+  "goth": {:hex, :goth, "0.1.3", "9833ef23e04cf210529f3db75a0bb8b22bfb9028aabf015c750f4b7113addbbe", [:mix], [{:httpoison, "~> 0.8.0", [hex: :httpoison, optional: false]}, {:json_web_token, "~> 0.2.5", [hex: :json_web_token, optional: false]}, {:poison, "~> 2.1", [hex: :poison, optional: false]}]},
+  "hackney": {:hex, :hackney, "1.6.0", "8d1e9440c9edf23bf5e5e2fe0c71de03eb265103b72901337394c840eec679ac", [:rebar3], [{:certifi, "0.4.0", [hex: :certifi, optional: false]}, {:idna, "1.2.0", [hex: :idna, optional: false]}, {:metrics, "1.0.1", [hex: :metrics, optional: false]}, {:mimerl, "1.0.2", [hex: :mimerl, optional: false]}, {:ssl_verify_fun, "1.1.0", [hex: :ssl_verify_fun, optional: false]}]},
   "httpoison": {:hex, :httpoison, "0.8.3", "b675a3fdc839a0b8d7a285c6b3747d6d596ae70b6ccb762233a990d7289ccae4", [:mix], [{:hackney, "~> 1.6.0", [hex: :hackney, optional: false]}]},
   "idna": {:hex, :idna, "1.2.0", "ac62ee99da068f43c50dc69acf700e03a62a348360126260e87f2b54eced86b2", [:rebar3], []},
   "json_web_token": {:hex, :json_web_token, "0.2.5", "270660861531117e627e58e6c8bdb99e858be690807fbf6b7337d868d63b9efb", [:mix], [{:poison, "~> 2.1", [hex: :poison, optional: false]}]},
@@ -24,4 +24,4 @@
   "providers": {:hex, :providers, "1.6.0", "db0e2f9043ae60c0155205fcd238d68516331d0e5146155e33d1e79dc452964a", [:rebar3], [{:getopt, "0.8.2", [hex: :getopt, optional: false]}]},
   "relx": {:hex, :relx, "3.19.0", "286dd5244b4786f56aac75d5c8e2d1fb4cfd306810d4ec8548f3ae1b3aadb8f7", [:rebar3], [{:providers, "1.6.0", [hex: :providers, optional: false]}, {:getopt, "0.8.2", [hex: :getopt, optional: false]}, {:erlware_commons, "0.19.0", [hex: :erlware_commons, optional: false]}, {:cf, "0.2.1", [hex: :cf, optional: false]}, {:bbmustache, "1.0.4", [hex: :bbmustache, optional: false]}]},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0", "edee20847c42e379bf91261db474ffbe373f8acb56e9079acb6038d4e0bf414f", [:rebar, :make], []},
-  "table_rex": {:hex, :table_rex, "0.8.0", "0a9b69a76928bb674c5eb3ce09e5cf4189ca53cba41ff323d7fb34b974009194", [:mix], []}}
+  "table_rex": {:hex, :table_rex, "0.8.3", "1c68dfc6886d6f118f5047b0449d6402ae0ac5709064789e578c2f4659f4064b", [:mix], []}}
