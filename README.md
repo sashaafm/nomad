@@ -77,32 +77,42 @@ Finally through macros and metaprogramming, the adapters logic will be generated
 
   1. Add nomad to your list of dependencies in mix.exs:
 
-          def deps do
-              [{:nomad, "~> 0.6.0"}]
-          end
-        or
-          def deps do 
-              [{:nomad, github: "sashaafm/nomad" }]
-            end
+```elixir
+  def deps do
+      [{:nomad, "~> 0.6.0"}]
+  end
+```
+  or
+```elixir
+  def deps do 
+    [{:nomad, github: "sashaafm/nomad" }]
+  end
+```
 
   2. Ensure nomad is started before your application:
 
-          def application do
-            [applications: [:nomad]]
-          end
+```elixir
+  def application do
+    [applications: [:nomad]]
+  end
+```
 
 ### Configuration<a name="configuration"></a>
 #### General<a name="general_config"></a>
 For every cloud provider you will need to add to your desired environment the following:
 
-    config :nomad, 
-      cloud_provider: <provider_atom>
+```elixir
+config :nomad, 
+  cloud_provider: <provider_atom>
+```
       
 #### Amazon Web Services<a name="aws_config"></a>
 To use Amazon Web Services the following configurations are needed:
 
-    config :nomad,
-      cloud_provider: :aws
+```elixir
+config :nomad,
+  cloud_provider: :aws
+```
       
 Then pass your AWS Access Key ID and AWS Secret Access Key as System variables when launching the application like so:
 
@@ -111,11 +121,13 @@ Then pass your AWS Access Key ID and AWS Secret Access Key as System variables w
 #### Google Cloud Platform<a name="gcl_config"></a>
 To use Google Cloud Platofrm the following configurations are needed:
 
-    config :nomad,
-      cloud_provider: :gcl
-    
-    config :goth, 
-      json: "config/creds.json" |> Path.expand |> File.read!
+```elixir
+config :nomad,
+  cloud_provider: :gcl
+
+config :goth, 
+  json: "config/creds.json" |> Path.expand |> File.read!
+```
       
 Where 'creds.json' is the JSON file with your account credentials that you may download from your Google Cloud Console. Alternatively you may name the file whatever you want as long as you change the config accordingly.
 
@@ -130,26 +142,33 @@ Where 'creds.json' is the JSON file with your account credentials that you may d
 
   1. List available storages
 
-         Nomad.Storage.list_storages
-         #=> ["bucket_1", "bucket_2"]
+```elixir
+   Nomad.Storage.list_storages
+   #=> ["bucket_1", "bucket_2"]
+ ```
   
   2. List files inside a storage
   
-         Nomad.Storage.list_items "bucket_1"
-         # => [".gitignore", "/random/archive/Director-free.zip",
-         "/new_dir/other_dir/some_file.txt", "README.md", "architecture.png",
-         "examples/examples.desktop", "storage_API"]    
+```elixir
+   Nomad.Storage.list_items "bucket_1"
+   # => [".gitignore", "/random/archive/Director-free.zip",
+   "/new_dir/other_dir/some_file.txt", "README.md", "architecture.png",
+   "examples/examples.desktop", "storage_API"]    
+```
         
   3. Create a storage
     
-         Nomad.Storage.create_storage "bucket_name", "region_name", "bucket_class"
-         # => :ok
+```elixir
+  Nomad.Storage.create_storage "bucket_name", "region_name", "bucket_class"
+  # => :ok
+```
 
   4. Combine API functions
 
-         Nomad.Storage.list_storages |> Enum.map(fn storage -> {storage, Nomad.Storage.get_storage_region(storage)} end)
-         [{"bucket_1", "EUROPE-WEST1"}, {"bucket_2", "US"}]
-
+```elixir
+  Nomad.Storage.list_storages |> Enum.map(fn storage -> {storage, Nomad.Storage.get_storage_region(storage)} end)
+  [{"bucket_1", "EUROPE-WEST1"}, {"bucket_2", "US"}]
+```
   
 #### SQL<a name="sql_examples"></a>
 **Specification Docs**
